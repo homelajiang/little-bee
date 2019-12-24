@@ -1,0 +1,76 @@
+.mat-divider {
+  border-top-color: rgb(242, 244, 246);
+}
+
+.action-bar {
+}
+
+.action-bar h1 {
+  color: rgb(9, 36, 75);
+  font-weight: normal;
+}
+
+.action-bar span {
+  color: rgb(173, 173, 176);
+  margin-left: 15px;
+}
+
+.calendar-title {
+  background: white;
+  padding: 0 30px;
+}
+
+.calendar-title h1 {
+  color: rgb(9, 36, 75);
+}
+
+.calendar-title span {
+  color: rgb(181, 189, 201);
+  margin-left: 15px;
+}
+
+.week-header {
+  padding: 0 20px;
+}
+
+.week-header h1 {
+  color: rgb(9, 36, 75);
+}
+
+.week-header span {
+  margin-left: 10px;
+  color: rgb(132, 145, 165);
+}
+
+.week-cell {
+  padding: 20px;
+  height: 100px;
+}
+
+.group-button {
+
+}
+
+.group-button .pre {
+  min-width: 0;
+  padding: 0 6px;
+  border-right: none;
+  border-color: rgb(230, 233, 237);
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.group-button .action {
+  border-color: rgb(230, 233, 237);
+  border-radius: 0;
+}
+
+.group-button .next {
+  min-width: 0;
+  padding: 0 6px;
+  border-color: rgb(230, 233, 237);
+  border-left: none;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+

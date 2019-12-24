@@ -1,0 +1,29 @@
+.logo {
+  background-image: url('../../assets/angular.svg');
+  width: 58px;
+  height: 58px;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+mat-toolbar h1{
+
+}
+
+.main-toolbar{
+  background: white;
+  height: 80px;
+}
+
+.avatar-button {
+
+}
+
+.avatar-toolbar {
+  background-image: url('../../assets/angular.svg');
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
