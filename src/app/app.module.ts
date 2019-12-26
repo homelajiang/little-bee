@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {Page404Component} from './page404/page404.component';
 import {DailyComponent} from './daily/daily.component';
 import {SettingComponent} from './setting/setting.component';
-import {OrderMealComponent} from './order-meal/order-meal.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
@@ -22,6 +21,7 @@ import {
 } from '@angular/material';
 import {MainComponent} from './main/main.component';
 import {NewTodoComponent} from './new-todo/new-todo.component';
+import { DinnerComponent } from './dinner/dinner.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +29,10 @@ import {NewTodoComponent} from './new-todo/new-todo.component';
     Page404Component,
     DailyComponent,
     SettingComponent,
-    OrderMealComponent,
     LoginComponent,
     MainComponent,
-    NewTodoComponent
+    NewTodoComponent,
+    DinnerComponent
   ],
   imports: [
     BrowserModule,
