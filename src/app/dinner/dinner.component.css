@@ -1,0 +1,18 @@
+.dinner-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.dinner {
+  padding-top: 100px;
+}
+
+.dinner span {
+  margin-bottom: 10px;
+}
+
+
+.dinner button {
+  width: 200px;
+  margin-top: 60px;
+}

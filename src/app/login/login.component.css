@@ -1,0 +1,32 @@
+.login-card {
+  height: 500px;
+  max-width: 900px;
+  width: 100%;
+  padding: 0;
+  margin-top: 200px;
+}
+
+.login-left {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-image: url("../../assets/bg.jpg");
+}
+
+.login-right {
+ padding: 20px 40px;
+}
+
+.login-right h1{
+  margin-bottom: 50px;
+}
+
+.login-right mat-form-field {
+   width: 100%;
+  margin-bottom: 10px;
+ }
+
+.login-right button {
+  width: 100%;
+  margin-top: 50px;
+  height: 54px;
+}
