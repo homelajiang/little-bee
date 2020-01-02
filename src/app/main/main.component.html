@@ -1,19 +1,25 @@
 <mat-toolbar fxLayout="row" class="main-toolbar">
 
-  <div class="logo"></div>
-  <h1>Storage</h1>
+  <button mat-button routerLink="/">
+    <div fxLayout="row" fxLayoutAlign="start center" class="logo">
+      <div class="logo-icon"></div>
+      <h1>Little Bee</h1>
+    </div>
+  </button>
 
   <span fxFlex="grow"></span>
 
-  <button mat-icon-button>
-    <mat-icon>fastfood</mat-icon>
+  <button mat-icon-button class="action-button" routerLink="/dinner">
+    <!--    <mat-icon>fastfood</mat-icon>-->
+    <img src="../../assets/order-dinner.svg">
   </button>
 
-  <button mat-icon-button class="avatar-button">
-    <div class="avatar-toolbar"></div>
+  <button mat-button>
+    <div fxLayout="row" class="avatar" fxLayoutAlign="start center">
+      <div fxFlex="none" class="avatar-icon"></div>
+      <span>Harsha</span>
+    </div>
   </button>
-
-  <h2>Harsha</h2>
 </mat-toolbar>
 
 <div style="padding: 0 140px">

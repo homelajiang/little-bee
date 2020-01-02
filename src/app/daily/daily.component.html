@@ -2,7 +2,9 @@
   <h1 fxFlex="none">Schedules</h1>
   <span fxFlex="none">8 schedules todo</span>
   <span fxFlex="grow"></span>
-  <button fxFlex="none" fxFlexAlign="center" mat-flat-button color="primary">
+  <button fxFlex="none" fxFlexAlign="center" mat-flat-button color="primary"
+          #originFab
+          cdkOverlayOrigin (click)="createMission()">
     <mat-icon>add</mat-icon>
     New
   </button>
@@ -37,10 +39,19 @@
     </div>
     <div *ngFor="let item of [0,1,2,3,4]">
       <mat-divider></mat-divider>
-      <div class="week-cell">
+      <div class="week-cell" matRipple  >
       </div>
     </div>
   </div>
 </div>
+
+<!--弹出动态内容模板-->
+<ng-template #overlay>
+  <div class="demo-overlay">
+    <div style="overflow: auto;">
+      <ul><li *ngFor="let item of [1,2,3,4,5]; index as i">{{item}} {{i}}</li></ul>
+    </div>
+  </div>
+</ng-template>
 
 

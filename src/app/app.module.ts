@@ -16,12 +16,13 @@ import {
   MatCardModule, MatDatepickerModule,
   MatDividerModule,
   MatFormFieldModule,
-  MatIconModule, MatInputModule, MatNativeDateModule,
+  MatIconModule, MatInputModule, MatNativeDateModule, MatRippleModule,
   MatToolbarModule
 } from '@angular/material';
 import {MainComponent} from './main/main.component';
 import {NewTodoComponent} from './new-todo/new-todo.component';
-import { DinnerComponent } from './dinner/dinner.component';
+import {DinnerComponent} from './dinner/dinner.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,10 @@ import { DinnerComponent } from './dinner/dinner.component';
     LoginComponent,
     MainComponent,
     NewTodoComponent,
-    DinnerComponent
+    DinnerComponent,
   ],
   imports: [
+    OverlayModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
@@ -49,7 +51,8 @@ import { DinnerComponent } from './dinner/dinner.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

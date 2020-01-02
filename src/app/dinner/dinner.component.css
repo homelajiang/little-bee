@@ -4,7 +4,9 @@
 }
 
 .dinner {
-  padding-top: 100px;
+  margin-top: 100px;
+  /*padding: 60px 0;*/
+  /*max-width: 900px;*/
 }
 
 .dinner span {
@@ -14,5 +16,7 @@
 
 .dinner button {
   width: 200px;
+  height: 54px;
   margin-top: 60px;
+  font-size: 18px;
 }

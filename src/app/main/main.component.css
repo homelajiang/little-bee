@@ -1,29 +1,54 @@
-.logo {
-  background-image: url('../../assets/angular.svg');
+.logo{
+  padding: 4px 50px 4px 0;
+}
+
+.logo h1{
+
+}
+
+.logo-icon {
+  background-image: url('../../assets/logo.svg');
   width: 58px;
   height: 58px;
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
 
-mat-toolbar h1{
-
+mat-toolbar h1 {
+  margin-left: 15px;
 }
 
-.main-toolbar{
+.main-toolbar {
   background: white;
   height: 80px;
+  padding: 0 40px;
 }
 
-.avatar-button {
-
+.main-toolbar .action-button {
+  margin-right: 20px;
 }
 
-.avatar-toolbar {
-  background-image: url('../../assets/angular.svg');
-  width: 40px;
-  height: 40px;
+.main-toolbar button img {
+  width: 24px;
+  height: 24px;
+}
+
+.avatar {
+  padding: 4px 20px 4px 0;
+}
+
+.avatar span {
+  color: rgb(135, 144, 161);
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.avatar-icon {
+  background-image: url('../../assets/default-avatar.jpg');
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-repeat: no-repeat;
   flex-shrink: 0;
+  background-size: cover;
 }

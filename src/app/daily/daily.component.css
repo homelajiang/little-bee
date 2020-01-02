@@ -47,6 +47,10 @@
   height: 100px;
 }
 
+.week-cell:hover{
+  cursor: pointer;
+}
+
 .group-button {
 
 }
