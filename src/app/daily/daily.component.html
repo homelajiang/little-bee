@@ -3,8 +3,7 @@
   <span fxFlex="none">8 schedules todo</span>
   <span fxFlex="grow"></span>
   <button fxFlex="none" fxFlexAlign="center" mat-flat-button color="primary"
-          #originFab
-          cdkOverlayOrigin (click)="createMission()">
+          #originFab (click)="newMission(originFab)">
     <mat-icon>add</mat-icon>
     New
   </button>
@@ -39,7 +38,7 @@
     </div>
     <div *ngFor="let item of [0,1,2,3,4]">
       <mat-divider></mat-divider>
-      <div class="week-cell" matRipple  >
+      <div class="week-cell" matRipple (click)="newMission($event)">
       </div>
     </div>
   </div>

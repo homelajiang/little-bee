@@ -54,6 +54,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     MatDatepickerModule,
     MatRippleModule
   ],
+  entryComponents: [NewTodoComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
