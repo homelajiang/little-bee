@@ -5,3 +5,7 @@ body {
   margin: 0;
   background-color: rgb(247,248,252);
 }
+
+.transparent-drop-bg{
+  background: transparent;
+}
