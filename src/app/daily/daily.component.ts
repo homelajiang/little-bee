@@ -12,6 +12,7 @@ import {ComponentPortal, TemplatePortal} from '@angular/cdk/portal';
 import {CdkOverlayOrigin, Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {MatButton} from '@angular/material';
 import {NewTodoComponent} from '../new-todo/new-todo.component';
+import {getDaysInMonth, startOfMonth, endOfMonth, endOfWeek, startOfWeek} from 'date-fns';
 
 @Component({
   selector: 'app-daily',
@@ -22,10 +23,29 @@ export class DailyComponent implements OnInit, AfterViewInit {
   @ViewChild('originFab', {static: false}) originFab: MatButton;
   private overlayRef: OverlayRef;
 
+  private currentDate: Date = new Date(); // 当前日期
+  private today: Date = new Date(this.currentDate); // 当前的日期
+  private sundayIsFirstDay = false; // 星期日是第一天
+  private rows = [0, 1, 2, 3, 4, 5]; // 行数
+  private displayDays: Array<Array<any>>;
+  private dateOptions: object = {
+    weekStartsOn: 1, // 周一
+    firstWeekContainsDate: 1
+  };
+
   constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef) {
   }
 
   ngOnInit() {
+    const days = getDaysInMonth(this.currentDate);
+    const startMonthDay = startOfMonth(this.currentDate);
+    const endMonthDay = endOfMonth(this.currentDate);
+    const startWeekDay = startOfWeek(startMonthDay, this.dateOptions);
+    const endWeekDay = endOfWeek(endMonthDay, this.dateOptions);
+
+    console.log(`days : ${days} \n startMonthDay : ${startMonthDay} \n endMonthDay : ${endMonthDay}`
+      + ` \n startWeekDay : ${startWeekDay} \n endWeekDay : ${endWeekDay}`);
+
   }
 
   ngAfterViewInit() {

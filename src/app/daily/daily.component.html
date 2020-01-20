@@ -10,7 +10,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="start baseline" class="calendar-title">
-  <h1 fxFlex="none">June 25</h1>
+  <h1 fxFlex="none">June 2020</h1>
   <span fxFlex="none">The 39th week</span>
 
   <span fxFlex="grow"></span>
@@ -29,28 +29,22 @@
 
 <mat-divider></mat-divider>
 
-<div>
-  <div fxFlex *ngFor="let row of [0,1,2,3,4,5,6];let index = index"
+<div fxLayout="row">
+  <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
        [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
-    <div fxLayout="row" fxLayoutAlign="start baseline" class="week-header">
+    <div fxLayout="row" fxLayoutAlign="center center" class="week-header">
+        周一
+    </div>
+<!--  <div fxLayout="row"
+         fxLayoutAlign="start baseline" class="week-header">
       <h1>23</h1>
       <span>Sun</span>
-    </div>
-    <div *ngFor="let column of [0,1,2,3,4]">
+    </div>-->
+    <div *ngFor="let rowIndex of rows">
       <mat-divider></mat-divider>
-      <div class="week-cell" id="save-user" matRipple (click)="newMission($event)">
+      <div class="week-cell" id="save-user" matRipple >
       </div>
     </div>
   </div>
+
 </div>
-
-<!--弹出动态内容模板-->
-<ng-template #overlay>
-  <div class="demo-overlay">
-    <div style="overflow: auto;">
-      <ul><li *ngFor="let item of [1,2,3,4,5]; index as i">{{item}} {{i}}</li></ul>
-    </div>
-  </div>
-</ng-template>
-
-

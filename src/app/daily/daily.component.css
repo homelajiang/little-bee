@@ -31,6 +31,7 @@
 
 .week-header {
   padding: 0 20px;
+  height: 40px;
 }
 
 .week-header h1 {
@@ -44,7 +45,7 @@
 
 .week-cell {
   padding: 20px;
-  height: 100px;
+  height: 80px;
 }
 
 .week-cell:hover{
