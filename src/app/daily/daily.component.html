@@ -1,50 +1,91 @@
-<div fxLayout="row" fxLayoutAlign="start baseline" class="action-bar">
-  <h1 fxFlex="none">Schedules</h1>
-  <span fxFlex="none">8 schedules todo</span>
-  <span fxFlex="grow"></span>
-  <button fxFlex="none" fxFlexAlign="center" mat-flat-button color="primary"
-          #originFab (click)="newMission($event)">
-    <mat-icon>add</mat-icon>
-    New
-  </button>
+<div fxLayout="row" fxLayoutAlign="start baseline" class="action-bar" style="height: 40px;">
+  <!--  <h1 fxFlex="none">Schedules</h1>
+    <span fxFlex="none">8 schedules todo</span>
+    <span fxFlex="grow"></span>
+    <button fxFlex="none" fxFlexAlign="center" mat-flat-button color="primary"
+            #originFab (click)="newMission($event)">
+      <mat-icon>add</mat-icon>
+      New
+    </button>-->
 </div>
 
 <div fxLayout="row" fxLayoutAlign="start baseline" class="calendar-title">
-  <h1 fxFlex="none">June 2020</h1>
+  <h1 fxFlex="none">{{getMonthString(currentDate)}} {{currentDate | date:'yyyy'}}</h1>
   <span fxFlex="none">The 39th week</span>
 
   <span fxFlex="grow"></span>
   <div fxFlex="none" fxFlexAlign="center" class="group-button">
-    <button mat-stroked-button class="pre">
+    <button mat-stroked-button class="pre" (click)="preMonth()">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-stroked-button class="action">Today
+    <button mat-stroked-button class="action" (click)="thisMonth()">Today
     </button>
-    <button mat-stroked-button class="next">
+    <button mat-stroked-button class="next" (click)="nextMonth()">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>
 
 </div>
 
-<mat-divider></mat-divider>
 
-<div fxLayout="row">
-  <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
-       [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
-    <div fxLayout="row" fxLayoutAlign="center center" class="week-header">
-        周一
+<div fxLayout="row" style="border-bottom: #dadce0 1px solid;">
+  <div fxFlex="1 1" *ngFor="let weekday of weekdays;let index = index"
+       style="background-color: white;"
+       fxLayoutAlign="center center" class="week-header">
+    <div style="font-size: 14px;">
+      {{weekday}}
     </div>
-<!--  <div fxLayout="row"
+  </div>
+  <!--  <div fxLayout="row"
          fxLayoutAlign="start baseline" class="week-header">
       <h1>23</h1>
       <span>Sun</span>
     </div>-->
-    <div *ngFor="let rowIndex of rows">
-      <mat-divider></mat-divider>
-      <div class="week-cell" id="save-user" matRipple >
+</div>
+
+<div fxLayout="column">
+
+  <div *ngFor="let temp of displayDays;let rowIndex = index" fxLayout="row"
+       style="border-bottom: #dadce0 1px solid">
+
+    <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
+         fxLayout="column" class="week-cell" (click)="newMission($event)"
+         style="border-right: #dadce0 1px solid"
+         [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
+      <div style="padding: 7px 10px;">
+        <span style="font-size: 14px;">{{displayDays[rowIndex][columnIndex].date  | date:"dd"}}</span>
+        <!--        <span style="font-size: 12px;color: #70757a;">（三十）</span>-->
+        <span fxFlex="grow"></span>
+        <span style="    font-size: 12px;
+    color: #70757a;
+    /*background: #d4d7da;*/
+    border-radius: 5px;
+    padding: 0 5px;">11h</span>
       </div>
+
+      <div class="daily-item" matRipple (click)="showMissionInfo()">融合通信app</div>
     </div>
+
   </div>
 
 </div>
+
+<!--<div fxLayout="row">
+  <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
+       [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
+    <div fxLayout="row" fxLayoutAlign="center center" class="week-header">
+      周一
+    </div>
+    &lt;!&ndash;  <div fxLayout="row"
+             fxLayoutAlign="start baseline" class="week-header">
+          <h1>23</h1>
+          <span>Sun</span>
+        </div>&ndash;&gt;
+    <div *ngFor="let rowIndex of rowsArray">
+      <mat-divider></mat-divider>
+      <div class="week-cell" id="save-user" matRipple>
+        {{displayDays[rowIndex][columnIndex]  | date:"dd"}}
+      </div>
+    </div>
+  </div>
+</div>-->
