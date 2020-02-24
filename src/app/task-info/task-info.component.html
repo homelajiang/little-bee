@@ -1,0 +1,35 @@
+<div style="width: 500px;">
+
+  <mat-card style="padding-left: 28px;padding-top: 0;padding-right: 0;" class="mat-elevation-z20">
+
+    <div fxLayout="row" class="task-action">
+      <span fxFlex="grow"></span>
+      <button mat-icon-button matTooltip="删除" (click)="deleteTask()" *ngIf="task.state!==2">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="关闭任务" (click)="closeTask()" *ngIf="task.state===1 || task.state===3">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="关闭" class="task-action-close" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="none" class="task-state" [matTooltip]="getTaskStateDes(task.state)"
+           [ngClass]="getTaskStateColorClass(task.state)"></div>
+      <div fxFlex="grow" class="task-info">
+        <div class="task-content">
+          <span>{{task.title}}</span>
+        </div>
+        <div class="task-date">{{task.startTime | dateFnsFormat:'MMM d (EEEE)'}}</div>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection task-project">
+      <mat-icon>folder_open</mat-icon>
+      <span>{{task.projectName}}</span>
+    </div>
+
+  </mat-card>
+</div>

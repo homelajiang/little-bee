@@ -8,10 +8,10 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {ComponentPortal, TemplatePortal} from '@angular/cdk/portal';
+import {ComponentPortal, PortalInjector, TemplatePortal} from '@angular/cdk/portal';
 import {CdkOverlayOrigin, Overlay, OverlayRef} from '@angular/cdk/overlay';
-import {MatButton} from '@angular/material';
-import {NewTodoComponent} from '../new-todo/new-todo.component';
+import {MatButton, MatSnackBar} from '@angular/material';
+import {NewTaskComponent} from '../new-task/new-task.component';
 import {
   getDaysInMonth,
   startOfMonth,
@@ -22,10 +22,18 @@ import {
   getISOWeek,
   getDay,
   addDays,
-  differenceInDays, addMonths, subMonths, isSameMonth, getMonth
+  differenceInDays, addMonths, subMonths, isSameMonth, getMonth, isSameDay, isAfter, isEqual, isBefore, isSameWeek
 } from 'date-fns';
 import {zhCN} from 'date-fns/locale';
 import locale from 'date-fns/esm/locale/zh-CN';
+import {BeeService, Task, TaskClose} from '../bee/bee.service';
+import {SnackBar} from '../utils/snack-bar';
+import {TaskInfoComponent} from '../task-info/task-info.component';
+import {TASK_INFO} from '../tokens';
+import solarLunar from 'solarLunar';
+import {Config} from '../config';
+import CryptoJS from 'crypto-js';
+
 
 @Component({
   selector: 'app-daily',
@@ -35,38 +43,120 @@ import locale from 'date-fns/esm/locale/zh-CN';
 export class DailyComponent implements OnInit, AfterViewInit {
   @ViewChild('originFab', {static: false}) originFab: MatButton;
   private overlayRef: OverlayRef;
-
+  private reqTasking = false;
   private today: Date = new Date(); // 现在日期
   private currentDate: Date = new Date(this.today); // 当前使用日期
   private sundayIsFirstDay = false; // 星期日是第一天
   private rows; // 行数
   private displayDays: Array<Array<Daily>>;
-  private weekStartsOnMonday = true; // 周一为一周的第一天
-  private dateOptions: object = {
-    locale: zhCN,
-    weekStartsOn: this.weekStartsOnMonday ? 1 : 0, // 周一
-    // firstWeekContainsDate: 1
-  };
+  private listDays: Array<Daily>; // 列表的形式存储
 
   private weekdays = [...Array(7).keys()].map(i => locale.localize.day(i, {width: 'abbreviated'}));
   private months = [...Array(12).keys()].map(i => locale.localize.month(i, {width: 'wide'}));
 
-  constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef) {
+  private tasks: Array<Task> = []; // 任务列表
+
+  constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
+              private beeService: BeeService, private snackBar: MatSnackBar, private injector: Injector) {
   }
 
   ngOnInit() {
+    if (Config.weekStartsOnMonday) {
+      this.weekdays.push(this.weekdays[0]);
+      this.weekdays.shift();
+    }
     this.updateCalendar();
+    this.getProjects();
+    // 监听刷新事件
+    this.beeService.refreshTasks.subscribe((date: Date) => {
+      if (date) {
+        this.refreshTask(date);
+      }
+    });
+
+    // 监听关闭任务事件
+    this.beeService.notifyCloseTask.subscribe((taskClose: TaskClose) => {
+      if (taskClose) {
+        this.beeService.closeTask(taskClose.task, taskClose.workHours)
+          .subscribe(res => {
+            SnackBar.open(this.snackBar, '关闭成功');
+            this.refreshTask(new Date(taskClose.task.endDate));
+          }, error => {
+            SnackBar.open(this.snackBar, `关闭失败:${error}`);
+          });
+      }
+    });
+  }
+
+  // 刷新某天的task
+  private refreshTask(date: Date) {
+    this.beeService.getTasksByDate(date, 0)
+      .subscribe(tasks => {
+        console.log(tasks);
+        this.listDays.forEach(task => {
+          if (isSameDay(date, task.date)) {
+            // 删除数据源中的数据
+            task.events.forEach(e => {
+              const i = this.tasks.indexOf(e);
+              this.tasks.splice(i, 1);
+            });
+
+            // 添加到数据源中
+            this.tasks.push.apply(this.tasks, tasks);
+            console.log(this.tasks);
+
+            task.events = tasks; // 更新视图中的task项
+          }
+        });
+      });
+  }
+
+  private getTasks() {
+    if (this.reqTasking) {
+      return;
+    }
+    this.reqTasking = true;
+    this.beeService.getTasks()
+      .subscribe(tasks => {
+        this.tasks = tasks;
+        this.reqTasking = false;
+        this.handleDailyTask();
+      }, error => {
+        this.reqTasking = false;
+        SnackBar.open(this.snackBar, error.toString());
+      });
+  }
+
+  // 对比当前日期的任务
+  private handleDailyTask() {
+    this.tasks.forEach(task => {
+      this.listDays.forEach(daily => {
+        const startDate = new Date(task.startTime);
+        const endDate = new Date(task.endTime);
+        if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
+          (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
+          daily.events.push(task);
+        }
+      });
+    });
+    console.log(this.listDays);
+  }
+
+  private getProjects() {
+    this.beeService.getProjects()
+      .subscribe();
   }
 
   updateCalendar() {
     const startMonthDay = startOfMonth(this.currentDate); // 当月的开始
     const endMonthDay = endOfMonth(this.currentDate); // 当月的结束
-    const startWeekDay = startOfWeek(startMonthDay, this.dateOptions); // 当月首周的开始
-    const endWeekDay = endOfWeek(endMonthDay, this.dateOptions); // 当月末周的结束
+    const startWeekDay = startOfWeek(startMonthDay, Config.dateOptions); // 当月首周的开始
+    const endWeekDay = endOfWeek(endMonthDay, Config.dateOptions); // 当月末周的结束
     const betweenDays = differenceInDays(endWeekDay, startWeekDay);
 
     this.rows = (betweenDays + 1) / 7; // 确定行数
     this.displayDays = new Array(this.rows);
+    this.listDays = [];
 
     let startDay = startWeekDay;
     for (let row = 0; row < this.rows; row++) {
@@ -74,15 +164,19 @@ export class DailyComponent implements OnInit, AfterViewInit {
       for (let column = 0; column < 7; column++) {
         const daily = new Daily();
         daily.date = startDay;
+        const lunar = solarLunar.solar2lunar(startDay.getFullYear(), startDay.getMonth() + 1, startDay.getDate());
+        daily.lunar = lunar.dayCn;
         daily.currentMonth = isSameMonth(this.currentDate, startDay);
+        daily.today = isSameDay(this.today, startDay);
         arr[column] = daily;
+        this.listDays.push(daily);
         startDay = addDays(startDay, 1);
       }
       this.displayDays[row] = arr;
     }
 
     console.log(this.months);
-    console.log(this.displayDays);
+    console.log(this.listDays);
 
     console.log(
       `startMonthDay : ${startMonthDay}\n` +
@@ -91,6 +185,12 @@ export class DailyComponent implements OnInit, AfterViewInit {
       `endWeekDay : ${endWeekDay}\n` +
       `betweenDays : ${betweenDays}\n`
     );
+
+    if (this.tasks.length === 0) {
+      this.getTasks();
+    } else {
+      this.handleDailyTask();
+    }
   }
 
   ngAfterViewInit() {
@@ -117,11 +217,25 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.updateCalendar();
   }
 
-  showMissionInfo(){
+  showMissionInfo(event: any, task: Task) {
+    this.createOverlayRef(event);
+    const popupComponentPortal = new ComponentPortal(TaskInfoComponent, this.viewContainerRef,
+      this.createInjector(task, this.overlayRef));
+    this.overlayRef.attach(popupComponentPortal);
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
 
+    event.stopPropagation();
   }
 
-  newMission(event: any) {
+  newMission(event: any, daily: Daily) {
+    this.createOverlayRef(event);
+    const popupComponentPortal = new ComponentPortal(NewTaskComponent, this.viewContainerRef,
+      this.createInjector({createTime: daily.date}, this.overlayRef));
+    this.overlayRef.attach(popupComponentPortal);
+    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+  }
+
+  createOverlayRef(event: any) {
     if (this.overlayRef && this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
@@ -142,9 +256,13 @@ export class DailyComponent implements OnInit, AfterViewInit {
       positionStrategy: this.getFlexiblePosition(element),
       maxHeight: 300,
     });
-    const popupComponentPortal = new ComponentPortal(NewTodoComponent);
-    this.overlayRef.attach(popupComponentPortal);
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+  }
+
+  createInjector(data: any, overlayRef: OverlayRef): PortalInjector {
+    const injectorTokens = new WeakMap();
+    injectorTokens.set(OverlayRef, overlayRef);
+    injectorTokens.set(TASK_INFO, data);
+    return new PortalInjector(this.injector, injectorTokens);
   }
 
   getFlexiblePosition(element: any) {
@@ -185,13 +303,28 @@ export class DailyComponent implements OnInit, AfterViewInit {
         }
       ]);
   }
+
+  getTaskStateColorClass(state: number) {
+    if (state === 2) {
+      return 'task-closed';
+    } else if (state === 3) {
+      return 'task-delay';
+    } else {
+      return 'task-opened';
+    }
+  }
+
+  headerClicked(event) {
+    event.stopPropagation();
+  }
 }
 
 export class Daily {
   date: Date;
-  events: Array<any>;
-  Lunar: string; // 阴历
+  events: Array<Task> = [];
+  lunar: string; // 阴历
   currentMonth: boolean; // 属于当前月
+  today: boolean; // 是否是当天
   workDay: boolean; // 工作日
 }
 

@@ -11,18 +11,26 @@ import {RouterModule} from '@angular/router';
 import {appRouting} from './app.router';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
+  MAT_DATE_LOCALE,
   MatButtonModule,
   MatButtonToggleModule,
-  MatCardModule, MatDatepickerModule,
+  MatCardModule, MatDatepickerModule, MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
-  MatIconModule, MatInputModule, MatNativeDateModule, MatRippleModule,
-  MatToolbarModule
+  MatIconModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatRippleModule, MatSelectModule, MatSnackBarModule,
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {MainComponent} from './main/main.component';
-import {NewTodoComponent} from './new-todo/new-todo.component';
+import {NewTaskComponent} from './new-task/new-task.component';
 import {DinnerComponent} from './dinner/dinner.component';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {httpInterceptorProviders} from './http-interceptor';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {TaskInfoComponent} from './task-info/task-info.component';
+import {DateFnsFormatPipe, TaskStateColorPip} from './bee/bee.pipe';
+import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
+import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
 
 @NgModule({
   declarations: [
@@ -32,8 +40,13 @@ import {OverlayModule} from '@angular/cdk/overlay';
     SettingComponent,
     LoginComponent,
     MainComponent,
-    NewTodoComponent,
+    WorkHoursDialogComponent,
+    NewTaskComponent,
     DinnerComponent,
+    TaskInfoComponent,
+    DateFnsFormatPipe,
+    TaskStateColorPip,
+    ConfirmDialogComponent
   ],
   imports: [
     OverlayModule,
@@ -52,10 +65,17 @@ import {OverlayModule} from '@angular/cdk/overlay';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatRippleModule
+    MatRippleModule,
+    HttpClientModule,
+    FormsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatMenuModule
   ],
-  entryComponents: [NewTodoComponent],
-  providers: [],
+  entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent, ConfirmDialogComponent],
+  providers: [httpInterceptorProviders, {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

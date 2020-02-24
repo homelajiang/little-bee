@@ -18,7 +18,7 @@
     <button mat-stroked-button class="pre" (click)="preMonth()">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-stroked-button class="action" (click)="thisMonth()">Today
+    <button mat-stroked-button class="action" (click)="thisMonth()">今天
     </button>
     <button mat-stroked-button class="next" (click)="nextMonth()">
       <mat-icon>keyboard_arrow_right</mat-icon>
@@ -48,44 +48,24 @@
   <div *ngFor="let temp of displayDays;let rowIndex = index" fxLayout="row"
        style="border-bottom: #dadce0 1px solid">
 
-    <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
-         fxLayout="column" class="week-cell" (click)="newMission($event)"
-         style="border-right: #dadce0 1px solid"
+    <div fxFlex="1 1" *ngFor="let daily of displayDays[rowIndex];let index = index;"
+         fxLayout="column" class="week-cell" (click)="newMission($event,daily)"
+         style="border-right: #dadce0 1px solid;"
          [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
-      <div style="padding: 7px 10px;">
-        <span style="font-size: 14px;">{{displayDays[rowIndex][columnIndex].date  | date:"dd"}}</span>
-        <!--        <span style="font-size: 12px;color: #70757a;">（三十）</span>-->
-        <span fxFlex="grow"></span>
-        <span style="    font-size: 12px;
-    color: #70757a;
-    /*background: #d4d7da;*/
-    border-radius: 5px;
-    padding: 0 5px;">11h</span>
+      <div fxLayout="row" fxFlexAlign="start center" (click)="headerClicked($event)">
+        <div
+          style="font-size: 14px;width: max-content;min-width: 24px;height: 24px;text-align: center;line-height: 24px;margin: 3px;"
+          [ngClass]="daily.today?'current-date':''">{{daily.date  | date:"d"}}</div>
+        <div fxFlex="none" fxLayout="row" fxFlexAlign="center">
+          <span [ngClass]="daily.today?'current-lunar':''" class="lunar">（{{daily.lunar}}）</span>
+        </div>
       </div>
 
-      <div class="daily-item" matRipple (click)="showMissionInfo()">融合通信app</div>
+      <div *ngFor="let task of daily.events" class="task-item" [ngClass]="getTaskStateColorClass(task.state)"
+           matRipple
+           (click)="showMissionInfo($event,task)">{{task.projectName}}</div>
     </div>
 
   </div>
 
 </div>
-
-<!--<div fxLayout="row">
-  <div fxFlex="1 1" *ngFor="let columnIndex of [0,1,2,3,4,5,6];let index = index"
-       [ngStyle]="{'background-color':index%2==0 ? 'white' : 'rgb(251,251,253)' }">
-    <div fxLayout="row" fxLayoutAlign="center center" class="week-header">
-      周一
-    </div>
-    &lt;!&ndash;  <div fxLayout="row"
-             fxLayoutAlign="start baseline" class="week-header">
-          <h1>23</h1>
-          <span>Sun</span>
-        </div>&ndash;&gt;
-    <div *ngFor="let rowIndex of rowsArray">
-      <mat-divider></mat-divider>
-      <div class="week-cell" id="save-user" matRipple>
-        {{displayDays[rowIndex][columnIndex]  | date:"dd"}}
-      </div>
-    </div>
-  </div>
-</div>-->

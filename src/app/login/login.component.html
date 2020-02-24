@@ -11,17 +11,17 @@
 
       <mat-form-field appearance="outline">
         <mat-label>User Name</mat-label>
-        <input matInput placeholder="Please Input Username">
-        <mat-hint>Hint</mat-hint>
+        <input matInput [(ngModel)]="username" placeholder="Please Input Username">
+        <!--        <mat-hint>Hint</mat-hint>-->
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <mat-hint>Hint</mat-hint>
-        <input matInput placeholder="Please Input Password">
+        <!--        <mat-hint>Hint</mat-hint>-->
+        <input matInput [(ngModel)]="password" type="password" placeholder="Please Input Password">
       </mat-form-field>
 
-        <button mat-flat-button color="primary">LET ME IN</button>
+      <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">LET ME IN</button>
     </div>
 
   </mat-card>

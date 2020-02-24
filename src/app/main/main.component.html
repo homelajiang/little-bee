@@ -14,12 +14,25 @@
     <img src="../../assets/order-dinner.svg">
   </button>
 
-  <button mat-button>
+  <button mat-button [matMenuTriggerFor]="appMenu">
     <div fxLayout="row" class="avatar" fxLayoutAlign="start center">
-      <div fxFlex="none" class="avatar-icon"></div>
-      <span>Harsha</span>
+      <div fxFlex="none" class="avatar-icon"
+           [ngStyle]="{'background-image': 'url(' + userInfo.head + ')'}"></div>
+      <span>{{userInfo.name}}</span>
     </div>
   </button>
+
+  <mat-menu #appMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>系统设置</span>
+    </button>
+    <button mat-menu-item (click)="signOut()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>注销登录</span>
+    </button>
+  </mat-menu>
+
 </mat-toolbar>
 
 <div style="padding: 0 140px">

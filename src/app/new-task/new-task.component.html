@@ -1,0 +1,59 @@
+<div style="width: 500px;">
+
+  <mat-card style="padding-left: 28px;" class="mat-elevation-z20">
+    <div fxLayout="row" [style.fontSize.px]="22">
+      <mat-form-field fxFlex="grow" style="margin-left: 40px;margin-top: 10px;">
+        <mat-label>添加任务简述</mat-label>
+        <textarea matInput class="task-input"
+                  cdkTextareaAutosize
+                  [(ngModel)]="taskInput"
+                  #autosize="cdkTextareaAutosize"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+      <mat-icon>access_time</mat-icon>
+
+      <button mat-button (click)="picker.open()" style="position: relative;" disabled>
+        {{selectedDate | dateFnsFormat :'yyyy年 MMM d日 (EEEE)'}}
+        <mat-form-field style="opacity: 0;height: 36px;width:0;position: absolute;left: 0;">
+          <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged($event)">
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+      <mat-icon>folder_open</mat-icon>
+      <button mat-button (click)="selectProject()" style="position: relative;">
+        {{selectedProject ? selectedProject.projectName : '请选择一个项目'}}
+        <mat-form-field style="opacity: 0;height: 36px;position: absolute;left: 0;">
+          <mat-select placeholder="请选择一个项目" fxFlex="grow" id="selectProjectForm"
+                      [(value)]="selectedProject">
+            <mat-option *ngFor="let project of projectList" [value]="project">
+              {{project.projectName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </button>
+    </div>
+
+    <!--    <div fxLayout="row" fxLayoutAlign="start center" class="todo-selection">
+          <mat-icon fxFlex="none">people_alt</mat-icon>
+          <button mat-button>范德萨 等5人</button>
+        </div>-->
+
+    <div fxLayout="row">
+      <span fxFlex="grow"></span>
+<!--      <button fxFlex="none" mat-button color="primary">更多</button>-->
+      <button fxFlex="none" mat-flat-button color="primary" (click)="saveTask()">保存</button>
+    </div>
+
+    <button mat-icon-button class="task-close-button" (click)="closeEdit()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </mat-card>
+
+</div>

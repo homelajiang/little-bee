@@ -44,7 +44,6 @@ mat-toolbar h1 {
 }
 
 .avatar-icon {
-  background-image: url('../../assets/default-avatar.jpg');
   width: 30px;
   height: 30px;
   border-radius: 50%;
