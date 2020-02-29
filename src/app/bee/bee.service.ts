@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, merge, Observable, of, throwError} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpParameterCodec, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, forkJoin, from, merge, Observable, of, throwError, Subject} from 'rxjs';
 import {catchError, flatMap, map, tap} from 'rxjs/operators';
 import {differenceInDays, endOfWeek, format, getDay, isSameWeek, startOfWeek} from 'date-fns';
 import {Config} from '../config';
@@ -16,10 +16,10 @@ const USER_INFO = 'user_info';
 export class BeeService {
 
   // 通知刷新某天的task
-  public refreshTasks = new BehaviorSubject<Date>(null);
+  public refreshTasks = new Subject<Date>();
 
   // 通知关闭某个任务
-  public notifyCloseTask = new BehaviorSubject<TaskClose>(null);
+  public notifyCloseTask = new Subject<TaskClose>();
 
   jsonHttpOptions = {
     headers: new HttpHeaders({
@@ -36,7 +36,7 @@ export class BeeService {
   DEVICE_ID = '9AD89D0791C59431';
 
   BEE_BASE_URL = 'http://132.232.11.114:8180/';
-  OA_MOBILE_URL = 'http://iapp.kedacom.com:8081/interface/mobile.do';
+  OA_MOBILE_URL = 'interface/mobile.do';
 
   userInfo: UserInfo = new UserInfo(); // 用户信息
   projects: Array<Project> = []; // 用户项目列表
@@ -240,7 +240,7 @@ export class BeeService {
     }
 
     return (dayOfWeek === 1 && differenceDays <= 7) // 周一和上周
-      || isSameWeek(currentDate, endDate);
+      || isSameWeek(currentDate, endDate, Config.dateOptions);
   }
 
   /**
@@ -259,15 +259,15 @@ export class BeeService {
 
     if (workHours) {
       // oa创建任务
-      this.createOaTask(task, workHours)
+      return this.queryOaTask(task, workHours)
         .pipe(
           flatMap(result => {
             if (result.sid === 1) {
-              const weeklyData = result.getInfo();
+              const weeklyData = result.info;
               let targetTask;
-
-              weeklyData.projectData.forEach(project => {
-                project.saveOrSubmit = '2';
+              let readOnly = false;
+              weeklyData.projectData.some(project => {
+                (project as any).saveOrSubmit = '2';
 
                 if (project.date === taskDay) {
                   project.tasks.some((t) => {
@@ -280,11 +280,14 @@ export class BeeService {
                   if (targetTask) {
                     if ('0' === targetTask.dateFlag[dayOfWeek - 1]) {
                       // 已提交，无法编辑
+                      readOnly = true;
+                      return true;
                     }
                     targetTask.hours = workHours;
                     targetTask.operate = '结项';
                   } else {
                     targetTask = {
+                      class: 'com.keda.littlebee.model.oa.OATask',
                       hours: '0',
                       projectName: task.oaProjectName,
                       projectCode: task.oaProjectCode,
@@ -295,11 +298,15 @@ export class BeeService {
                       taskCode: 'TMP' + Date.now(),
                       taskName: task.content
                     };
-                    targetTask[dayOfWeek - 1] = '1';
+                    targetTask.dateFlag[dayOfWeek - 1] = '1';
                   }
-
+                  return true;
                 }
               });
+
+              if (readOnly) {
+                return throwError('已提交， 无法编辑');
+              }
 
               if (targetTask && targetTask.taskCode.startsWith('TMP')) {
                 weeklyData.projectData.forEach(project => {
@@ -312,16 +319,16 @@ export class BeeService {
                   project.tasks.push(addTask);
                 });
               }
-              return this.closeOaTask(weeklyData); // oa关闭任务
+              return this.saveOaTask(weeklyData); // oa关闭任务
             } else {
-              return throwError(result.des);
+              return throwError(result.desc);
             }
           }),
           flatMap(result => {
             if (result.sid === 1) {
               return this.closeBeeTask(task, workHours);
             } else {
-              return throwError(result.des);
+              return throwError(result.desc);
             }
           })
         );
@@ -332,9 +339,9 @@ export class BeeService {
   }
 
   /**
-   * 创建oa任务
+   * 查询oa任务
    */
-  createOaTask(task: TaskInfo, workHours: number) {
+  queryOaTask(task: TaskInfo, workHours: number) {
     const taskEndTime = new Date(task.endDate);
     const beginWeekDay = format(startOfWeek(taskEndTime, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
     const endWeekDay = format(endOfWeek(taskEndTime, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
@@ -347,31 +354,34 @@ export class BeeService {
       class: '.daily.plm.QueryCondition'
     };
 
-    const body: HttpParams = new HttpParams()
-      .set('VER"', '4.24')
-      .set('OS"', 'ANDROID')
-      .set('vkey"', this.userInfo.token)
+    const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
+      .set('VER', '4.24')
+      .set('OS', 'ANDROID')
+      .set('vkey', this.userInfo.token)
       .set('devId', this.DEVICE_ID)
       .set('account', this.userInfo.userAccount)
       .set('method', 'GetPlmReportByWeek')
-
       .set('params', this.desEncrypt(JSON.stringify(paramsBody), 'kedacom0'));
     return this.http.post<any>(`${this.OA_MOBILE_URL}?action=dailyplm`, body, this.formHttpOptions);
   }
 
   /**
-   * 关闭oa任务
+   * 创建并关闭oa任务
    */
-  closeOaTask(weeklyData) {
-    const body: HttpParams = new HttpParams()
-      .set('VER"', '4.24')
-      .set('OS"', 'ANDROID')
-      .set('vkey"', this.userInfo.token)
+  saveOaTask(weeklyData) {
+    const weeklyDataString = JSON.stringify(weeklyData)
+      .replace(/.daily.plm.WeeklyData/g, 'com.keda.littlebee.model.oa.WeeklyData')
+      .replace(/.daily.plm.ProjectData/g, 'com.keda.littlebee.model.oa.ProjectData')
+      .replace(/.daily.plm.Task/g, 'com.keda.littlebee.model.oa.OATask');
+    const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
+      .set('VER', '4.24')
+      .set('OS', 'ANDROID')
+      .set('vkey', this.userInfo.token)
       .set('devId', this.DEVICE_ID)
       .set('account', this.userInfo.userAccount)
       .set('method', 'SaveReport')
 
-      .set('params', this.desEncrypt(JSON.stringify(weeklyData), 'kedacom0'));
+      .set('params', this.desEncrypt(weeklyDataString, 'kedacom0'));
     return this.http.post<any>(`${this.OA_MOBILE_URL}?action=dailyplm`, body, this.formHttpOptions);
   }
 
@@ -513,4 +523,22 @@ export class TaskInfo {
   state: number;
   projectName: string;
   projectId: number;
+}
+
+class CustomEncoder implements HttpParameterCodec {
+  encodeKey(key: string): string {
+    return encodeURIComponent(key);
+  }
+
+  encodeValue(value: string): string {
+    return encodeURIComponent(value);
+  }
+
+  decodeKey(key: string): string {
+    return decodeURIComponent(key);
+  }
+
+  decodeValue(value: string): string {
+    return decodeURIComponent(value);
+  }
 }

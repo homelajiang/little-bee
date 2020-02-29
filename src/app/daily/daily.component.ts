@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   ComponentFactoryResolver,
-  ElementRef, Injector,
+  ElementRef, Injector, OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -33,6 +33,7 @@ import {TASK_INFO} from '../tokens';
 import solarLunar from 'solarLunar';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -40,7 +41,7 @@ import CryptoJS from 'crypto-js';
   templateUrl: './daily.component.html',
   styleUrls: ['./daily.component.css']
 })
-export class DailyComponent implements OnInit, AfterViewInit {
+export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('originFab', {static: false}) originFab: MatButton;
   private overlayRef: OverlayRef;
   private reqTasking = false;
@@ -55,6 +56,8 @@ export class DailyComponent implements OnInit, AfterViewInit {
   private months = [...Array(12).keys()].map(i => locale.localize.month(i, {width: 'wide'}));
 
   private tasks: Array<Task> = []; // 任务列表
+  private taskChanges: Subscription;
+  private closeTaskChnages: Subscription;
 
   constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
               private beeService: BeeService, private snackBar: MatSnackBar, private injector: Injector) {
@@ -68,22 +71,23 @@ export class DailyComponent implements OnInit, AfterViewInit {
     this.updateCalendar();
     this.getProjects();
     // 监听刷新事件
-    this.beeService.refreshTasks.subscribe((date: Date) => {
+    this.taskChanges = this.beeService.refreshTasks.subscribe((date: Date) => {
       if (date) {
         this.refreshTask(date);
       }
     });
 
     // 监听关闭任务事件
-    this.beeService.notifyCloseTask.subscribe((taskClose: TaskClose) => {
+    this.closeTaskChnages = this.beeService.notifyCloseTask.subscribe((taskClose: TaskClose) => {
       if (taskClose) {
-        this.beeService.closeTask(taskClose.task, taskClose.workHours)
-          .subscribe(res => {
-            SnackBar.open(this.snackBar, '关闭成功');
-            this.refreshTask(new Date(taskClose.task.endDate));
-          }, error => {
-            SnackBar.open(this.snackBar, `关闭失败:${error}`);
-          });
+        const temp = this.beeService.closeTask(taskClose.task, taskClose.workHours);
+        temp.subscribe(res => {
+          SnackBar.open(this.snackBar, '关闭成功');
+          this.refreshTask(new Date(taskClose.task.endDate));
+        }, error => {
+          SnackBar.open(this.snackBar, `关闭失败:${error}`);
+          this.refreshTask(new Date(taskClose.task.endDate));
+        });
       }
     });
   }
@@ -316,6 +320,15 @@ export class DailyComponent implements OnInit, AfterViewInit {
 
   headerClicked(event) {
     event.stopPropagation();
+  }
+
+  ngOnDestroy(): void {
+    if (this.taskChanges) {
+      this.taskChanges.unsubscribe();
+    }
+    if (this.closeTaskChnages) {
+      this.closeTaskChnages.unsubscribe();
+    }
   }
 }
 
