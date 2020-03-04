@@ -11,9 +11,9 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private username: string;
-  private password: string;
-  private loading: boolean;
+  public username: string;
+  public password: string;
+  public loading: boolean;
 
   constructor(private beeService: BeeService, private snackBar: MatSnackBar, private router: Router) {
   }

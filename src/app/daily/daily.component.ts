@@ -46,13 +46,13 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
   private overlayRef: OverlayRef;
   private reqTasking = false;
   private today: Date = new Date(); // 现在日期
-  private currentDate: Date = new Date(this.today); // 当前使用日期
+  public currentDate: Date = new Date(this.today); // 当前使用日期
   private sundayIsFirstDay = false; // 星期日是第一天
   private rows; // 行数
-  private displayDays: Array<Array<Daily>>;
+  public displayDays: Array<Array<Daily>>;
   private listDays: Array<Daily>; // 列表的形式存储
 
-  private weekdays = [...Array(7).keys()].map(i => locale.localize.day(i, {width: 'abbreviated'}));
+  public weekdays = [...Array(7).keys()].map(i => locale.localize.day(i, {width: 'abbreviated'}));
   private months = [...Array(12).keys()].map(i => locale.localize.month(i, {width: 'wide'}));
 
   private tasks: Array<Task> = []; // 任务列表

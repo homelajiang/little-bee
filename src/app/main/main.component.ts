@@ -7,7 +7,7 @@ import {BeeService, UserInfo} from '../bee/bee.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  private userInfo: UserInfo;
+  public userInfo: UserInfo;
 
   constructor(private beeService: BeeService) {
   }
