@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4201 --proxy-config proxy.config.json",
-    "build": "ng build --prod --output-path docs",
+    "build": "ng build --prod --output-path docs --base-href /little-bee/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
