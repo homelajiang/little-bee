@@ -7,7 +7,7 @@
 }
 
 .logo-icon {
-  background-image: url('../../assets/logo.svg');
+  background-image: url('~src/assets/logo.svg');
   width: 58px;
   height: 58px;
   background-repeat: no-repeat;
