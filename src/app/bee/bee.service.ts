@@ -36,7 +36,7 @@ export class BeeService {
   DEVICE_ID = '9AD89D0791C59431';
 
   BEE_BASE_URL = 'http://132.232.11.114:8180/';
-  OA_MOBILE_URL = 'interface/mobile.do';
+  OA_MOBILE_URL = 'http://iapp.kedacom.com:8081/interface/mobile.do';
 
   userInfo: UserInfo = new UserInfo(); // 用户信息
   projects: Array<Project> = []; // 用户项目列表
