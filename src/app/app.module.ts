@@ -31,6 +31,7 @@ import {TaskInfoComponent} from './task-info/task-info.component';
 import {DateFnsFormatPipe, TaskStateColorPip} from './bee/bee.pipe';
 import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
 import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,13 @@ import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
     MatMenuModule
   ],
   entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent, ConfirmDialogComponent],
-  providers: [httpInterceptorProviders, {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'}],
+  providers: [
+    httpInterceptorProviders,
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
+    {
+      provide: LocationStrategy, // 导航路径的策略设置
+      useClass: HashLocationStrategy // 使用'#'方式的策略
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
