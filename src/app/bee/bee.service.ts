@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParameterCodec, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, merge, Observable, of, throwError, Subject} from 'rxjs';
+import {BehaviorSubject, forkJoin, from, merge, Observable, of, throwError, Subject, zip} from 'rxjs';
 import {catchError, flatMap, map, tap} from 'rxjs/operators';
-import {differenceInDays, endOfWeek, format, getDay, isSameWeek, startOfWeek} from 'date-fns';
+import {addDays, differenceInDays, endOfWeek, format, getDay, isAfter, isBefore, isSameDay, isSameWeek, startOfWeek} from 'date-fns';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
 
@@ -78,7 +78,7 @@ export class BeeService {
   getTasks(): Observable<Array<Task>> {
     const body: HttpParams = new HttpParams()
       .set('pageNo', '1')
-      .set('pageSize', '10000')
+      .set('pageSize', '1000')
       .set('userId', this.userInfo.id.toString());
     return this.http.post<HttpResponse<Array<Task>>>(`bee/user/historyCreate`,
       body, this.formHttpOptions)
@@ -189,6 +189,8 @@ export class BeeService {
                         type: res.result.taskType,
                         typeState: res.result.taskType,
                         projectId: res.result.projectId,
+                        workHours: 0,
+                        hours: 0
                       };
                       resArr.push(task);
                     }
@@ -201,6 +203,44 @@ export class BeeService {
           }
         })
       );
+  }
+
+  /**
+   * 批量获取日报详情
+   */
+  getOaTaskInfoBatch(startDate: Date, endDate: Date) {
+
+    // 清空时分秒
+    startDate = new Date(format(startDate, 'yyyy-MM-dd', Config.dateOptions));
+    endDate = new Date(format(endDate, 'yyyy-MM-dd', Config.dateOptions));
+
+    const weekArr = [];
+    let start = startDate;
+    let end = endOfWeek(start, Config.dateOptions);
+
+    while (isBefore(end, endDate) || isSameDay(start, end)) {
+      weekArr.push(this.queryOaTask(start, end));
+      start = addDays(end, 1);
+      end = endOfWeek(start, Config.dateOptions);
+    }
+
+    if (isBefore(start, endDate) && isAfter(end, endDate)) {
+      end = endDate;
+      weekArr.push(this.queryOaTask(start, end));
+    }
+
+    return forkJoin(weekArr)
+      .pipe(
+        flatMap(infos => {
+          let temp = [];
+          infos.forEach(info => {
+            temp = temp.concat(info.info.projectData);
+          });
+          console.log(temp);
+          return of(temp);
+        })
+      );
+
   }
 
   // 获取任务详情
@@ -256,7 +296,7 @@ export class BeeService {
 
     if (workHours) {
       // oa创建任务
-      return this.queryOaTask(task, workHours)
+      return this.queryOaTask(new Date(task.endDate), new Date(task.endDate))
         .pipe(
           flatMap(result => {
             if (result.sid === 1) {
@@ -337,13 +377,11 @@ export class BeeService {
 
   /**
    * 查询oa任务
+   * 按周进行查询，小于一周算是一周
    */
-  queryOaTask(task: TaskInfo, workHours: number) {
-    const taskEndTime = new Date(task.endDate);
-    const beginWeekDay = format(startOfWeek(taskEndTime, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
-    const endWeekDay = format(endOfWeek(taskEndTime, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
-    const taskDay = format(taskEndTime, 'yyyy-MM-dd', Config.dateOptions);
-
+  queryOaTask(startDate: Date, endDate: Date) {
+    const beginWeekDay = format(startOfWeek(startDate, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
+    const endWeekDay = format(endOfWeek(endDate, Config.dateOptions), 'yyyy-MM-dd', Config.dateOptions);
     const paramsBody = {
       account: this.userInfo.userAccount,
       begintime: beginWeekDay,
@@ -475,6 +513,8 @@ export class Task {
   type: number;
   typeState: number;
   projectId: number;
+  workHours: number;
+  hours: number; // 任务时长
 }
 
 export class TaskClose {

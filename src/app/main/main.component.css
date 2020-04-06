@@ -14,6 +14,15 @@
   flex-shrink: 0;
 }
 
+.logo-text{
+  background-image: url('~src/assets/logo-text.png');
+  width: 167px;
+  height: 34px;
+  margin-left: 20px;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
 mat-toolbar h1 {
   margin-left: 15px;
 }

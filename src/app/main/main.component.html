@@ -3,16 +3,17 @@
   <button mat-button routerLink="/">
     <div fxLayout="row" fxLayoutAlign="start center" class="logo">
       <div class="logo-icon"></div>
-      <h1>Little Bee</h1>
+      <div class="logo-text"></div>
+<!--      <h1>Bee</h1>-->
     </div>
   </button>
 
   <span fxFlex="grow"></span>
 
-  <button mat-icon-button class="action-button" routerLink="/dinner">
-    <!--    <mat-icon>fastfood</mat-icon>-->
+<!--  <button mat-icon-button class="action-button" routerLink="/dinner">
+    &lt;!&ndash;    <mat-icon>fastfood</mat-icon>&ndash;&gt;
     <img src="assets/order-dinner.svg">
-  </button>
+  </button>-->
 
   <button mat-button [matMenuTriggerFor]="appMenu">
     <div fxLayout="row" class="avatar" fxLayoutAlign="start center">
@@ -23,10 +24,10 @@
   </button>
 
   <mat-menu #appMenu="matMenu">
-    <button mat-menu-item>
+<!--    <button mat-menu-item>
       <mat-icon>settings</mat-icon>
       <span>系统设置</span>
-    </button>
+    </button>-->
     <button mat-menu-item (click)="signOut()">
       <mat-icon>power_settings_new</mat-icon>
       <span>注销登录</span>

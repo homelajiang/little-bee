@@ -69,7 +69,6 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.weekdays.shift();
     }
     this.updateCalendar();
-    this.getProjects();
     // 监听刷新事件
     this.taskChanges = this.beeService.refreshTasks.subscribe((date: Date) => {
       if (date) {
@@ -143,12 +142,27 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     });
-    console.log(this.listDays);
-  }
+    console.log(`当前月：`, this.listDays);
 
-  private getProjects() {
-    this.beeService.getProjects()
-      .subscribe();
+    // 获取oa实际工时
+    /*    this.beeService.getOaTaskInfoBatch(this.listDays[0].date, this.listDays[this.listDays.length - 1].date).subscribe(taskBatch => {
+          this.listDays.forEach(daily => {
+            taskBatch.forEach(t => {
+              if (isSameDay(daily.date, new Date(t.date))) {
+                daily.events.forEach(event => {
+                  t.tasks.forEach(tt => {
+                    if (event.title == tt.taskName) {
+                      event.hours = tt.hours;
+                    }
+                  });
+                });
+              }
+            });
+          });
+
+          console.log(this.listDays);
+
+        });*/
   }
 
   updateCalendar() {

@@ -11,7 +11,7 @@
 
 <div fxLayout="row" fxLayoutAlign="start baseline" class="calendar-title">
   <h1 fxFlex="none">{{getMonthString(currentDate)}} {{currentDate | date:'yyyy'}}</h1>
-  <span fxFlex="none">The 39th week</span>
+<!--  <span fxFlex="none">The 39th week</span>-->
 
   <span fxFlex="grow"></span>
   <div fxFlex="none" fxFlexAlign="center" class="group-button">
@@ -61,9 +61,13 @@
         </div>
       </div>
 
-      <div *ngFor="let task of daily.events" class="task-item" [ngClass]="getTaskStateColorClass(task.state)"
+      <div *ngFor="let task of daily.events" fxLayout="row" class="task-item"
+           [ngClass]="getTaskStateColorClass(task.state)"
            matRipple
-           (click)="showMissionInfo($event,task)">{{task.projectName}}</div>
+           (click)="showMissionInfo($event,task)" [matTooltip]="task.title">
+        <div fxFlex="1 1">{{task.projectName}}</div>
+        <div fxFlex="none" *ngIf="task.workHours>0">{{task.workHours}}h</div>
+      </div>
     </div>
 
   </div>
