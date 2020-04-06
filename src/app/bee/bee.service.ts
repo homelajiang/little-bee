@@ -35,9 +35,6 @@ export class BeeService {
 
   DEVICE_ID = '9AD89D0791C59431';
 
-  BEE_BASE_URL = 'http://132.232.11.114:8180/';
-  OA_MOBILE_URL = 'http://iapp.kedacom.com:8081/interface/mobile.do';
-
   userInfo: UserInfo = new UserInfo(); // 用户信息
   projects: Array<Project> = []; // 用户项目列表
   defaultProject: Project = null; // 默认选中的项目
@@ -62,7 +59,7 @@ export class BeeService {
       .set('userAccount', username)
       .set('password', password);
 
-    return this.http.post<HttpResponse<UserInfo>>(`${this.BEE_BASE_URL}login/userLogin`,
+    return this.http.post<HttpResponse<UserInfo>>(`bee/login/userLogin`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -83,7 +80,7 @@ export class BeeService {
       .set('pageNo', '1')
       .set('pageSize', '10000')
       .set('userId', this.userInfo.id.toString());
-    return this.http.post<HttpResponse<Array<Task>>>(`${this.BEE_BASE_URL}user/historyCreate`,
+    return this.http.post<HttpResponse<Array<Task>>>(`bee/user/historyCreate`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -98,7 +95,7 @@ export class BeeService {
 
   // 获取所有项目
   getProjects(): Observable<Array<Project>> {
-    return this.http.post<HttpResponse<Array<Project>>>(`${this.BEE_BASE_URL}user/myProjects`,
+    return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -123,7 +120,7 @@ export class BeeService {
       .set('createMore', '1')
       .set('projectId', project.projectId.toString())
       .set('alarmFlag', '0');
-    return this.http.post<HttpResponse<any>>(`${this.BEE_BASE_URL}task/operate`,
+    return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -142,7 +139,7 @@ export class BeeService {
   deleteTask(taskId: string) {
     const body: HttpParams = new HttpParams()
       .set('taskId', taskId);
-    return this.http.post<HttpResponse<any>>(`${this.BEE_BASE_URL}/task/deleteTask`,
+    return this.http.post<HttpResponse<any>>(`bee/task/deleteTask`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -161,7 +158,7 @@ export class BeeService {
       .set('searchDate', format(date, 'yyyy-MM-dd'))
       .set('state', state.toString())
       .set('userId', this.userInfo.id.toString());
-    return this.http.post<HttpResponse<Array<any>>>(`${this.BEE_BASE_URL}task/list`,
+    return this.http.post<HttpResponse<Array<any>>>(`bee/task/list`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
@@ -172,7 +169,7 @@ export class BeeService {
             const taskDetailReqs = event.result.map(task => {
               const body2: HttpParams = new HttpParams()
                 .set('taskId', task.id.toString());
-              return this.http.post<HttpResponse<TaskInfo>>(`${this.BEE_BASE_URL}task/detail`, body2, this.formHttpOptions);
+              return this.http.post<HttpResponse<TaskInfo>>(`bee/task/detail`, body2, this.formHttpOptions);
             });
             return forkJoin(taskDetailReqs)
               .pipe(
@@ -210,7 +207,7 @@ export class BeeService {
   getTaskInfo(taskId: string): Observable<TaskInfo> {
     const body: HttpParams = new HttpParams()
       .set('taskId', taskId);
-    return this.http.post<HttpResponse<TaskInfo>>(`${this.BEE_BASE_URL}task/detail`, body, this.formHttpOptions)
+    return this.http.post<HttpResponse<TaskInfo>>(`bee/task/detail`, body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
@@ -362,7 +359,7 @@ export class BeeService {
       .set('account', this.userInfo.userAccount)
       .set('method', 'GetPlmReportByWeek')
       .set('params', this.desEncrypt(JSON.stringify(paramsBody), 'kedacom0'));
-    return this.http.post<any>(`${this.OA_MOBILE_URL}?action=dailyplm`, body, this.formHttpOptions);
+    return this.http.post<any>(`oa/interface/mobile.do?action=dailyplm`, body, this.formHttpOptions);
   }
 
   /**
@@ -382,7 +379,7 @@ export class BeeService {
       .set('method', 'SaveReport')
 
       .set('params', this.desEncrypt(weeklyDataString, 'kedacom0'));
-    return this.http.post<any>(`${this.OA_MOBILE_URL}?action=dailyplm`, body, this.formHttpOptions);
+    return this.http.post<any>(`oa/interface/mobile.do?action=dailyplm`, body, this.formHttpOptions);
   }
 
   /**
@@ -392,7 +389,7 @@ export class BeeService {
     const body: HttpParams = new HttpParams()
       .set('taskId', task.id.toString())
       .set('workHours', workHours.toString());
-    return this.http.post<HttpResponse<ScoreAndExp>>(`${this.BEE_BASE_URL}/task/close`,
+    return this.http.post<HttpResponse<ScoreAndExp>>(`bee/task/close`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {

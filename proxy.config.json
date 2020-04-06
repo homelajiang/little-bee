@@ -1,7 +1,18 @@
 {
-  "/interface": {
+  "/oa": {
     "target": "http://iapp.kedacom.com:8081",
     "secure": "false",
-    "changeOrigin": true
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/oa": ""
+    }
+  },
+  "/bee": {
+    "target": "http://132.232.11.114:8180",
+    "secure": "false",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/bee": ""
+    }
   }
 }
