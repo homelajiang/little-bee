@@ -18,6 +18,8 @@
 .calendar-title {
   background: white;
   padding: 0 30px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .calendar-title h1 {

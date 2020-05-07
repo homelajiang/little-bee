@@ -95,7 +95,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
   private refreshTask(date: Date) {
     this.beeService.getTasksByDate(date, 0)
       .subscribe(tasks => {
-        console.log(tasks);
+        // console.log(tasks);
         this.listDays.forEach(task => {
           if (isSameDay(date, task.date)) {
             // 删除数据源中的数据
@@ -106,7 +106,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // 添加到数据源中
             this.tasks.push.apply(this.tasks, tasks);
-            console.log(this.tasks);
+            // console.log(this.tasks);
 
             task.events = tasks; // 更新视图中的task项
           }
@@ -142,7 +142,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     });
-    console.log(`当前月：`, this.listDays);
+    // console.log(`当前月：`, this.listDays);
 
     // 获取oa实际工时
     /*    this.beeService.getOaTaskInfoBatch(this.listDays[0].date, this.listDays[this.listDays.length - 1].date).subscribe(taskBatch => {
@@ -193,9 +193,10 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
       this.displayDays[row] = arr;
     }
 
-    console.log(this.months);
-    console.log(this.listDays);
+    // console.log(this.months);
+    // console.log(this.listDays);
 
+/*
     console.log(
       `startMonthDay : ${startMonthDay}\n` +
       `endMonthDay : ${endMonthDay}\n` +
@@ -203,6 +204,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
       `endWeekDay : ${endWeekDay}\n` +
       `betweenDays : ${betweenDays}\n`
     );
+*/
 
     if (this.tasks.length === 0) {
       this.getTasks();

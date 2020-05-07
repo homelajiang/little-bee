@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParameterCodec, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, forkJoin, from, merge, Observable, of, throwError, Subject, zip} from 'rxjs';
-import {catchError, flatMap, map, tap} from 'rxjs/operators';
+import {forkJoin, Observable, of, Subject, throwError} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
 import {addDays, differenceInDays, endOfWeek, format, getDay, isAfter, isBefore, isSameDay, isSameWeek, startOfWeek} from 'date-fns';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
@@ -78,7 +78,7 @@ export class BeeService {
   getTasks(): Observable<Array<Task>> {
     const body: HttpParams = new HttpParams()
       .set('pageNo', '1')
-      .set('pageSize', '1000')
+      .set('pageSize', '100') // 为加快速度只获取最近100条
       .set('userId', this.userInfo.id.toString());
     return this.http.post<HttpResponse<Array<Task>>>(`bee/user/historyCreate`,
       body, this.formHttpOptions)
@@ -189,7 +189,7 @@ export class BeeService {
                         type: res.result.taskType,
                         typeState: res.result.taskType,
                         projectId: res.result.projectId,
-                        workHours: 0,
+                        workHours: res.result.workHours,
                         hours: 0
                       };
                       resArr.push(task);
@@ -236,7 +236,6 @@ export class BeeService {
           infos.forEach(info => {
             temp = temp.concat(info.info.projectData);
           });
-          console.log(temp);
           return of(temp);
         })
       );
@@ -560,6 +559,7 @@ export class TaskInfo {
   state: number;
   projectName: string;
   projectId: number;
+  workHours: number;
 }
 
 class CustomEncoder implements HttpParameterCodec {

@@ -1,7 +1,3 @@
-.logo{
-  padding: 4px 50px 4px 0;
-}
-
 .logo h1{
 
 }
@@ -18,7 +14,6 @@
   background-image: url('~src/assets/logo-text.png');
   width: 167px;
   height: 34px;
-  margin-left: 20px;
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
