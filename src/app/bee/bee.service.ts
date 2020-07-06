@@ -118,8 +118,13 @@ export class BeeService {
       .set('endDate', format(date, 'yyyy-MM-dd'))
       .set('userIds', this.userInfo.id.toString())
       .set('createMore', '1')
+      .set('taskType', '1')  // 1 普通任务 2 风险
+      .set('restFlag', '0') // 1、休假任务  0或不传表示正常任务
       .set('projectId', project.projectId.toString())
       .set('alarmFlag', '0');
+    // TODO 支持子项目
+    // TODO 支持休假
+    // params.put("subProjectId", childProjectId); 只有维护项目才传子项目id
     return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
@@ -287,7 +292,7 @@ export class BeeService {
   closeTask(task: TaskInfo, workHours: number = 0): Observable<ScoreAndExp> {
     const taskEndTime = new Date(task.endDate);
     const taskDay = format(taskEndTime, 'yyyy-MM-dd', Config.dateOptions);
-    let dayOfWeek = getDay(taskEndTime);
+    let dayOfWeek: number = getDay(taskEndTime);
     // 周六是7、周日是1
     if (dayOfWeek === 0) {
       dayOfWeek = 7;
@@ -307,7 +312,7 @@ export class BeeService {
 
                 if (project.date === taskDay) {
                   project.tasks.some((t) => {
-                    if (t.taskName === task.content) {
+                    if (t.taskName === `【${task.projectName}】${task.content}`) {
                       targetTask = t;
                       return true;
                     }
@@ -332,7 +337,7 @@ export class BeeService {
                       endDate: taskDay,
                       startDate: taskDay,
                       taskCode: 'TMP' + Date.now(),
-                      taskName: task.content
+                      taskName: `【${task.projectName}】${task.content}`
                     };
                     targetTask.dateFlag[dayOfWeek - 1] = '1';
                   }
@@ -362,7 +367,7 @@ export class BeeService {
           }),
           flatMap(result => {
             if (result.sid === 1) {
-              return this.closeBeeTask(task, workHours);
+              return this.closeBeeTask(task, workHours, taskDay);
             } else {
               return throwError(result.desc);
             }
@@ -370,7 +375,7 @@ export class BeeService {
         );
     } else {
       // 　小蜜蜂关闭任务
-      return this.closeBeeTask(task, workHours);
+      return this.closeBeeTask(task, workHours, taskDay);
     }
   }
 
@@ -421,10 +426,14 @@ export class BeeService {
 
   /**
    * 关闭小蜜蜂任务
+   * @param task 任务
+   * @param workHours 工时
+   * @param recordDate 工时所属日期
    */
-  closeBeeTask(task: TaskInfo, workHours): Observable<ScoreAndExp> {
+  closeBeeTask(task: TaskInfo, workHours, recordDate: string): Observable<ScoreAndExp> {
     const body: HttpParams = new HttpParams()
       .set('taskId', task.id.toString())
+      .set('recordDate', recordDate) // 工时所属日期
       .set('workHours', workHours.toString());
     return this.http.post<HttpResponse<ScoreAndExp>>(`bee/task/close`,
       body, this.formHttpOptions)
