@@ -7,9 +7,11 @@ import {MainComponent} from './main/main.component';
 import {DinnerComponent} from './dinner/dinner.component';
 import {TaskInfoComponent} from './task-info/task-info.component';
 import {AuthGuard} from './auth/auth.guard';
+import {HomeComponent} from './home/home.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
   {
     path: '', component: MainComponent, canActivate: [AuthGuard],
     children: [

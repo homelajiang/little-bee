@@ -10,16 +10,6 @@ import {LoginComponent} from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {appRouting} from './app.router';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {
-  MAT_DATE_LOCALE,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule, MatDatepickerModule, MatDialogModule,
-  MatDividerModule,
-  MatFormFieldModule,
-  MatIconModule, MatInputModule, MatMenuModule, MatNativeDateModule, MatRippleModule, MatSelectModule, MatSnackBarModule,
-  MatToolbarModule, MatTooltipModule
-} from '@angular/material';
 import {MainComponent} from './main/main.component';
 import {NewTaskComponent} from './new-task/new-task.component';
 import {DinnerComponent} from './dinner/dinner.component';
@@ -32,6 +22,22 @@ import {DateFnsFormatPipe, TaskStateColorPip} from './bee/bee.pipe';
 import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
 import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { HomeComponent } from './home/home.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon';
+import {MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -47,7 +53,8 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     TaskInfoComponent,
     DateFnsFormatPipe,
     TaskStateColorPip,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    HomeComponent
   ],
   imports: [
     OverlayModule,
