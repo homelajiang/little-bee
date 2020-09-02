@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {TASK_INFO} from '../tokens';
-import {MatDialog, MatSnackBar} from '@angular/material';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {BeeService, Task, TaskClose, TaskInfo} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
@@ -8,6 +7,8 @@ import {ConfirmDialog} from '../utils/confirm-dialog';
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {pipe} from 'rxjs';
 import {filter, flatMap} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-info',

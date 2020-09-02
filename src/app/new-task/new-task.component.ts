@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {BeeService, Project, Task} from '../bee/bee.service';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {TASK_INFO} from '../tokens';
 import {SnackBar} from '../utils/snack-bar';
 import {WorkHoursDialogComponent} from './work-hours-dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-todo',

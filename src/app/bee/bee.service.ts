@@ -210,43 +210,6 @@ export class BeeService {
       );
   }
 
-  /**
-   * 批量获取日报详情
-   */
-  getOaTaskInfoBatch(startDate: Date, endDate: Date) {
-
-    // 清空时分秒
-    startDate = new Date(format(startDate, 'yyyy-MM-dd', Config.dateOptions));
-    endDate = new Date(format(endDate, 'yyyy-MM-dd', Config.dateOptions));
-
-    const weekArr = [];
-    let start = startDate;
-    let end = endOfWeek(start, Config.dateOptions);
-
-    while (isBefore(end, endDate) || isSameDay(start, end)) {
-      weekArr.push(this.queryOaTask(start, end));
-      start = addDays(end, 1);
-      end = endOfWeek(start, Config.dateOptions);
-    }
-
-    if (isBefore(start, endDate) && isAfter(end, endDate)) {
-      end = endDate;
-      weekArr.push(this.queryOaTask(start, end));
-    }
-
-    return forkJoin(weekArr)
-      .pipe(
-        flatMap(infos => {
-          let temp = [];
-          infos.forEach(info => {
-            temp = temp.concat(info.info.projectData);
-          });
-          return of(temp);
-        })
-      );
-
-  }
-
   // 获取任务详情
   getTaskInfo(taskId: string): Observable<TaskInfo> {
     const body: HttpParams = new HttpParams()

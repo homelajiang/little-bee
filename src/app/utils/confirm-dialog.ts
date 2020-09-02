@@ -1,5 +1,5 @@
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {ConfirmDialogComponent} from '../component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 
 export class ConfirmDialog {
 
