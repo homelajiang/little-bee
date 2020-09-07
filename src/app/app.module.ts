@@ -41,6 +41,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {CalendarComponent} from './calendar/calendar.component';
 import {CommonModule} from '@angular/common';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { EventComponent } from './event/event.component';
+import { EventTitleComponent } from './event-title/event-title.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     ConfirmDialogComponent,
     HomeComponent,
     CalendarComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    EventComponent,
+    EventTitleComponent
   ],
   imports: [
     CommonModule,

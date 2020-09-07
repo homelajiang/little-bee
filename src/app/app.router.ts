@@ -10,10 +10,14 @@ import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './home/home.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
+import {EventComponent} from './event/event.component';
+import {EventTitleComponent} from './event-title/event-title.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'event_title', component: EventTitleComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'event', component: EventComponent},
   {path: 'toolbar', component: ToolbarComponent},
   {path: 'calendar', component: CalendarComponent},
   {
