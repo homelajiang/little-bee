@@ -1,0 +1,27 @@
+<div class="calendar-container">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <h3>Dec 2020</h3>
+    <span fxFlex></span>
+    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayout="row" class="calendar-label">
+    <div class="calendar-label-item" *ngFor="let weekday of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']">
+      {{weekday}}
+    </div>
+  </div>
+
+
+  <div *ngFor="let column of [0,1,2,3,4,5]" fxLayout="row" class="calendar-column">
+    <div *ngFor="let row of [1,2,3,4,5,6,7]" >
+      <button mat-button class="calendar-button">{{ (column + 1) * row }}</button>
+
+    </div>
+  </div>
+
+</div>

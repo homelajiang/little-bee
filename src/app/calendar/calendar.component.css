@@ -1,0 +1,35 @@
+.calendar-container {
+  background: #80bdff;
+  display: inline-block;
+}
+
+.calendar-bar {
+
+}
+
+.calendar-bar h2 {
+
+}
+
+.calendar-label {
+
+}
+
+.calendar-label-item {
+  width: 40px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.calendar-column{
+  border-radius: 12px;
+}
+
+.calendar-button {
+  min-width: 0;
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  flex-shrink: 0;
+}

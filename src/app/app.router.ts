@@ -8,10 +8,14 @@ import {DinnerComponent} from './dinner/dinner.component';
 import {TaskInfoComponent} from './task-info/task-info.component';
 import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './home/home.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {ToolbarComponent} from './toolbar/toolbar.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'toolbar', component: ToolbarComponent},
+  {path: 'calendar', component: CalendarComponent},
   {
     path: '', component: MainComponent, canActivate: [AuthGuard],
     children: [

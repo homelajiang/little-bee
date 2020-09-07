@@ -1,0 +1,42 @@
+.toolbar-icon {
+  background-image: url('~src/assets/logo.svg');
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.toolbar-text {
+  background-image: url('~src/assets/logo-text.png');
+  width: 167px;
+  height: 34px;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.avatar-button {
+  padding: 0;
+}
+
+.avatar {
+  padding: 4px 10px;
+  text-align: start;
+  line-height: normal;
+}
+
+.avatar span {
+  color: rgb(135, 144, 161);
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.avatar-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+  background-image: url('~src/assets/default-avatar.jpg');
+  background-size: cover;
+}

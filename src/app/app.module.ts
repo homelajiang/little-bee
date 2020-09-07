@@ -22,7 +22,7 @@ import {DateFnsFormatPipe, TaskStateColorPip} from './bee/bee.pipe';
 import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
 import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDividerModule} from '@angular/material/divider';
@@ -38,6 +38,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
+import {CalendarComponent} from './calendar/calendar.component';
+import {CommonModule} from '@angular/common';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -54,9 +57,12 @@ import {MatMenuModule} from '@angular/material/menu';
     DateFnsFormatPipe,
     TaskStateColorPip,
     ConfirmDialogComponent,
-    HomeComponent
+    HomeComponent,
+    CalendarComponent,
+    ToolbarComponent
   ],
   imports: [
+    CommonModule,
     OverlayModule,
     BrowserModule,
     BrowserAnimationsModule,
