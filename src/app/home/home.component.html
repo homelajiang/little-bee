@@ -1,17 +1,21 @@
-<div fxLayout="column">
-  <div style="height: 64px;background: #4da2ff;"></div>
-  <div style="background: #5f6368;">
+<div>
+  <app-toolbar></app-toolbar>
 
-    <div style="background: #f2f5ff;max-width: 1400px;margin: 0 auto;" fxLayout="row">
+  <div fxLayout="row" class="home-container">
 
-      <div style="height: 300px;width:360px;background: #3577cc;" fxFlex="300px"></div>
-      <div style="height: 500px;background: #3c4043;" fxFlex></div>
-
+    <div class="home-nav">
+      <div class="nav-calendar">
+        <app-calendar></app-calendar>
+      </div>
     </div>
 
+    <div fxLayout="column" class="home-content" fxFlex>
+      <app-event-title></app-event-title>
+      <app-event class="home-event"></app-event>
+    </div>
 
   </div>
 
-  <div style="height: 64px;background: #2e373e;"></div>
+  <app-footer></app-footer>
 </div>
 <!--https://www.imwhite.com.cn/category/angular-material/-->

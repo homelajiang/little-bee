@@ -43,6 +43,7 @@ import {CommonModule} from '@angular/common';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { EventComponent } from './event/event.component';
 import { EventTitleComponent } from './event-title/event-title.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { EventTitleComponent } from './event-title/event-title.component';
     CalendarComponent,
     ToolbarComponent,
     EventComponent,
-    EventTitleComponent
+    EventTitleComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

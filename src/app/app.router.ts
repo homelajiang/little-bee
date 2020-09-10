@@ -12,6 +12,7 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 import {EventComponent} from './event/event.component';
 import {EventTitleComponent} from './event-title/event-title.component';
+import {FooterComponent} from './footer/footer.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -19,6 +20,7 @@ const router: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'event', component: EventComponent},
   {path: 'toolbar', component: ToolbarComponent},
+  {path: 'footer', component: FooterComponent},
   {path: 'calendar', component: CalendarComponent},
   {
     path: '', component: MainComponent, canActivate: [AuthGuard],

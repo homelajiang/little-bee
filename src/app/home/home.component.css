@@ -1,0 +1,22 @@
+.home-container {
+  max-width: 1400px;
+  margin: 46px auto;
+}
+
+.home-nav {
+  margin-left: 46px;
+}
+
+.home-content {
+  margin: 0 40px;
+}
+
+.nav-calendar {
+  background: white;
+  padding: 10px 20px 20px 20px;
+  border-radius: 14px;
+}
+
+.home-event {
+  margin-top: 15px;
+}

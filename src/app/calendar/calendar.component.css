@@ -1,5 +1,4 @@
 .calendar-container {
-  background: #80bdff;
   display: inline-block;
 }
 
@@ -7,8 +6,8 @@
 
 }
 
-.calendar-bar h2 {
-
+.calendar-bar h3 {
+  margin: 10px 5px 10px;
 }
 
 .calendar-label {
@@ -19,9 +18,11 @@
   width: 40px;
   line-height: 30px;
   text-align: center;
+  font-size: 12px;
+
 }
 
-.calendar-column{
+.calendar-column {
   border-radius: 12px;
 }
 
@@ -32,4 +33,23 @@
   height: 40px;
   padding: 0;
   flex-shrink: 0;
+  font-weight: 400;
+}
+
+.calendar-item {
+  position: relative;
+}
+
+.calendar-point {
+  position: absolute;
+  bottom: 6px;
+  width: 100%;
+}
+
+.calendar-point span {
+  height: 4px;
+  width: 4px;
+  background: greenyellow;
+  border-radius: 4px;
+  margin: 0 1px;
 }

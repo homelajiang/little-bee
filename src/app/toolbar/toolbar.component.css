@@ -1,3 +1,11 @@
+
+.toolbar-container {
+  max-width: 1400px;
+  height: 76px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
 .toolbar-icon {
   background-image: url('~src/assets/logo.svg');
   width: 40px;
@@ -13,6 +21,10 @@
   height: 34px;
   background-repeat: no-repeat;
   flex-shrink: 0;
+}
+
+.toolbar-label {
+  font-weight: bold;
 }
 
 .avatar-button {

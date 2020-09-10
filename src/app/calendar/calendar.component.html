@@ -1,5 +1,5 @@
 <div class="calendar-container">
-  <div fxLayout="row" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayoutAlign="start center" class="calendar-bar">
     <h3>Dec 2020</h3>
     <span fxFlex></span>
     <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
@@ -18,9 +18,13 @@
 
 
   <div *ngFor="let column of [0,1,2,3,4,5]" fxLayout="row" class="calendar-column">
-    <div *ngFor="let row of [1,2,3,4,5,6,7]" >
+    <div *ngFor="let row of [1,2,3,4,5,6,7]" fxLayout="column" fxLayoutAlign="start none" class="calendar-item">
       <button mat-button class="calendar-button">{{ (column + 1) * row }}</button>
-
+      <div fxLayout="row" fxLayoutAlign="center center" class="calendar-point">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 

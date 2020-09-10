@@ -1,23 +1,22 @@
-<div style="height: 100%;">
-  <div fxLayout="row">
+  <div fxLayout="row" class="event-weekday-container">
     <div fxFlex fxLayout="column" fxLayoutAlign="center" class="event-weekday" *ngFor="let weekday of [0,1,2,3,4,5,6] ">
-      <div style="margin: 0 auto">
-        <div style="text-align: center;">{{weekday}}</div>
-        <div>SUNDAY</div>
-      </div>
+      <h2 style="text-align: center;">{{weekday}}</h2>
+      <span>SUNDAY</span>
     </div>
   </div>
 
   <div fxLayout="row" class="event-container">
-    <div fxFlex fxLayout="column" fxLayoutAlign="center" class="event-column" *ngFor="let weekday of [0,1,2,3,4,5,6] ">
+    <div fxFlex fxLayout="column" fxLayoutAlign="start center" class="event-column"
+         *ngFor="let weekday of [0,1,2,3,4,5,6] ">
 
-      <div class="event-item">
-        <span>Mozilla 可能终止了对 Rust 语言的资助，但有 Linux 项目的支持和加持，它的未来还是安全的。</span>
-        <h3>狮山街道</h3>
-      </div>
+            <div class="event-item">
+              <p>Mozilla 可能终止了对 Rust 语言的资助，但有 Linux 项目的支持和加持，它的未来还是安全的。</p>
+              <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
+                <h3>狮山街道</h3>
+                <span fxFlex=""></span>
+                <span class="event-hour">3h</span>
+              </div>
+            </div>
 
     </div>
   </div>
-
-
-</div>
