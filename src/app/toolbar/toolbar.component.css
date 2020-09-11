@@ -8,8 +8,9 @@
 
 .toolbar-icon {
   background-image: url('~src/assets/logo.svg');
-  width: 40px;
-  height: 40px;
+  background-size: cover;
+  width: 46px;
+  height: 46px;
   margin-right: 10px;
   background-repeat: no-repeat;
   flex-shrink: 0;
@@ -23,8 +24,23 @@
   flex-shrink: 0;
 }
 
-.toolbar-label {
+.toolbar-nav {
+
+}
+
+.toolbar-nav button {
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.toolbar-nav span {
   font-weight: bold;
+  margin-left: 8px;
+}
+
+.toolbar-nav img {
+  width: 26px;
+  height: 26px;
 }
 
 .avatar-button {
@@ -37,15 +53,27 @@
   line-height: normal;
 }
 
-.avatar span {
+.avatar-info {
+  padding: 0 10px;
+}
+
+.avatar-info span {
   color: rgb(135, 144, 161);
-  margin: 0 10px;
-  font-size: 16px;
+  font-size: 12px;
+}
+
+.avatar-info h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.avatar-info mat-icon {
+
 }
 
 .avatar-icon {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background-repeat: no-repeat;
   flex-shrink: 0;

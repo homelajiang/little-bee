@@ -3,37 +3,46 @@
     <div class="toolbar-icon"></div>
     <div class="toolbar-text"></div>
 
-    <div fxFlex>
-      <div fxLayout="row" fxLayoutAlign="center">
-        <button mat-button class="toolbar-label">
-          <img src="favicon.ico">
-          Dashboard
-        </button>
-        <button mat-button class="toolbar-label">
-          <img src="favicon.ico">
-          Calendar
-        </button>
-        <button mat-button class="toolbar-label">
-          <img src="favicon.ico">
-          Analytics
-        </button>
-      </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="center" class="toolbar-nav">
+
+      <button mat-button>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img src="./assets/calendar.svg">
+          <span>Calendar</span>
+        </div>
+      </button>
+
+      <button mat-button>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img src="./assets/shop.svg">
+          <span>Shop</span>
+        </div>
+      </button>
+
+      <button mat-button>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <img src="./assets/setting.svg">
+          <span>Settings</span>
+        </div>
+      </button>
+
     </div>
 
-    <button mat-icon-button aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+    <!--    <button mat-icon-button aria-label="Example icon-button with heart icon">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <mat-icon>share</mat-icon>
+        </button>-->
 
     <button mat-button class="avatar-button">
       <div fxLayout="row" fxLayoutAlign="start center" class="avatar">
         <div class="avatar-icon"></div>
-        <div>
-          <div>Saepul man</div>
-          <div>Admin</div>
+        <div class="avatar-info">
+          <h3>刘德华</h3>
+          <span>管理员</span>
         </div>
+        <mat-icon fxFlexAlign="start">keyboard_arrow_down</mat-icon>
       </div>
     </button>
   </div>
