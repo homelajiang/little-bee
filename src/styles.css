@@ -7,6 +7,12 @@ body {
   background: #f5f6fa;
 }
 
-.transparent-drop-bg{
+.transparent-drop-bg {
   background: transparent;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 46px auto;
+  padding: 0 40px;
 }

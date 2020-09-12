@@ -44,6 +44,10 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { EventComponent } from './event/event.component';
 import { EventTitleComponent } from './event-title/event-title.component';
 import { FooterComponent } from './footer/footer.component';
+import { EventFilterComponent } from './event-filter/event-filter.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ShopComponent } from './shop/shop.component';
+import { HomeCalendarComponent } from './home-calendar/home-calendar.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,10 @@ import { FooterComponent } from './footer/footer.component';
     ToolbarComponent,
     EventComponent,
     EventTitleComponent,
-    FooterComponent
+    FooterComponent,
+    EventFilterComponent,
+    ShopComponent,
+    HomeCalendarComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +99,8 @@ import { FooterComponent } from './footer/footer.component';
     MatSelectModule,
     MatDialogModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
   ],
   entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent, ConfirmDialogComponent],
   providers: [

@@ -13,15 +13,29 @@ import {ToolbarComponent} from './toolbar/toolbar.component';
 import {EventComponent} from './event/event.component';
 import {EventTitleComponent} from './event-title/event-title.component';
 import {FooterComponent} from './footer/footer.component';
+import {EventFilterComponent} from './event-filter/event-filter.component';
+import {ShopComponent} from './shop/shop.component';
+import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'shop', component: ShopComponent},
   {path: 'event_title', component: EventTitleComponent},
   {path: 'home', component: HomeComponent},
   {path: 'event', component: EventComponent},
   {path: 'toolbar', component: ToolbarComponent},
   {path: 'footer', component: FooterComponent},
   {path: 'calendar', component: CalendarComponent},
+  {path: 'event_filter', component: EventFilterComponent},
+
+  {
+    path: 'home', component: HomeComponent,
+    children: [
+      {path: 'daily', component: HomeCalendarComponent},
+      {path: 'gift', component: ShopComponent}
+    ]
+  },
+
   {
     path: '', component: MainComponent, canActivate: [AuthGuard],
     children: [

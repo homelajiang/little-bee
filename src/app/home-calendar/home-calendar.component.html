@@ -1,0 +1,18 @@
+<div fxLayout="row" class="container">
+  <div class="home-nav">
+    <div class="nav-card nav-calendar">
+      <app-calendar></app-calendar>
+    </div>
+
+    <div class="nav-card">
+      <app-event-filter></app-event-filter>
+    </div>
+
+  </div>
+
+  <div fxLayout="column" class="home-content" fxFlex>
+    <app-event-title></app-event-title>
+    <app-event class="home-event"></app-event>
+  </div>
+
+</div>

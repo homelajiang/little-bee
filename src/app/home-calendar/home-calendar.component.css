@@ -1,0 +1,26 @@
+
+.home-nav {
+}
+
+.home-content {
+  margin-left: 40px;
+}
+
+.nav-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 40px;
+}
+
+.nav-calendar {
+  margin-top: 0;
+}
+
+.nav-filter {
+
+}
+
+.home-event {
+  margin-top: 15px;
+}

@@ -1,20 +1,7 @@
 <div>
   <app-toolbar></app-toolbar>
 
-  <div fxLayout="row" class="home-container">
-
-    <div class="home-nav">
-      <div class="nav-calendar">
-        <app-calendar></app-calendar>
-      </div>
-    </div>
-
-    <div fxLayout="column" class="home-content" fxFlex>
-      <app-event-title></app-event-title>
-      <app-event class="home-event"></app-event>
-    </div>
-
-  </div>
+  <router-outlet></router-outlet>
 
   <app-footer></app-footer>
 </div>

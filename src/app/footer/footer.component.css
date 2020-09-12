@@ -1,0 +1,13 @@
+.footer-container {
+  max-width: 1400px;
+  padding: 0 46px;
+  font-size: 14px;
+  color: #999999;
+  margin: 80px auto;
+}
+
+.footer-icon {
+  width: 40px;
+  border-radius: 20px;
+  height: 40px;
+}
