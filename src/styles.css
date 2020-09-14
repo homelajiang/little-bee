@@ -16,3 +16,14 @@ body {
   margin: 46px auto;
   padding: 0 40px;
 }
+
+.hover-shadow {
+  transition: transform .2s ease-in-out, box-shadow .15s cubic-bezier(.47, 0, .745, .715), border .3s linear .1s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 0 20px rgba(51, 51, 51, 0.25);
+  -webkit-transform: translateY(-5px);
+  -moz-transform: translateY(-5px);
+  transform: translateY(-5px);
+}
