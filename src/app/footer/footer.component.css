@@ -10,4 +10,9 @@
   width: 40px;
   border-radius: 20px;
   height: 40px;
+  opacity: .6;
+}
+
+.footer-icon:hover{
+  opacity: 1;
 }
