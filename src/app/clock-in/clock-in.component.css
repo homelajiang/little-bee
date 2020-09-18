@@ -1,0 +1,23 @@
+
+.clock-in {
+  /*padding: 60px 0;*/
+  background: white;
+  /*max-width: 900px;*/
+}
+
+.clock-in img {
+  width: 56px;
+  height: 56px;
+  /*margin-right: 10px;*/
+}
+
+.clock-in h2 {
+  margin: 5px 0;
+}
+
+
+.clock-in span {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #999999;
+}

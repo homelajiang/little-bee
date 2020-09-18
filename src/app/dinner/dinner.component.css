@@ -1,22 +1,32 @@
-.dinner-icon {
-  width: 100px;
-  height: 100px;
-}
 
 .dinner {
-  margin-top: 100px;
   /*padding: 60px 0;*/
+  background: white;
   /*max-width: 900px;*/
 }
 
-.dinner span {
-  margin-bottom: 10px;
+.dinner img {
+  width: 56px;
+  height: 56px;
+  margin-right: 10px;
+}
+
+.dinner h2 {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 
+.dinner span {
+  margin-bottom: 0px;
+  font-size: 14px;
+  color: #999999;
+}
+
+/*
 .dinner button {
   width: 200px;
   height: 54px;
   margin-top: 60px;
   font-size: 18px;
-}
+}*/

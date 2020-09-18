@@ -1,39 +1,37 @@
 <div style="background: white;">
   <div class="toolbar-container" fxLayout="row" fxLayoutAlign="start center">
-    <div class="toolbar-icon"></div>
-    <div class="toolbar-text"></div>
+    <div class="toolbar-icon" routerLink="./"></div>
+    <div class="toolbar-text" routerLink="./"></div>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="center" class="toolbar-nav">
 
-      <button mat-button routerLink="./daily">
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <img src="./assets/calendar.svg">
-          <span>Calendar</span>
-        </div>
-      </button>
+      <!--      <button mat-button routerLink="./daily">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <img src="./assets/calendar.svg">
+                <span>Calendar</span>
+              </div>
+            </button>
 
-      <button mat-button routerLink="./gift">
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <img src="./assets/gift.svg">
-          <span>Shop</span>
-        </div>
-      </button>
+            <button mat-button routerLink="./gift">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <img src="./assets/gift.svg">
+                <span>Shop</span>
+              </div>
+            </button>
 
-      <button mat-button routerLink="./setting">
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <img src="./assets/setting.svg">
-          <span>Settings</span>
-        </div>
-      </button>
+            <button mat-button routerLink="./setting">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <img src="./assets/setting.svg">
+                <span>Settings</span>
+              </div>
+            </button>-->
 
     </div>
 
-    <!--    <button mat-icon-button aria-label="Example icon-button with heart icon">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-          <mat-icon>share</mat-icon>
-        </button>-->
+    <button mat-icon-button matTooltip="商城" routerLink="./gift">
+      <mat-icon svgIcon="bee:gift"></mat-icon>
+      <!--          <img src="./assets/gift.svg">-->
+    </button>
 
     <button mat-button class="avatar-button">
       <div fxLayout="row" fxLayoutAlign="start center" class="avatar">

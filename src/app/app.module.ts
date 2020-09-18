@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
@@ -26,7 +26,7 @@ import {HomeComponent} from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
@@ -40,14 +40,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
 import {CalendarComponent} from './calendar/calendar.component';
 import {CommonModule} from '@angular/common';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { EventComponent } from './event/event.component';
-import { EventTitleComponent } from './event-title/event-title.component';
-import { FooterComponent } from './footer/footer.component';
-import { EventFilterComponent } from './event-filter/event-filter.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import { ShopComponent } from './shop/shop.component';
-import { HomeCalendarComponent } from './home-calendar/home-calendar.component';
+import {ToolbarComponent} from './toolbar/toolbar.component';
+import {EventComponent} from './event/event.component';
+import {EventTitleComponent} from './event-title/event-title.component';
+import {FooterComponent} from './footer/footer.component';
+import {EventFilterComponent} from './event-filter/event-filter.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ShopComponent} from './shop/shop.component';
+import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
+import {ClockInComponent} from './clock-in/clock-in.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { HomeCalendarComponent } from './home-calendar/home-calendar.component';
     FooterComponent,
     EventFilterComponent,
     ShopComponent,
-    HomeCalendarComponent
+    HomeCalendarComponent,
+    ClockInComponent
   ],
   imports: [
     CommonModule,
@@ -113,4 +115,10 @@ import { HomeCalendarComponent } from './home-calendar/home-calendar.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  // https://www.jianshu.com/p/4e5755f38065
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIconInNamespace('bee', 'gift',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/gift.svg'))
+  }
 }

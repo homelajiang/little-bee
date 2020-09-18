@@ -16,17 +16,20 @@ import {FooterComponent} from './footer/footer.component';
 import {EventFilterComponent} from './event-filter/event-filter.component';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
+import {ClockInComponent} from './clock-in/clock-in.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'shop', component: ShopComponent},
-  {path: 'event_title', component: EventTitleComponent},
+  {path: 'event-title', component: EventTitleComponent},
   {path: 'home', component: HomeComponent},
   {path: 'event', component: EventComponent},
   {path: 'toolbar', component: ToolbarComponent},
   {path: 'footer', component: FooterComponent},
   {path: 'calendar', component: CalendarComponent},
   {path: 'event_filter', component: EventFilterComponent},
+  {path: 'dinner', component: DinnerComponent},
+  {path: 'clock-in', component: ClockInComponent},
 
   {
     path: 'home', component: HomeComponent,
