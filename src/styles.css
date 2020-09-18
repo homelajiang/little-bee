@@ -4,7 +4,11 @@
 body {
   margin: 0;
   /*background-color: rgb(247,248,252);*/
-  background: #f5f6fa;
+  /*background: #f5f6fa;*/
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("./assets/bg.svg");
 }
 
 .transparent-drop-bg {
