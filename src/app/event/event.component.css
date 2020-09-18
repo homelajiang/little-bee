@@ -6,6 +6,7 @@
 
 .event-weekday {
   height: 90px;
+  cursor: pointer;
 }
 
 .event-weekday h2 {
@@ -22,7 +23,7 @@
 
 .event-container {
   overflow: auto;
-  min-height: 400px;
+  min-height: 500px;
   max-height: 600px;
   background: white;
   border-bottom-left-radius: 14px;
