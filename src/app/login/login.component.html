@@ -1,26 +1,49 @@
-  <mat-card class="mat-elevation-z8 login-card" fxLayout="row">
+<mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
 
-<!--    <div fxFlex="50" class="login-left">
-      Little Bee
+
+  <h1>Login</h1>
+
+<!--  <div class="night">
+    <div class="shooting_star"  *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+  </div>-->
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+    <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
+
+    <div fxFlex="grow" fxLayout="column">
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+
+        <mat-icon>person_outline</mat-icon>
+        <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+        <mat-icon>lock_open</mat-icon>
+        <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="username" placeholder="Password">
+
+        <button mat-button color="warn">Forget?</button>
+      </div>
+
     </div>
 
-    <div fxFlex="50" class="login-right">
+  </div>
 
-      <H1>LOGIN</H1>
+  <mat-form-field appearance="outline" style="display: none">
+    <mat-label>用户名</mat-label>
+    <input matInput [(ngModel)]="username" placeholder="请输入用户名">
+    <!--        <mat-hint>Hint</mat-hint>-->
+  </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>用户名</mat-label>
-        <input matInput [(ngModel)]="username" placeholder="请输入用户名">
-        &lt;!&ndash;        <mat-hint>Hint</mat-hint>&ndash;&gt;
-      </mat-form-field>
+  <mat-form-field appearance="outline" style="display: none">
+    <mat-label>密码</mat-label>
+    <!--        <mat-hint>Hint</mat-hint>-->
+    <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
+  </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>密码</mat-label>
-        &lt;!&ndash;        <mat-hint>Hint</mat-hint>&ndash;&gt;
-        <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
-      </mat-form-field>
 
-      <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">登录</button>
-    </div>-->
+  <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
 
-  </mat-card>
+  <p>Dont't have an account? <b>Sign Up</b></p>
+
+
+</mat-card>
