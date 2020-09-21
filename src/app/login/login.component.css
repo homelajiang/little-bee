@@ -1,12 +1,49 @@
 .login-card {
-  max-width: 512px;
+  max-width: 460px;
   width: 100%;
-  padding: 0;
+  padding: 50px 0;
   margin: 100px auto;
 }
 
-.login-card input{
-  line-height: 80px;
+.login-card h1{
+  margin-bottom: 0;
+}
+
+
+.login-card input {
+  line-height: 70px;
+}
+
+.login-card img{
+  margin-right: 20px;
+}
+
+.login-form{
+  padding: 60px 80px;
+}
+
+.login-button {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.login-button button {
+  height: 56px;
+  border-radius: 56px;
+  width: 50%;
+  margin-left: 25%;
+  font-size: 18px;
+  background: #1e1738;
+}
+
+.login-dash {
+  position: absolute;
+  bottom: 50%;
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(to right, #aaaaaa 0%, #aaaaaa 50%, transparent 50%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
 }
 
 .login-left {
@@ -19,17 +56,17 @@
 }
 
 .login-right {
- padding: 20px 40px;
+  padding: 20px 40px;
 }
 
-.login-right h1{
+.login-right h1 {
   margin-bottom: 50px;
 }
 
 .login-right mat-form-field {
-   width: 100%;
+  width: 100%;
   margin-bottom: 10px;
- }
+}
 
 .login-right button {
   width: 100%;

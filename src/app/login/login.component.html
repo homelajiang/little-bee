@@ -3,22 +3,19 @@
 
   <h1>Login</h1>
 
-<!--  <div class="night">
+  <div class="night">
     <div class="shooting_star"  *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
-  </div>-->
+  </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
     <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
 
     <div fxFlex="grow" fxLayout="column">
       <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
-
-        <mat-icon>person_outline</mat-icon>
         <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
       </div>
 
       <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
-        <mat-icon>lock_open</mat-icon>
         <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="username" placeholder="Password">
 
         <button mat-button color="warn">Forget?</button>
@@ -40,8 +37,10 @@
     <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
   </mat-form-field>
 
-
+<div class="login-button"  fxFlexAlign="stretch">
+  <div class="login-dash"></div>
   <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
+</div>
 
   <p>Dont't have an account? <b>Sign Up</b></p>
 
