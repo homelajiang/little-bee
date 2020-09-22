@@ -1,12 +1,27 @@
 .login-card {
-  max-width: 460px;
+  max-width: 380px;
   width: 100%;
-  padding: 50px 0;
+  padding: 60px 0;
+  border-radius: 10px;
   margin: 100px auto;
 }
 
-.login-card h1{
+.login-card p {
+  color: #999999;
+}
+
+.login-card b {
+  color: #1e1738;
+}
+
+.login-card a {
+  text-decoration: none;
+}
+
+.login-card h1 {
   margin-bottom: 0;
+  font-weight: 500;
+  color: #1e1738;
 }
 
 
@@ -14,23 +29,24 @@
   line-height: 70px;
 }
 
-.login-card img{
+.login-card img {
   margin-right: 20px;
 }
 
-.login-form{
-  padding: 60px 80px;
+.login-form {
+  padding: 50px 50px;
 }
 
 .login-button {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .login-button button {
-  height: 56px;
+  height: 50px;
+  font-weight: normal;
   border-radius: 56px;
-  width: 50%;
+  width: 48%;
   margin-left: 25%;
   font-size: 18px;
   background: #1e1738;
@@ -75,14 +91,12 @@
   height: 54px;
 }
 
-body {
+.night-bg {
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  font-family: 'Anton', sans-serif;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  bottom: 0;
 }
 
 .night {

@@ -1,12 +1,11 @@
+<div class="night-bg">
+  <!--  <div class="night">
+      <div class="shooting_star" *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+    </div>-->
+</div>
+
 <mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
-
-
   <h1>Login</h1>
-
-  <div class="night">
-    <div class="shooting_star"  *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
-  </div>
-
   <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
     <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
 
@@ -18,7 +17,7 @@
       <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
         <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="username" placeholder="Password">
 
-        <button mat-button color="warn">Forget?</button>
+        <button fxFlex="none" mat-button color="warn">Forget?</button>
       </div>
 
     </div>
@@ -37,12 +36,14 @@
     <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
   </mat-form-field>
 
-<div class="login-button"  fxFlexAlign="stretch">
-  <div class="login-dash"></div>
-  <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
-</div>
+  <div class="login-button" fxFlexAlign="stretch">
+    <div class="login-dash"></div>
+    <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
+  </div>
 
-  <p>Dont't have an account? <b>Sign Up</b></p>
+  <p>Don't have an account?&nbsp;&nbsp;
+    <a href="#"><b>Sign Up</b></a>
+  </p>
 
 
 </mat-card>
