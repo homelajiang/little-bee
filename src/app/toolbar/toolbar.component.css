@@ -78,6 +78,6 @@
   border-radius: 50%;
   background-repeat: no-repeat;
   flex-shrink: 0;
-  background-image: url('~src/assets/default-avatar.jpg');
+  /*background-image: url('~src/assets/default-avatar.jpg');*/
   background-size: cover;
 }

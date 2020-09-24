@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BeeService, UserInfo} from '../bee/bee.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+  public userInfo: UserInfo
 
-  constructor() { }
+  constructor(private beeService: BeeService) {
+  }
 
   ngOnInit(): void {
+    this.userInfo = this.beeService.userInfo
   }
 
 }

@@ -30,17 +30,16 @@
 
     <button mat-icon-button matTooltip="商城" routerLink="./gift">
       <mat-icon svgIcon="bee:gift"></mat-icon>
-      <!--          <img src="./assets/gift.svg">-->
     </button>
 
     <button mat-button class="avatar-button">
       <div fxLayout="row" fxLayoutAlign="start center" class="avatar">
-        <div class="avatar-icon"></div>
+        <div class="avatar-icon" [ngStyle]="{'background-image':'url('+userInfo.head+')'}"></div>
         <div class="avatar-info">
-          <h3>刘德华</h3>
+          <h3>{{userInfo.name}}</h3>
           <div>
             <img src="./assets/integral.svg" style="width: 12px;height: 12px;margin-right: 3px;">
-            <span>4325</span>
+            <span>{{userInfo.score}}</span>
           </div>
         </div>
         <mat-icon fxFlexAlign="start">keyboard_arrow_down</mat-icon>

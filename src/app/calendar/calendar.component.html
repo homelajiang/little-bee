@@ -1,25 +1,30 @@
 <div class="calendar-container">
   <div fxLayout="row" fxLayoutAlign="start center" class="calendar-bar">
-    <h3>Dec 2020</h3>
+    <h3>{{currentDate | date:'MMM , yyyy'}}</h3>
     <span fxFlex></span>
-    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+    <button mat-icon-button (click)="preMonth()"
+            aria-label="pre month">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+    <button mat-icon-button (click)="nextMonth()"
+            aria-label="next month">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>
 
   <div fxLayout="row" class="calendar-label">
-    <div class="calendar-label-item" *ngFor="let weekday of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']">
+    <div class="calendar-label-item" *ngFor="let weekday of weekdays">
       {{weekday}}
     </div>
   </div>
 
 
-  <div *ngFor="let column of [0,1,2,3,4,5]" fxLayout="row" class="calendar-column">
-    <div *ngFor="let row of [1,2,3,4,5,6,7]" fxLayout="column" fxLayoutAlign="start none" class="calendar-item">
-      <button mat-button class="calendar-button">{{ (column + 1) * row }}</button>
+  <div *ngFor="let week of displayDays" fxLayout="row" class="calendar-column"
+       [ngClass]="{'calendar-column-selected':week.includes(selectDaily)}">
+    <div *ngFor="let column of [0,1,2,3,4,5,6]" matRipple fxLayout="column"
+         (click)="onSelectDay(week[column],week)"
+         fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
+      <h2 class="calendar-button">{{ week[column].date | date:'d' }}</h2>
       <div fxLayout="row" fxLayoutAlign="center center" class="calendar-point">
         <span></span>
         <span></span>

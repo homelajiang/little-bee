@@ -23,14 +23,22 @@
 }
 
 .calendar-column {
-  border-radius: 12px;
+  border-radius: 10px;
+}
+
+.calendar-column-selected {
+  background: #eaeaea;
 }
 
 .calendar-button {
   min-width: 0;
   border-radius: 12px;
+  font-size: 14px;
   width: 40px;
+  margin: 0;
   height: 40px;
+  line-height: 40px;
+  text-align: center;
   padding: 0;
   flex-shrink: 0;
   font-weight: 400;
@@ -38,11 +46,18 @@
 
 .calendar-item {
   position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.calendar-today {
+  background: #455af7;
+  color: white;
 }
 
 .calendar-point {
   position: absolute;
-  bottom: 6px;
+  bottom: 5px;
   width: 100%;
 }
 
