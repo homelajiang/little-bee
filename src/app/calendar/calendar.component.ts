@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewContainerRef} from '@angular/core';
 import {Daily} from '../daily/daily.component';
 import {
   addDays,
   addMonths, addWeeks,
   differenceInDays,
   endOfMonth,
-  endOfWeek,
+  endOfWeek, isAfter, isBefore, isEqual,
   isSameDay,
   isSameMonth, isSameWeek,
   startOfMonth,
@@ -14,6 +14,10 @@ import {
 import {Config} from '../config';
 
 import solarLunar from 'solarLunar';
+import {SnackBar} from '../utils/snack-bar';
+import {Overlay} from '@angular/cdk/overlay';
+import {BeeService, Task} from '../bee/bee.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-calendar',
@@ -21,11 +25,18 @@ import solarLunar from 'solarLunar';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+
+
+  constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
+              private beeService: BeeService, private snackBar: MatSnackBar, private injector: Injector) {
+  }
+
   private rows; // 日历行数
   private today: Date = new Date(); // 今天日期
   public displayDays: Array<Array<Daily>>; // 二维本月日期
   private listDays: Array<Daily>; // 一维本月日期
   public selectWeek: Array<Daily>; // 选中的周
+  private tasks: Array<Task> = []; // 任务列表
 
   public currentDate: Date = new Date(this.today); // 当前使用日期
   // 选中一周
@@ -33,9 +44,7 @@ export class CalendarComponent implements OnInit {
 
   public weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']; // ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
-
-  constructor() {
-  }
+  private reqTasking = false;
 
   ngOnInit(): void {
     this.updateCalendar(true);
@@ -130,5 +139,40 @@ export class CalendarComponent implements OnInit {
 
       arr.map(value => value.date);
     }
+    if (this.tasks.length === 0) {
+      this.getTasks();
+    } else {
+      this.handleMonthTask();
+    }
+  }
+
+  private getTasks() {
+    if (this.reqTasking) {
+      return;
+    }
+    this.reqTasking = true;
+    this.beeService.getTasks()
+      .subscribe(tasks => {
+        this.tasks = tasks;
+        this.handleMonthTask();
+        this.reqTasking = false;
+      }, error => {
+        this.reqTasking = false;
+        SnackBar.open(this.snackBar, error.toString());
+      });
+  }
+
+  // 不全当月的task
+  private handleMonthTask() {
+    this.tasks.forEach(task => {
+      this.listDays.forEach(daily => {
+        const startDate = new Date(task.startTime);
+        const endDate = new Date(task.endTime);
+        if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
+          (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
+          daily.events.push(task);
+        }
+      });
+    });
   }
 }

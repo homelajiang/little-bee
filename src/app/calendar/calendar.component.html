@@ -26,9 +26,7 @@
          fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
       <h2 class="calendar-button">{{ week[column].date | date:'d' }}</h2>
       <div fxLayout="row" fxLayoutAlign="center center" class="calendar-point">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span *ngFor="let event of week[column].events"></span>
       </div>
     </div>
   </div>
