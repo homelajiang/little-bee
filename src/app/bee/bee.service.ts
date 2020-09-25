@@ -500,16 +500,6 @@ export class Task {
   hours: number; // 任务时长
 }
 
-export class WeekSelectEvent {
-  daily: Daily;
-  weekDaily: Array<Daily>;
-
-  constructor(d: Daily, week: Array<Daily>) {
-    this.daily = d;
-    this.weekDaily = week;
-  }
-}
-
 export class TaskClose {
   task: TaskInfo;
   workHours: number;

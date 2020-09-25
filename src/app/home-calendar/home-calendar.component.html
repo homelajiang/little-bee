@@ -1,7 +1,7 @@
 <div fxLayout="row" class="container">
   <div class="home-nav">
     <div class="nav-card nav-calendar">
-      <app-calendar ></app-calendar>
+      <app-calendar (selectWeekEvent)="onSelectWeek($event)"></app-calendar>
     </div>
 
 <!--    <div class="nav-card">
@@ -19,8 +19,8 @@
   </div>
 
   <div fxLayout="column" class="home-content" fxFlex>
-    <app-event-title ></app-event-title>
-    <app-event [weekSelectEvent]="weekSelectedEvent" class="home-event" ></app-event>
+    <app-event-title [week]="selectWeek" (weekChanged)="changeWeek($event)"></app-event-title>
+    <app-event [week]="selectWeek" class="home-event" ></app-event>
   </div>
 
 </div>

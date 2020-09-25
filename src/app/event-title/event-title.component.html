@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="event-title">
-  <h2>December 15 - 21,2019</h2>
-  <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+  <h2  fxFlex="none">{{getDisplayWeekName()}}</h2>
+  <button fxFlex="none" mat-icon-button (click)="weekChanged.emit(-1)" aria-label="Example icon button with a vertical three dot icon">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
-  <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+  <button  fxFlex="none" mat-icon-button (click)="weekChanged.emit(1)" aria-label="Example icon button with a vertical three dot icon">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
   <span fxFlex></span>

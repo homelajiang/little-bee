@@ -2,19 +2,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Daily} from '../daily/daily.component';
 import {
   addDays,
-  addMonths,
+  addMonths, addWeeks,
   differenceInDays,
   endOfMonth,
   endOfWeek,
   isSameDay,
-  isSameMonth,
+  isSameMonth, isSameWeek,
   startOfMonth,
   startOfWeek
 } from 'date-fns';
-import {WeekSelectEvent} from '../bee/bee.service';
 import {Config} from '../config';
 
-import solarLunar from 'solarLunar'
+import solarLunar from 'solarLunar';
 
 @Component({
   selector: 'app-calendar',
@@ -26,11 +25,11 @@ export class CalendarComponent implements OnInit {
   private today: Date = new Date(); // 今天日期
   public displayDays: Array<Array<Daily>>; // 二维本月日期
   private listDays: Array<Daily>; // 一维本月日期
-  public selectDaily: Daily; // 点击选中的日期
   public selectWeek: Array<Daily>; // 选中的周
 
   public currentDate: Date = new Date(this.today); // 当前使用日期
-  private weekSelectedEvent: WeekSelectEvent;
+  // 选中一周
+  @Output() selectWeekEvent = new EventEmitter<Array<Daily>>();
 
   public weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']; // ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
@@ -39,14 +38,14 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateCalendar(true)
+    this.updateCalendar(true);
   }
 
 
-  // 选择一个日期
-  onSelectDay(daily: Daily, week: Array<Daily>) {
-    this.selectDaily = daily;
+  // 选择一周
+  onSelectWeek(week: Array<Daily>) {
     this.selectWeek = week;
+    this.selectWeekEvent.emit(week);
   }
 
   preMonth() {
@@ -59,20 +58,35 @@ export class CalendarComponent implements OnInit {
     this.updateCalendar(false);
   }
 
-  onWeekSelected(event: WeekSelectEvent) {
-    this.weekSelectedEvent = event
+
+  changeWeek(event: number) {
+    const index = this.displayDays.indexOf(this.selectWeek);
+    console.log(index);
+    if (event < 0) {
+      if (index < 1) { // 需要跳转上一月
+        this.preMonth();
+
+        const sameWeek = isSameDay(this.selectWeek[0].date, this.displayDays[this.displayDays.length - 1][0].date);
+
+        // 找到则找倒数第二，否则为倒数第一
+        this.onSelectWeek(this.displayDays[this.displayDays.length - (sameWeek ? 2 : 1)]);
+      } else {
+        this.onSelectWeek(this.displayDays[index - 1]);
+      }
+    } else if (event > 0) {
+      if (index > this.displayDays.length - 2) { // 需要跳转下一月
+        this.nextMonth();
+        const sameWeek = isSameDay(this.selectWeek[0].date, this.displayDays[0][0].date);
+
+        this.onSelectWeek(this.displayDays[sameWeek ? 1 : 0]);
+      } else {
+        this.onSelectWeek(this.displayDays[index + 1]);
+      }
+    }
   }
 
-  preWeek() {
-
-  }
-
-  nextWeek() {
-
-  }
-
-  dailyInWeek(daily: Daily, weekDaily: Array<Daily>) {
-    return weekDaily.map(d => d.date).filter(d => isSameDay(d, daily.date)).length === 1
+  weekIsSelected(week: Array<Daily>) {
+    return isSameWeek(week[0].date, this.selectWeek[0].date);
   }
 
   updateCalendar(onInit: boolean) {
@@ -98,24 +112,23 @@ export class CalendarComponent implements OnInit {
         daily.date = day;
         const lunar = solarLunar.solar2lunar(day.getFullYear(), day.getMonth() + 1, day.getDate());
         daily.lunar = lunar.dayCn;
-        daily.today = isSameDay(day, this.today)
+        daily.today = isSameDay(day, this.today);
         daily.currentMonth = isSameMonth(this.today, day);
-        arr[column] = daily
-        this.listDays.push(daily)
+        arr[column] = daily;
+        this.listDays.push(daily);
         if (daily.today && onInit) { // 初始化时初始化选择日期
-          this.selectDaily = daily;
           currentWeek = true;
         }
-        day = addDays(day, 1)
+        day = addDays(day, 1);
       }
 
       if (onInit && currentWeek) {  // 初始化
         this.selectWeek = arr;
-        this.weekSelectedEvent = new WeekSelectEvent(this.selectDaily, this.selectWeek)
+        this.selectWeekEvent.emit(this.selectWeek);
       }
       this.displayDays[row] = arr;
 
-      arr.map(value => value.date)
+      arr.map(value => value.date);
     }
   }
 }

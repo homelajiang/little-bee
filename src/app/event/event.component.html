@@ -1,8 +1,8 @@
 <div fxLayout="row" class="event-weekday-container">
   <div fxFlex fxLayout="column" fxLayoutAlign="center" matRipple class="event-weekday"
-       [ngClass]="{'event-today':weekSelectEvent.weekDaily.includes(weekSelectEvent.daily)==index}"
+       [ngClass]="{'event-today':week[index].today}"
        *ngFor="let index of [0,1,2,3,4,5,6] ">
-    <h2 style="text-align: center;">{{weekSelectEvent.weekDaily[index].date | date:'d'}}</h2>
+    <h2 style="text-align: center;">{{week[index].date | date:'d'}}</h2>
     <span>{{displayWeekdays[index]}}</span>
   </div>
 </div>

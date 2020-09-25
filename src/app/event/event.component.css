@@ -59,6 +59,15 @@
   font-size: 14px;
   margin: 0;
 }
+.event-today{}
+
+.event-today h2{
+  color: #455af7;
+}
+
+.event-today span{
+  color: #455af7;
+}
 
 .event-hour {
   font-size: 12px;
