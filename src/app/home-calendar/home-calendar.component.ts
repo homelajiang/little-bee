@@ -1,7 +1,10 @@
-import {Component, ElementRef, Injector, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Overlay} from '@angular/cdk/overlay';
 import {BeeService} from '../bee/bee.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {EventTitleComponent} from '../event-title/event-title.component';
+import {EventComponent} from '../event/event.component';
+import {CalendarComponent} from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-home-calendar',
@@ -10,8 +13,13 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class HomeCalendarComponent implements OnInit {
 
-  private today: Date = new Date(); // 今天的日期
-  public weekdaysSimple = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+
+  @ViewChild(EventTitleComponent)
+  eventTitleComponent: EventTitleComponent
+  @ViewChild(EventComponent)
+  eventComponent: EventComponent
+  @ViewChild(CalendarComponent)
+  calendarComponent: CalendarComponent
 
 
   constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
@@ -20,5 +28,6 @@ export class HomeCalendarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 }

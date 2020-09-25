@@ -3,9 +3,21 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParameterCodec, HttpParams} from '@angular/common/http';
 import {forkJoin, Observable, of, Subject, throwError} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {addDays, differenceInDays, endOfWeek, format, getDay, isAfter, isBefore, isSameDay, isSameWeek, startOfWeek} from 'date-fns';
+import {
+  addDays,
+  differenceInDays,
+  endOfWeek,
+  format,
+  getDay,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isSameWeek,
+  startOfWeek
+} from 'date-fns';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
+import {Daily} from "../daily/daily.component";
 
 const DEFAULT_PROJECT = 'default_project';
 const USER_INFO = 'user_info';
@@ -486,6 +498,16 @@ export class Task {
   projectId: number;
   workHours: number;
   hours: number; // 任务时长
+}
+
+export class WeekSelectEvent {
+  daily: Daily;
+  weekDaily: Array<Daily>;
+
+  constructor(d: Daily, week: Array<Daily>) {
+    this.daily = d;
+    this.weekDaily = week;
+  }
 }
 
 export class TaskClose {
