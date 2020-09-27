@@ -17,7 +17,6 @@ import {
 } from 'date-fns';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
-import {Daily} from "../daily/daily.component";
 
 const DEFAULT_PROJECT = 'default_project';
 const USER_INFO = 'user_info';
@@ -28,10 +27,16 @@ const USER_INFO = 'user_info';
 export class BeeService {
 
   // 通知刷新某天的task
-  public refreshTasks = new Subject<Date>();
+  public notifyRefreshDaily = new Subject<Date>();
 
   // 通知关闭某个任务
   public notifyCloseTask = new Subject<TaskClose>();
+
+  // 通知创建任务
+  public notifyCreateTask = new Subject<TaskCreate>();
+
+  // 通知删除任务
+  public notifyDeleteTask = new Subject<Task>();
 
   jsonHttpOptions = {
     headers: new HttpHeaders({
@@ -105,15 +110,30 @@ export class BeeService {
       );
   }
 
-  // 获取所有项目
+  // 获取所有项目(包括已关闭的项目)
   getProjects(): Observable<Array<Project>> {
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            this.projects = event.result;
-            return of(event.result);
+            return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myCloseProjects`,
+              {}, this.formHttpOptions)
+              .pipe(
+                flatMap(res => {
+                  if (res.code === 0) {
+                    event.result.forEach(p => {
+                      if (p.projectName === '维护项目') {
+                        p.subProjects = res.result
+                      }
+                    })
+                    return of(event.result);
+                  } else {
+                    return throwError(res.msg)
+                  }
+                })
+              )
+
           } else {
             return throwError(event.msg);
           }
@@ -505,6 +525,18 @@ export class TaskClose {
   workHours: number;
 }
 
+export class TaskCreate {
+  constructor(date: Date, content: string, project: Project) {
+    this.date = date;
+    this.content = content;
+    this.project = project;
+  }
+
+  date: Date;
+  content: string;
+  project: Project
+}
+
 export class ScoreAndExp {
   score: number;
   exp: number;
@@ -516,6 +548,18 @@ export class Project {
   projectName: string;
   projectId: number;
   startDate: string;
+  subProjects: Array<Project> = new Array<Project>()
+}
+
+export class ProjectMenu {
+  constructor(parent: Project,children: Array<Project>) {
+    this.parent = parent
+    this.children = children
+  }
+
+  parent?: Project;
+  current: Project;
+  children: Array<Project> = []
 }
 
 export class HttpResponse<T> {

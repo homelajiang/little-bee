@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {BeeService, Project, Task} from '../bee/bee.service';
+import {BeeService, Project, ProjectMenu, Task, TaskCreate} from '../bee/bee.service';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {TASK_INFO} from '../tokens';
 import {SnackBar} from '../utils/snack-bar';
@@ -16,7 +16,7 @@ export class NewTaskComponent implements OnInit {
 
   selectedDate: Date;
   selectedProject: Project;
-  projectList: Array<Project> = [];
+  projectMenus: Array<ProjectMenu> = []
   taskInput = '';
 
   constructor(@Inject(TASK_INFO) public task: Task, private beeService: BeeService, private snackBar: MatSnackBar,
@@ -29,19 +29,13 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.beeService.projects.length === 0) {
-      this.getAllProjects();
-    } else {
-      this.projectList = this.beeService.projects;
-      this.checkDefaultProject();
-    }
-
+    this.initProject()
   }
 
-  checkDefaultProject() {
+  checkDefaultProject(projects: Array<Project>) {
     if (this.beeService.defaultProject) {
       let temp: Project = null;
-      this.projectList.forEach(p => {
+      projects.forEach(p => {
         if (this.beeService.defaultProject.projectId === p.projectId) {
           temp = p;
         }
@@ -52,10 +46,26 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
+  initProject() {
+    /*  // todo 适时的刷新项目列表
+      if (this.beeService.projects.length === 0) {
+        this.getAllProjects();
+      } else {
+        this.projectList = this.beeService.projects;
+        this.checkDefaultProject();
+      }*/
+    this.getAllProjects()
+  }
+
   getAllProjects() {
     this.beeService.getProjects().subscribe(projects => {
-      this.projectList = projects;
-      this.checkDefaultProject();
+
+      // 处理菜单
+      this.expandProjectMenu(null, projects)
+
+      console.log(this.projectMenus)
+
+      this.checkDefaultProject(projects);
     }, error => SnackBar.open(this.snackBar, error));
   }
 
@@ -87,15 +97,19 @@ export class NewTaskComponent implements OnInit {
       return;
     }
 
-    this.beeService.createTask(this.selectedDate, this.taskInput, this.selectedProject)
-      .subscribe(res => {
-        SnackBar.open(this.snackBar, '创建成功');
-        this.beeService.refreshTasks.next(this.selectedDate);
-        this.closeEdit();
-        // 刷新任务列表
-      }, error => {
-        SnackBar.open(this.snackBar, `创建失败 ${error}`);
-      });
+    this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject))
+
+    this.closeEdit();
+
+    /*    this.beeService.createTask(this.selectedDate, this.taskInput, this.selectedProject)
+          .subscribe(res => {
+            SnackBar.open(this.snackBar, '创建成功');
+            this.beeService.refreshTasks.next(this.selectedDate);
+            this.closeEdit();
+            // 刷新任务列表
+          }, error => {
+            SnackBar.open(this.snackBar, `创建失败 ${error}`);
+          });*/
 
   }
 
@@ -112,4 +126,23 @@ export class NewTaskComponent implements OnInit {
     });
   }
 
+  private expandProjectMenu(parent: Project, projects: Array<Project>) {
+
+    this.projectMenus.push(new ProjectMenu(parent, projects))
+
+    projects.forEach(project => {
+      if (project.subProjects && project.subProjects.length > 0) {
+        this.expandProjectMenu(project, project.subProjects)
+      }
+    })
+
+    /*    projects.forEach(project => {
+          if (project.subProjects && project.subProjects.length > 0) {
+            this.projectMenus.push(new ProjectMenu(parent, project, project.subProjects));
+            this.expandProjectMenu(project,project.subProjects)
+          } else {
+            this.projectMenus.push(new ProjectMenu(parent, project, []));
+          }
+        })*/
+  }
 }

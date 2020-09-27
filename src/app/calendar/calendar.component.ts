@@ -1,4 +1,14 @@
-import {Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewContainerRef} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewContainerRef
+} from '@angular/core';
 import {Daily} from '../daily/daily.component';
 import {
   addDays,
@@ -17,18 +27,18 @@ import solarLunar from 'solarLunar';
 import {SnackBar} from '../utils/snack-bar';
 import {Overlay} from '@angular/cdk/overlay';
 import {BeeService, Task} from '../bee/bee.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
 
 
   constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
-              private beeService: BeeService, private snackBar: MatSnackBar, private injector: Injector) {
+              private beeService: BeeService, private snackBar: SnackBar, private injector: Injector) {
   }
 
   private rows; // 日历行数
@@ -46,8 +56,14 @@ export class CalendarComponent implements OnInit {
 
   private reqTasking = false;
 
+  private refreshTaskEvent: Subscription;
+  private createTaskEvent: Subscription;
+  private closeTaskEvent: Subscription;
+  private deleteTaskEvent: Subscription;
+
   ngOnInit(): void {
     this.updateCalendar(true);
+    this.subscribeEvent()
   }
 
 
@@ -98,6 +114,78 @@ export class CalendarComponent implements OnInit {
     return isSameWeek(week[0].date, this.selectWeek[0].date);
   }
 
+  // 订阅事件
+  private subscribeEvent() {
+
+    // 刷新指定日期的任务
+    this.refreshTaskEvent = this.beeService.notifyRefreshDaily.subscribe(date => {
+        console.log(date)
+        if (date) {
+          this.beeService.getTasksByDate(date, 0)
+            .subscribe(tasks => {
+              this.listDays.forEach(daily => {
+                if (isSameDay(date, daily.date)) {
+
+                  // 更新任务源数据
+                  daily.events.forEach(e => {
+                    const index = this.tasks.indexOf(e);
+                    this.tasks.splice(index, 1)
+                  })
+                  this.tasks.push.apply(this.tasks, tasks)
+
+                  // 更新daily数据
+                  daily.events = tasks;
+                }
+              })
+            })
+        }
+      }
+    )
+
+    // 关闭任务
+    this.closeTaskEvent = this.beeService.notifyCloseTask.subscribe(task => {
+      if (task) {
+        this.beeService.closeTask(task.task, task.workHours)
+          .subscribe(res => {
+            this.snackBar.tipsSuccess('关闭成功')
+          }, error => {
+            this.snackBar.tipsError('关闭失败')
+          }, () => {
+            this.beeService.notifyRefreshDaily.next(new Date(task.task.endDate))
+          })
+      }
+    })
+
+    // 创建任务
+    this.createTaskEvent = this.beeService.notifyCreateTask.subscribe(task => {
+      if (task) {
+        this.beeService.createTask(task.date, task.content, task.project)
+          .subscribe(res => {
+            this.snackBar.tipsSuccess('创建成功')
+          }, error => {
+            this.snackBar.tipsSuccess('创建失败')
+          }, () => {
+            this.beeService.notifyRefreshDaily.next(task.date)
+          })
+      }
+    })
+
+    // 删除任务
+    this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
+        if (task) {
+          this.beeService.deleteTask(task.id.toString())
+            .subscribe(res => {
+              this.snackBar.tipsSuccess('已删除')
+            }, error => {
+              this.snackBar.tipsSuccess('删除失败')
+            }, () => {
+              this.beeService.notifyRefreshDaily.next(new Date(task.startTime))
+            })
+        }
+      }
+    )
+  }
+
   updateCalendar(onInit: boolean) {
     const startMonthDay = startOfMonth(this.currentDate); // 当月的开始
     const endMonthDay = endOfMonth(this.currentDate); // 当月的结束
@@ -139,6 +227,8 @@ export class CalendarComponent implements OnInit {
 
       arr.map(value => value.date);
     }
+
+    // 将task和日期对应起来
     if (this.tasks.length === 0) {
       this.getTasks();
     } else {
@@ -158,7 +248,7 @@ export class CalendarComponent implements OnInit {
         this.reqTasking = false;
       }, error => {
         this.reqTasking = false;
-        SnackBar.open(this.snackBar, error.toString());
+        this.snackBar.tipsError(error.toString())
       });
   }
 
@@ -174,5 +264,12 @@ export class CalendarComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.refreshTaskEvent.unsubscribe()
+    this.createTaskEvent.unsubscribe()
+    this.closeTaskEvent.unsubscribe()
+    this.deleteTaskEvent.unsubscribe()
   }
 }

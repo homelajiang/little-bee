@@ -71,7 +71,7 @@ export class DailyComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.updateCalendar();
     // 监听刷新事件
-    this.taskChanges = this.beeService.refreshTasks.subscribe((date: Date) => {
+    this.taskChanges = this.beeService.notifyRefreshDaily.subscribe((date: Date) => {
       if (date) {
         this.refreshTask(date);
       }

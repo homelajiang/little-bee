@@ -26,17 +26,25 @@
 
     <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
       <mat-icon>folder_open</mat-icon>
-      <button mat-button (click)="selectProject()" style="position: relative;">
-        {{selectedProject ? selectedProject.projectName : '请选择一个项目'}}
-        <mat-form-field style="opacity: 0;height: 36px;position: absolute;left: 0;">
-          <mat-select placeholder="请选择一个项目" fxFlex="grow" id="selectProjectForm"
-                      [(value)]="selectedProject">
-            <mat-option *ngFor="let project of projectList" [value]="project">
-              {{project.projectName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </button>
+<!--      <button mat-button
+              [matMenuTriggerFor]="'startMenus'">{{selectedProject ? selectedProject.projectName : '请选择一个项目'}}</button>
+
+      <mat-menu #startMenus="matMenu" *ngFor="let menu of projectMenus">
+        <ng-template matMenuContent *ngFor="let child of menu.children">
+          <button mat-menu-item>{{child.projectName}}</button>
+        </ng-template>
+      </mat-menu>-->
+            <button mat-button (click)="selectProject()" style="position: relative;">
+              {{selectedProject ? selectedProject.projectName : '请选择一个项目'}}
+              <mat-form-field style="opacity: 0;height: 36px;position: absolute;left: 0;">
+                <mat-select placeholder="请选择一个项目" fxFlex="grow" id="selectProjectForm"
+                            [(value)]="selectedProject">
+                  <mat-option *ngFor="let project of projectList" [value]="project">
+                    {{project.projectName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </button>
     </div>
 
     <!--    <div fxLayout="row" fxLayoutAlign="start center" class="todo-selection">
@@ -46,7 +54,7 @@
 
     <div fxLayout="row">
       <span fxFlex="grow"></span>
-<!--      <button fxFlex="none" mat-button color="primary">更多</button>-->
+      <!--      <button fxFlex="none" mat-button color="primary">更多</button>-->
       <button fxFlex="none" mat-flat-button color="primary" (click)="saveTask()">保存</button>
     </div>
 

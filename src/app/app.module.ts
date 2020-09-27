@@ -33,7 +33,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -108,6 +108,7 @@ import {ClockInComponent} from './clock-in/clock-in.component';
   providers: [
     httpInterceptorProviders,
     {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     {
       provide: LocationStrategy, // 导航路径的策略设置
       useClass: HashLocationStrategy // 使用'#'方式的策略

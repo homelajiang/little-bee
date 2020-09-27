@@ -1,7 +1,7 @@
 <div fxLayout="row" class="event-weekday-container">
   <div fxFlex fxLayout="column" fxLayoutAlign="center" matRipple class="event-weekday"
        [ngClass]="{'event-today':week[index].today}"
-       *ngFor="let index of [0,1,2,3,4,5,6] ">
+       *ngFor="let index of [0,1,2,3,4,5,6] " (click)="newEvent($event,week[index].date)">
     <h2 style="text-align: center;">{{week[index].date | date:'d'}}</h2>
     <span>{{displayWeekdays[index]}}</span>
   </div>
@@ -11,7 +11,7 @@
   <div fxFlex fxLayout="column" fxLayoutAlign="start none" class="event-column"
        *ngFor="let index of [0,1,2,3,4,5,6] ">
 
-    <div class="event-item" matRipple *ngFor="let event of week[index].events">
+    <div class="event-item" matRipple *ngFor="let event of week[index].events" (click)="showEventInfo($event,event)">
       <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
         <span fxFlex=""></span>
       </div>
