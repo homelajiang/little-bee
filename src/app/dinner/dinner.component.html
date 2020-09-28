@@ -4,5 +4,5 @@
     <h2>Dinner</h2>
     <span>09:00 - 14:00</span>
   </div>
-  <button mat-button color="primary">预定</button>
+  <button mat-button color="primary" (click)="switchOrder()" [disabled]="readonly">{{getOrderDesc()}}</button>
 </div>

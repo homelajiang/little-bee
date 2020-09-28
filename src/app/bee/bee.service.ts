@@ -91,6 +91,50 @@ export class BeeService {
       );
   }
 
+  // 获取用户信息
+  getUserInfo(): Observable<UserInfo> {
+    return this.http.post<HttpResponse<UserInfo>>(`bee/user/userDetail`, new HttpParams(), this.formHttpOptions)
+      .pipe(
+        flatMap(res => {
+          if (res.code === 0) {
+            return of(res.result)
+          } else {
+            return throwError(res.msg)
+          }
+        })
+      )
+  }
+
+  // 获取商品列表
+  getGifts(): Observable<Array<Gift>> {
+    return this.http.post<HttpResponse<Array<Gift>>>(`bee/gift/list`, new HttpParams(), this.formHttpOptions)
+      .pipe(
+        flatMap(res => {
+          if (res.code === 0) {
+            return of(res.result)
+          } else {
+            return throwError(res.msg)
+          }
+        })
+      )
+  }
+
+  // 兑换商品
+  exchangeGift(giftId: number): Observable<any> {
+    const body: HttpParams = new HttpParams()
+      .set('giftId', giftId.toString())
+    return this.http.post<HttpResponse<Array<Gift>>>(`bee/user/exchangeGift`, body, this.formHttpOptions)
+      .pipe(
+        flatMap(res => {
+          if (res.code === 0) {
+            return of(res.result)
+          } else {
+            return throwError(res.msg)
+          }
+        })
+      )
+  }
+
   // 从小蜜蜂获取搜索代办事项
   getTasks(): Observable<Array<Task>> {
     const body: HttpParams = new HttpParams()
@@ -110,30 +154,14 @@ export class BeeService {
       );
   }
 
-  // 获取所有项目(包括已关闭的项目)
+  // 获取所有项目
   getProjects(): Observable<Array<Project>> {
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myCloseProjects`,
-              {}, this.formHttpOptions)
-              .pipe(
-                flatMap(res => {
-                  if (res.code === 0) {
-                    event.result.forEach(p => {
-                      if (p.projectName === '维护项目') {
-                        p.subProjects = res.result
-                      }
-                    })
-                    return of(event.result);
-                  } else {
-                    return throwError(res.msg)
-                  }
-                })
-              )
-
+            return of(event.result)
           } else {
             return throwError(event.msg);
           }
@@ -141,29 +169,49 @@ export class BeeService {
       );
   }
 
+  // 获取已关闭的项目
+  getClosedProjects(): Observable<Array<Project>> {
+    return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myCloseProjects`,
+      {}, this.formHttpOptions)
+      .pipe(
+        flatMap(res => {
+          if (res.code === 0) {
+            return of(res.result);
+          } else {
+            return throwError(res.msg)
+          }
+        })
+      )
+  }
+
   // 创建任务
-  createTask(date: Date, content: string, project: Project): Observable<any> {
-    const body: HttpParams = new HttpParams()
-      .set('beginDate', format(date, 'yyyy-MM-dd'))
+  createTask(taskCreate: TaskCreate): Observable<any> {
+    let body: HttpParams = new HttpParams()
+      .set('beginDate', format(taskCreate.date, 'yyyy-MM-dd'))
       .set('attachments', '')
-      .set('taskContent', content)
-      .set('endDate', format(date, 'yyyy-MM-dd'))
+      .set('taskContent', taskCreate.content)
+      .set('endDate', format(taskCreate.date, 'yyyy-MM-dd'))
       .set('userIds', this.userInfo.id.toString())
       .set('createMore', '1')
       .set('taskType', '1')  // 1 普通任务 2 风险
       .set('restFlag', '0') // 1、休假任务  0或不传表示正常任务
-      .set('projectId', project.projectId.toString())
       .set('alarmFlag', '0');
-    // TODO 支持子项目
+    if (taskCreate.parent) {
+      body = body.set('projectId', taskCreate.parent.projectId.toString())
+        .set('subProjectId', taskCreate.project.projectId.toString())
+    } else {
+      body = body.set('projectId', taskCreate.project.projectId.toString())
+    }
+
+    console.log(body)
     // TODO 支持休假
-    // params.put("subProjectId", childProjectId); 只有维护项目才传子项目id
     return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            localStorage.setItem(DEFAULT_PROJECT, JSON.stringify(project));
-            this.defaultProject = project;
+            /*            localStorage.setItem(DEFAULT_PROJECT, JSON.stringify(project));
+                        this.defaultProject = project;*/
             return of(event.result);
           } else {
             return throwError(event.msg);
@@ -395,7 +443,7 @@ export class BeeService {
       .set('devId', this.DEVICE_ID)
       .set('account', this.userInfo.userAccount)
       .set('method', 'GetPlmReportByWeek')
-      .set('params', this.desEncrypt(JSON.stringify(paramsBody), 'kedacom0'));
+      .set('params', this.desEncrypt(JSON.stringify(paramsBody)));
     return this.http.post<any>(`oa/interface/mobile.do?action=dailyplm`, body, this.formHttpOptions);
   }
 
@@ -415,7 +463,7 @@ export class BeeService {
       .set('account', this.userInfo.userAccount)
       .set('method', 'SaveReport')
 
-      .set('params', this.desEncrypt(weeklyDataString, 'kedacom0'));
+      .set('params', this.desEncrypt(weeklyDataString));
     return this.http.post<any>(`oa/interface/mobile.do?action=dailyplm`, body, this.formHttpOptions);
   }
 
@@ -443,9 +491,49 @@ export class BeeService {
       );
   }
 
+  // 获取订餐信息
+
+  getDinnerOrder() {
+    const paramsBody = {
+      userEmail: this.userInfo.userAccount,
+      class: '.kmoa.MealRequest'
+    }
+
+    const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
+      .set('VER', '4.24')
+      .set('OS', 'ANDROID')
+      .set('vkey', this.userInfo.token)
+      .set('devId', this.DEVICE_ID)
+      .set('account', this.userInfo.userAccount)
+      .set('method', 'GetMealOrder')
+      .set('params', this.desEncrypt(JSON.stringify(paramsBody)));
+
+    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions)
+  }
+
+  // 更改订餐信息
+  orderDinner(isOrder: number) {
+    const paramsBody = {
+      clientType: 'android',
+      idOrder: isOrder === 1 ? '1' : '0',
+      userEmail: this.userInfo.userAccount,
+      class: '.kmoa.MealRequest'
+    }
+    const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
+      .set('VER', '4.24')
+      .set('OS', 'ANDROID')
+      .set('vkey', this.userInfo.token)
+      .set('devId', this.DEVICE_ID)
+      .set('account', this.userInfo.userAccount)
+      .set('method', 'OrderMeal')
+      .set('params', this.desEncrypt(JSON.stringify(paramsBody)));
+
+    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions)
+  }
+
   // DES 加密
-  desEncrypt(message: string, key: string): string {
-    const result = CryptoJS.DES.encrypt(message, CryptoJS.enc.Utf8.parse(key), {
+  desEncrypt(message: string): string {
+    const result = CryptoJS.DES.encrypt(message, CryptoJS.enc.Utf8.parse('kedacom0'), {
       mode: CryptoJS.mode.ECB,
       padding: CryptoJS.pad.Pkcs7
     }).toString();
@@ -464,8 +552,8 @@ export class BeeService {
   }
 
   // DES 解密
-  desDecrypt(message, key) {
-    return CryptoJS.DES.decrypt(message.replace(/\s+/g, ''), CryptoJS.enc.Utf8.parse(key), {
+  desDecrypt(message) {
+    return CryptoJS.DES.decrypt(message.replace(/\s+/g, ''), CryptoJS.enc.Utf8.parse('kedacom0'), {
       mode: CryptoJS.mode.ECB,
       padding: CryptoJS.pad.Pkcs7
     }).toString(CryptoJS.enc.Utf8);
@@ -526,15 +614,25 @@ export class TaskClose {
 }
 
 export class TaskCreate {
-  constructor(date: Date, content: string, project: Project) {
+  constructor(date: Date, content: string, project: Project, parent: Project) {
     this.date = date;
     this.content = content;
     this.project = project;
+    this.parent = parent;
   }
 
   date: Date;
   content: string;
   project: Project
+  parent: Project
+}
+
+export class Gift {
+  id: number
+  img: string
+  leftCount: number
+  name: string
+  price: number
 }
 
 export class ScoreAndExp {
@@ -548,18 +646,6 @@ export class Project {
   projectName: string;
   projectId: number;
   startDate: string;
-  subProjects: Array<Project> = new Array<Project>()
-}
-
-export class ProjectMenu {
-  constructor(parent: Project,children: Array<Project>) {
-    this.parent = parent
-    this.children = children
-  }
-
-  parent?: Project;
-  current: Project;
-  children: Array<Project> = []
 }
 
 export class HttpResponse<T> {
@@ -587,6 +673,8 @@ export class TaskInfo {
   state: number;
   projectName: string;
   projectId: number;
+  subProjectId: number
+  subProjectName: string
   workHours: number;
 }
 

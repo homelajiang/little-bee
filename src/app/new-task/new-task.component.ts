@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {BeeService, Project, ProjectMenu, Task, TaskCreate} from '../bee/bee.service';
+import {BeeService, Project, Task, TaskCreate} from '../bee/bee.service';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {TASK_INFO} from '../tokens';
 import {SnackBar} from '../utils/snack-bar';
-import {WorkHoursDialogComponent} from './work-hours-dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -15,8 +14,12 @@ import {MatDialog} from '@angular/material/dialog';
 export class NewTaskComponent implements OnInit {
 
   selectedDate: Date;
+  // 选中维护项目时该project为维护项目项
   selectedProject: Project;
-  projectMenus: Array<ProjectMenu> = []
+  isClosedProject: boolean;
+  projects: Array<Project> = []
+  closedProject: Project
+  closedProjects: Array<Project> = []
   taskInput = '';
 
   constructor(@Inject(TASK_INFO) public task: Task, private beeService: BeeService, private snackBar: MatSnackBar,
@@ -47,25 +50,27 @@ export class NewTaskComponent implements OnInit {
   }
 
   initProject() {
-    /*  // todo 适时的刷新项目列表
-      if (this.beeService.projects.length === 0) {
-        this.getAllProjects();
-      } else {
-        this.projectList = this.beeService.projects;
-        this.checkDefaultProject();
-      }*/
     this.getAllProjects()
   }
 
   getAllProjects() {
     this.beeService.getProjects().subscribe(projects => {
+      this.projects = projects
+      let theOneIndex = -1;
+      this.projects.forEach((value, index) => {
+        if (value.projectName === '维护项目') {
+          theOneIndex = index
+        }
+      })
 
-      // 处理菜单
-      this.expandProjectMenu(null, projects)
+      if (theOneIndex !== -1) {
+        this.closedProject = this.projects[theOneIndex]
+        this.projects.splice(theOneIndex, 1)
+      }
+    }, error => SnackBar.open(this.snackBar, error));
 
-      console.log(this.projectMenus)
-
-      this.checkDefaultProject(projects);
+    this.beeService.getClosedProjects().subscribe(projects => {
+      this.closedProjects = projects
     }, error => SnackBar.open(this.snackBar, error));
   }
 
@@ -73,13 +78,21 @@ export class NewTaskComponent implements OnInit {
     this.selectedDate = event.value;
   }
 
-  // projectSelected(event: any) {
-  //   this.selectedProject = event;
-  // }
+  selectProject(isClosedProject: boolean, project: Project) {
+    this.isClosedProject = isClosedProject;
+    this.selectedProject = project;
+  }
 
-  selectProject() {
-    const selectProjectForm = document.getElementById('selectProjectForm') as HTMLInputElement;
-    selectProjectForm.click();
+  getSelectProjectTitle() {
+    if (this.selectedProject) {
+      if (this.isClosedProject) {
+        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`
+      } else {
+        return this.selectedProject.projectName
+      }
+    }else {
+      return '请选择一个项目';
+    }
   }
 
   closeEdit() {
@@ -97,52 +110,9 @@ export class NewTaskComponent implements OnInit {
       return;
     }
 
-    this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject))
+    this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
+      this.isClosedProject ? this.closedProject : null))
 
     this.closeEdit();
-
-    /*    this.beeService.createTask(this.selectedDate, this.taskInput, this.selectedProject)
-          .subscribe(res => {
-            SnackBar.open(this.snackBar, '创建成功');
-            this.beeService.refreshTasks.next(this.selectedDate);
-            this.closeEdit();
-            // 刷新任务列表
-          }, error => {
-            SnackBar.open(this.snackBar, `创建失败 ${error}`);
-          });*/
-
-  }
-
-  saveAndCloseTask() {
-    this.showInputWorkHoursDialog();
-  }
-
-  // 填写工时
-  showInputWorkHoursDialog(): void {
-    const dialogRef = this.dialog.open(WorkHoursDialogComponent, {});
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  private expandProjectMenu(parent: Project, projects: Array<Project>) {
-
-    this.projectMenus.push(new ProjectMenu(parent, projects))
-
-    projects.forEach(project => {
-      if (project.subProjects && project.subProjects.length > 0) {
-        this.expandProjectMenu(project, project.subProjects)
-      }
-    })
-
-    /*    projects.forEach(project => {
-          if (project.subProjects && project.subProjects.length > 0) {
-            this.projectMenus.push(new ProjectMenu(parent, project, project.subProjects));
-            this.expandProjectMenu(project,project.subProjects)
-          } else {
-            this.projectMenus.push(new ProjectMenu(parent, project, []));
-          }
-        })*/
   }
 }

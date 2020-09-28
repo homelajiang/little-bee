@@ -18,7 +18,7 @@
 }
 
 .goods-img {
-  background-image: url('~src/assets/goods.jpg');
+  background-image: url('../../assets/default_gift.jpg');
   background-size: contain;
   width: 100%;
   height: 140px;

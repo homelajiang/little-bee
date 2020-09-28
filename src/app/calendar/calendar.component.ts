@@ -159,7 +159,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     // 创建任务
     this.createTaskEvent = this.beeService.notifyCreateTask.subscribe(task => {
       if (task) {
-        this.beeService.createTask(task.date, task.content, task.project)
+        this.beeService.createTask(task)
           .subscribe(res => {
             this.snackBar.tipsSuccess('创建成功')
           }, error => {

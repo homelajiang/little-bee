@@ -26,31 +26,23 @@
 
     <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
       <mat-icon>folder_open</mat-icon>
-<!--      <button mat-button
-              [matMenuTriggerFor]="'startMenus'">{{selectedProject ? selectedProject.projectName : '请选择一个项目'}}</button>
+      <button mat-button
+              [matMenuTriggerFor]="menu">{{getSelectProjectTitle()}}</button>
 
-      <mat-menu #startMenus="matMenu" *ngFor="let menu of projectMenus">
-        <ng-template matMenuContent *ngFor="let child of menu.children">
-          <button mat-menu-item>{{child.projectName}}</button>
-        </ng-template>
-      </mat-menu>-->
-            <button mat-button (click)="selectProject()" style="position: relative;">
-              {{selectedProject ? selectedProject.projectName : '请选择一个项目'}}
-              <mat-form-field style="opacity: 0;height: 36px;position: absolute;left: 0;">
-                <mat-select placeholder="请选择一个项目" fxFlex="grow" id="selectProjectForm"
-                            [(value)]="selectedProject">
-                  <mat-option *ngFor="let project of projectList" [value]="project">
-                    {{project.projectName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="selectProject(false,project)" *ngFor="let  project of projects">{{project.projectName}}</button>
+
+        <button mat-menu-item *ngIf="closedProject" [matMenuTriggerFor]="closedMenu">{{closedProject.projectName}}</button>
+      </mat-menu>
+
+      <mat-menu #closedMenu="matMenu">
+        <button mat-menu-item
+                (click)="selectProject(true,project)"
+                *ngFor="let  project of closedProjects"
+        >{{project.projectName}}</button>
+      </mat-menu>
+
     </div>
-
-    <!--    <div fxLayout="row" fxLayoutAlign="start center" class="todo-selection">
-          <mat-icon fxFlex="none">people_alt</mat-icon>
-          <button mat-button>范德萨 等5人</button>
-        </div>-->
 
     <div fxLayout="row">
       <span fxFlex="grow"></span>

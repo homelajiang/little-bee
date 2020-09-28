@@ -1,24 +1,25 @@
+<div fxLayout="row" class="container shop-container">
 
-<div fxLayout="row"  class="container shop-container">
+  <div fxLayout="row wrap" class="shop-content">
 
-<div fxLayout="row wrap" class="shop-content">
+    <div fxFlex="25" *ngFor="let gift of gifts" class="goods-item">
+      <div fxLayout="column" class="goods-content hover-shadow">
+        <div class="goods-img" [ngStyle]="{'background-image': 'url(' + gift.img + ')'}"></div>
 
-  <div fxFlex="25" *ngFor="let index of [0,2,3,4,5,6,7,8,9,10,11]" class="goods-item">
-    <div fxLayout="column" class="goods-content hover-shadow">
-      <div class="goods-img"></div>
+        <div fxLayout="row" fxLayoutAlign="start end" class="goods-info">
+          <h4 fxFlex="grow">{{gift.name}}</h4>
+          <div fxFlex="none" class="integral-icon"></div>
+          <span fxFlex="none">{{gift.price}}</span>
 
-      <div fxLayout="row" fxLayoutAlign="start end" class="goods-info">
-        <h4 fxFlex="grow">百事可乐</h4>
-        <div fxFlex="none" class="integral-icon"></div>
-        <span fxFlex="none" >300</span>
+        </div>
 
+        <button fxFlex mat-flat-button color="primary"
+                (click)="exchangeGift(gift)"
+                [disabled]="gift.leftCount<=0">{{gift.leftCount <= 0 ? '库存不足' : '兑换'}}</button>
       </div>
-
-      <button fxFlex mat-flat-button color="primary">兑换</button>
     </div>
-  </div>
 
-</div>
+  </div>
 
 </div>
 
