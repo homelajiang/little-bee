@@ -14,6 +14,13 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.beeService.userInfo
+    this.beeService.notifyUserInfoUpdated.subscribe(userInfo=>{
+      this.userInfo = userInfo
+    })
+  }
+
+  signOut() {
+    this.beeService.signOut();
   }
 
 }

@@ -38,6 +38,9 @@ export class BeeService {
   // 通知删除任务
   public notifyDeleteTask = new Subject<Task>();
 
+  // 通知更新用户信息
+  public notifyUserInfoUpdated = new Subject<UserInfo>();
+
   jsonHttpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -89,6 +92,18 @@ export class BeeService {
           }
         }),
       );
+  }
+
+  // 请求刷新用户信息
+  refreshUserInfo() {
+    this.getUserInfo()
+      .subscribe(res => {
+        if (res) {
+          res.token = this.userInfo.token
+          this.userInfo = res
+          this.notifyUserInfoUpdated.next(this.userInfo)
+        }
+      })
   }
 
   // 获取用户信息
@@ -305,6 +320,21 @@ export class BeeService {
           }
         })
       );
+  }
+
+  // 首次登录
+  checkIn(): Observable<any> {
+    return this.http.get(`bee/home/entry`)
+      .pipe(
+        flatMap(event => {
+          const res = JSON.parse(JSON.stringify(event))
+          if (res.code === 0) {
+            return of(res.result)
+          } else {
+            return throwError(res.msg)
+          }
+        })
+      )
   }
 
   /**

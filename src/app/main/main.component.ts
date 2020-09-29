@@ -14,6 +14,10 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.beeService.userInfo;
+
+    this.beeService.notifyUserInfoUpdated.subscribe(userInfo=>{
+      this.userInfo = userInfo
+    })
   }
 
   signOut() {

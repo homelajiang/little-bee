@@ -67,8 +67,6 @@ export class DinnerComponent implements OnInit {
       if (res.sid === 1) {
         this.isOrder = res.info.isOrder === '1'
         this.readonly = res.info.readonly === '1'
-
-        console.log(`${this.isOrder} - ${this.readonly}`)
       } else {
         this.snackBar.tipsError(res.desc)
       }

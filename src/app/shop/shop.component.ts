@@ -45,7 +45,7 @@ export class ShopComponent implements OnInit {
       }, error => {
         this.snackBar.tipsError(error)
       }, () => {
-        this.beeService.getUserInfo()
+        this.beeService.refreshUserInfo()
       })
   }
 }

@@ -32,7 +32,7 @@
       <mat-icon svgIcon="bee:gift"></mat-icon>
     </button>
 
-    <button mat-button class="avatar-button">
+    <button mat-button class="avatar-button" [matMenuTriggerFor]="toolbarMenu">
       <div fxLayout="row" fxLayoutAlign="start center" class="avatar">
         <div class="avatar-icon" [ngStyle]="{'background-image':'url('+userInfo.head+')'}"></div>
         <div class="avatar-info">
@@ -45,5 +45,17 @@
         <mat-icon fxFlexAlign="start">keyboard_arrow_down</mat-icon>
       </div>
     </button>
+
+    <mat-menu #toolbarMenu="matMenu">
+      <!--    <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>系统设置</span>
+          </button>-->
+      <button mat-menu-item (click)="signOut()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>退出登录</span>
+      </button>
+    </mat-menu>
+
   </div>
 </div>

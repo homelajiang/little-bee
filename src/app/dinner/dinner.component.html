@@ -1,8 +1,9 @@
 <div fxLayout="row" class="dinner" fxLayoutAlign="start center">
-  <img src="assets/dinner-icon.svg" class="dinner-icon">
+  <img fxFlex="none" src="assets/dinner-icon.svg" class="dinner-icon">
   <div fxLayout="column" fxFlex="grow">
-    <h2>Dinner</h2>
+    <h2>晚餐预定</h2>
     <span>09:00 - 14:00</span>
   </div>
-  <button mat-button color="primary" (click)="switchOrder()" [disabled]="readonly">{{getOrderDesc()}}</button>
+  <button fxFlex="none" mat-button color="primary" (click)="switchOrder()"
+          [disabled]="readonly">{{getOrderDesc()}}</button>
 </div>
