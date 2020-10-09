@@ -11,7 +11,7 @@ import {filter, flatMap} from 'rxjs/operators';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  private gifts: Array<Gift> = [];
+  public gifts: Array<Gift> = [];
 
   constructor(private matDialog: MatDialog, private beeService: BeeService, private snackBar: SnackBar) {
   }

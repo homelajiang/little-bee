@@ -1,6 +1,6 @@
 <div class="calendar-container">
   <div fxLayout="row" fxLayoutAlign="start center" class="calendar-bar">
-    <h3>{{currentDate | date:'MMM , yyyy'}}</h3>
+    <h3>{{currentDate | dateFnsFormat:'MMM , yyyy'}}</h3>
     <span fxFlex></span>
     <button mat-icon-button (click)="preMonth()"
             aria-label="pre month">

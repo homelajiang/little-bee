@@ -5,9 +5,11 @@ import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './home/home.component';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
+import {CreateVacationComponent} from './create-vacation/create-vacation.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'vacation', component: CreateVacationComponent},
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [

@@ -49,6 +49,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 import {ClockInComponent} from './clock-in/clock-in.component';
+import { ActionCardComponent } from './action-card/action-card.component';
+import { CreateVacationComponent } from './create-vacation/create-vacation.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import {ClockInComponent} from './clock-in/clock-in.component';
     EventFilterComponent,
     ShopComponent,
     HomeCalendarComponent,
-    ClockInComponent
+    ClockInComponent,
+    ActionCardComponent,
+    CreateVacationComponent
   ],
   imports: [
     CommonModule,

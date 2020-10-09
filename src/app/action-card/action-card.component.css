@@ -1,0 +1,32 @@
+
+.action-card {
+  /*padding: 60px 0;*/
+  background: white;
+  /*max-width: 900px;*/
+}
+
+.action-card img {
+  width: 56px;
+  height: 56px;
+  margin-right: 10px;
+}
+
+.action-card h2 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+
+.action-card span {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #999999;
+}
+
+/*
+.action-card button {
+  width: 200px;
+  height: 54px;
+  margin-top: 60px;
+  font-size: 18px;
+}*/
