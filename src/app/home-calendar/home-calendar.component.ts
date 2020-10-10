@@ -35,7 +35,6 @@ export class HomeCalendarComponent implements OnInit {
   checkIn() {
     this.beeService.checkIn()
       .subscribe(res => {
-
         if (res) {
           let msg;
           if (res.exp) {
@@ -52,6 +51,8 @@ export class HomeCalendarComponent implements OnInit {
             this.snackBar.tipsSuccess(`每日登录：${msg}`)
           }
         }
+      }, () => null, () => {
+        this.beeService.refreshUserInfo()
       })
   }
 

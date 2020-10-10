@@ -1,8 +1,52 @@
-<div fxLayout="row" class="action-card" fxLayoutAlign="start center">
+<div fxLayout="row" class="vacation-card" fxLayoutAlign="start center">
   <img fxFlex="none" src="assets/vacation.png">
   <div fxLayout="column" fxFlex="grow">
     <h2>休假</h2>
-    <span>10/26 13:00 - 10/27 14:00</span>
+    <div fxLayout="row" class="vacation-select">
+      <span>开始:</span>
+      <div class="vacation-picker">
+        <button mat-button (click)="startPicker.open()">{{startDate | dateFnsFormat:'MM/dd'}}</button>
+        <mat-form-field>
+          <input matInput [matDatepicker]="startPicker">
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-button [mat-menu-trigger-for]="startTime">{{startDate | dateFnsFormat:'HH:mm'}}</button>
+      <mat-menu #startTime="matMenu">
+        <button mat-menu-item (click)="changeHour(true,9)">09:00</button>
+        <button mat-menu-item (click)="changeHour(true,10)">10:00</button>
+        <button mat-menu-item (click)="changeHour(true,11)">11:00</button>
+        <button mat-menu-item (click)="changeHour(true,12)">12:00</button>
+        <button mat-menu-item (click)="changeHour(true,13)">13:00</button>
+        <button mat-menu-item (click)="changeHour(true,14)">14:00</button>
+        <button mat-menu-item (click)="changeHour(true,15)">15:00</button>
+        <button mat-menu-item (click)="changeHour(true,16)">16:00</button>
+        <button mat-menu-item (click)="changeHour(true,17)">17:00</button>
+      </mat-menu>
+    </div>
+
+    <div fxLayout="row" class="vacation-select">
+      <span>结束:</span>
+      <div class="vacation-picker">
+        <button mat-button (click)="endPicker.open()">{{endDate | dateFnsFormat:'MM/dd'}}</button>
+        <mat-form-field>
+          <input matInput [matDatepicker]="endPicker" (dateChange)="changeDate(false,$event)">
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-button [mat-menu-trigger-for]="endTime">{{endDate | dateFnsFormat:'HH:mm'}}</button>
+      <mat-menu #endTime="matMenu">
+        <button mat-menu-item (click)="changeHour(false,10)">10:00</button>
+        <button mat-menu-item (click)="changeHour(false,11)">11:00</button>
+        <button mat-menu-item (click)="changeHour(false,12)">12:00</button>
+        <button mat-menu-item (click)="changeHour(false,13)">13:00</button>
+        <button mat-menu-item (click)="changeHour(false,14)">14:00</button>
+        <button mat-menu-item (click)="changeHour(false,15)">15:00</button>
+        <button mat-menu-item (click)="changeHour(false,16)">16:00</button>
+        <button mat-menu-item (click)="changeHour(false,17)">17:00</button>
+        <button mat-menu-item (click)="changeHour(false,18)">18:00</button>
+      </mat-menu>
+    </div>
   </div>
   <button fxFlex="none" mat-button color="primary">申请</button>
 </div>

@@ -1,32 +1,50 @@
 
-.action-card {
+.vacation-card {
   /*padding: 60px 0;*/
   background: white;
   /*max-width: 900px;*/
 }
 
-.action-card img {
+.vacation-card img {
   width: 56px;
   height: 56px;
   margin-right: 10px;
 }
 
-.action-card h2 {
+.vacation-card h2 {
   margin-top: 0;
   margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.vacation-picker{
+  position: relative;
+}
+
+.vacation-picker mat-form-field{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 24px;
 }
 
 
-.action-card span {
+.vacation-card span {
   margin-bottom: 0;
   font-size: 14px;
   color: #999999;
 }
 
-/*
-.action-card button {
-  width: 200px;
-  height: 54px;
-  margin-top: 60px;
-  font-size: 18px;
-}*/
+.vacation-select{}
+
+.vacation-select button {
+  line-height: 24px;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.vacation-select span{
+  font-size: 13px;
+  margin-top: 2px;
+}

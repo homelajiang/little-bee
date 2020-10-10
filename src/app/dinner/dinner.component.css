@@ -14,11 +14,12 @@
 .dinner h2 {
   margin-top: 0;
   margin-bottom: 5px;
+  font-size: 20px;
 }
 
 
 .dinner span {
-  margin-bottom: 0px;
+  margin-bottom: 0;
   font-size: 14px;
   color: #999999;
 }
