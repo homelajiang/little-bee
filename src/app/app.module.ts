@@ -125,5 +125,7 @@ export class AppModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIconInNamespace('bee', 'gift',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/gift.svg'))
+    this.matIconRegistry.addSvgIconInNamespace('bee','daily',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/calendar.svg'))
   }
 }

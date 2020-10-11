@@ -30,7 +30,7 @@ export class ShopComponent implements OnInit {
       this.snackBar.tipsError('积分不足')
       return
     }
-    ConfirmDialog.open(this.matDialog, '确定兑换', '', '提示')
+    ConfirmDialog.open(this.matDialog, '确定兑换？', '', '提示')
       .afterClosed()
       .pipe(
         filter(ok => {

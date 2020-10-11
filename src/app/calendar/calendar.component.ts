@@ -119,7 +119,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 刷新指定日期的任务
     this.refreshTaskEvent = this.beeService.notifyRefreshDaily.subscribe(date => {
-        console.log(date)
         if (date) {
           this.beeService.getTasksByDate(date, 0)
             .subscribe(tasks => {

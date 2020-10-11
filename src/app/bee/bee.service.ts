@@ -99,11 +99,11 @@ export class BeeService {
     this.getUserInfo()
       .subscribe(res => {
         if (res) {
-          res.token = this.userInfo.token
-          this.userInfo = res
-          this.notifyUserInfoUpdated.next(this.userInfo)
+          res.token = this.userInfo.token;
+          this.userInfo = res;
+          this.notifyUserInfoUpdated.next(this.userInfo);
         }
-      })
+      });
   }
 
   // 获取用户信息
@@ -112,12 +112,12 @@ export class BeeService {
       .pipe(
         flatMap(res => {
           if (res.code === 0) {
-            return of(res.result)
+            return of(res.result);
           } else {
-            return throwError(res.msg)
+            return throwError(res.msg);
           }
         })
-      )
+      );
   }
 
   // 获取商品列表
@@ -126,28 +126,28 @@ export class BeeService {
       .pipe(
         flatMap(res => {
           if (res.code === 0) {
-            return of(res.result)
+            return of(res.result);
           } else {
-            return throwError(res.msg)
+            return throwError(res.msg);
           }
         })
-      )
+      );
   }
 
   // 兑换商品
   exchangeGift(giftId: number): Observable<any> {
     const body: HttpParams = new HttpParams()
-      .set('giftId', giftId.toString())
+      .set('giftId', giftId.toString());
     return this.http.post<HttpResponse<Array<Gift>>>(`bee/user/exchangeGift`, body, this.formHttpOptions)
       .pipe(
         flatMap(res => {
           if (res.code === 0) {
-            return of(res.result)
+            return of(res.result);
           } else {
-            return throwError(res.msg)
+            return throwError(res.msg);
           }
         })
-      )
+      );
   }
 
   // 从小蜜蜂获取搜索代办事项
@@ -176,7 +176,7 @@ export class BeeService {
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            return of(event.result)
+            return of(event.result);
           } else {
             return throwError(event.msg);
           }
@@ -193,10 +193,16 @@ export class BeeService {
           if (res.code === 0) {
             return of(res.result);
           } else {
-            return throwError(res.msg)
+            return throwError(res.msg);
           }
         })
-      )
+      );
+  }
+
+  // 创建休假
+  createVacation(startDate: Date, endDate: Date): Observable<any> {
+    // todo 创建休假实现
+    return of();
   }
 
   // 创建任务
@@ -213,13 +219,10 @@ export class BeeService {
       .set('alarmFlag', '0');
     if (taskCreate.parent) {
       body = body.set('projectId', taskCreate.parent.projectId.toString())
-        .set('subProjectId', taskCreate.project.projectId.toString())
+        .set('subProjectId', taskCreate.project.projectId.toString());
     } else {
-      body = body.set('projectId', taskCreate.project.projectId.toString())
+      body = body.set('projectId', taskCreate.project.projectId.toString());
     }
-
-    console.log(body)
-    // TODO 支持休假
     return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
@@ -327,14 +330,14 @@ export class BeeService {
     return this.http.get(`bee/home/entry`)
       .pipe(
         flatMap(event => {
-          const res = JSON.parse(JSON.stringify(event))
+          const res = JSON.parse(JSON.stringify(event));
           if (res.code === 0) {
-            return of(res.result)
+            return of(res.result);
           } else {
-            return throwError(res.msg)
+            return throwError(res.msg);
           }
         })
-      )
+      );
   }
 
   /**
@@ -527,7 +530,7 @@ export class BeeService {
     const paramsBody = {
       userEmail: this.userInfo.userAccount,
       class: '.kmoa.MealRequest'
-    }
+    };
 
     const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
       .set('VER', '4.24')
@@ -538,7 +541,7 @@ export class BeeService {
       .set('method', 'GetMealOrder')
       .set('params', this.desEncrypt(JSON.stringify(paramsBody)));
 
-    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions)
+    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions);
   }
 
   // 更改订餐信息
@@ -548,7 +551,7 @@ export class BeeService {
       idOrder: isOrder === 1 ? '1' : '0',
       userEmail: this.userInfo.userAccount,
       class: '.kmoa.MealRequest'
-    }
+    };
     const body: HttpParams = new HttpParams({encoder: new CustomEncoder()})
       .set('VER', '4.24')
       .set('OS', 'ANDROID')
@@ -558,7 +561,7 @@ export class BeeService {
       .set('method', 'OrderMeal')
       .set('params', this.desEncrypt(JSON.stringify(paramsBody)));
 
-    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions)
+    return this.http.post(`oa/interface/mobile.do?action=kmoa`, body, this.formHttpOptions);
   }
 
   // DES 加密
@@ -653,16 +656,16 @@ export class TaskCreate {
 
   date: Date;
   content: string;
-  project: Project
-  parent: Project
+  project: Project;
+  parent: Project;
 }
 
 export class Gift {
-  id: number
-  img: string
-  leftCount: number
-  name: string
-  price: number
+  id: number;
+  img: string;
+  leftCount: number;
+  name: string;
+  price: number;
 }
 
 export class ScoreAndExp {
@@ -703,8 +706,8 @@ export class TaskInfo {
   state: number;
   projectName: string;
   projectId: number;
-  subProjectId: number
-  subProjectName: string
+  subProjectId: number;
+  subProjectName: string;
   workHours: number;
 }
 

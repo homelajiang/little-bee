@@ -7,7 +7,7 @@
       <div class="vacation-picker">
         <button mat-button (click)="startPicker.open()">{{startDate | dateFnsFormat:'MM/dd'}}</button>
         <mat-form-field>
-          <input matInput [matDatepicker]="startPicker">
+          <input matInput [matDatepicker]="startPicker" (dateChange)="changeDate(true,$event)">
           <mat-datepicker #startPicker></mat-datepicker>
         </mat-form-field>
       </div>
@@ -48,5 +48,5 @@
       </mat-menu>
     </div>
   </div>
-  <button fxFlex="none" mat-button color="primary">申请</button>
+  <button fxFlex="none" mat-button color="primary" (click)="applyVacation()">申请</button>
 </div>
