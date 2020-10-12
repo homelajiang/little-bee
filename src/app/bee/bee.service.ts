@@ -301,19 +301,19 @@ export class BeeService {
                   results.forEach((res, index) => {
                     if (res.code === 0) {
                       const task: Task = new Task();
-                      task.createTime= ''
-                      task.userNames= ''
-                      task.startTime= res.result.beginDate
-                      task.id= event.result[index].id
-                      task.endTime= res.result.endDate
-                      task.state= res.result.state
-                      task.projectName= res.result.projectName
-                      task.title= res.result.content
-                      task.type= res.result.taskType
-                      task.typeState= res.result.taskType
-                      task.projectId= res.result.projectId
-                      task.workHours= res.result.workHours
-                      task.hours= 0
+                      task.createTime = ''
+                      task.userNames = ''
+                      task.startTime = res.result.beginDate
+                      task.id = event.result[index].id
+                      task.endTime = res.result.endDate
+                      task.state = res.result.state
+                      task.projectName = res.result.projectName
+                      task.title = res.result.content
+                      task.type = res.result.taskType
+                      task.typeState = res.result.taskType
+                      task.projectId = res.result.projectId
+                      task.workHours = res.result.workHours
+                      task.hours = 0
                       resArr.push(task);
                     }
                   });

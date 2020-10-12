@@ -40,9 +40,10 @@
   padding: 10px;
   color: #8365db;
   cursor: pointer;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
+/*  border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-left: 2px solid;
+  border-left: 2px solid;*/
 }
 
 .event-item-title {

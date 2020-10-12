@@ -17,7 +17,7 @@
       </div>
       <h3>{{task.projectName}}</h3>
       <!--      <p>Mozilla 可能终止了对 Rust 语言的资助，但有 Linux 项目的支持和加持，它的未来还是安全的。</p>-->
-      <span class="event-hour">{{task.workHours}}小时</span>
+      <span class="event-hour">{{getStateDesc(task)}}</span>
     </div>
 
   </div>
