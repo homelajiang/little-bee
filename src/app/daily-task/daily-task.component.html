@@ -16,10 +16,12 @@
       <div fxLayout="row" fxLayoutAlign="start center">
         <h3 fxFlex="none">{{task.projectName}}</h3>
         <span fxFlex="grow"></span>
-        <span fxFlex="none" class="event-hour">{{'状态'}}</span>
+        <span fxFlex="none" class="event-hour">{{getStateDesc(task)}}</span>
       </div>
       <p>{{task.title}}</p>
     </div>
   </div>
+
+  <button mat-flat-button color="primary">新建任务</button>
 
 </div>

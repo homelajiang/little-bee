@@ -86,7 +86,6 @@ export class DinnerComponent implements OnInit {
           this.actionUrl = res.info.qUrl
           this.tips = res.info.qMsg
         }
-        console.log('handleOrderRes')
       } else {
         this.snackBar.tipsError(res.desc)
       }

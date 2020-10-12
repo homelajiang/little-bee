@@ -15,6 +15,10 @@
 -->
 
     <div class="nav-card">
+      <app-daily-task [daily]="selectDaily"></app-daily-task>
+    </div>
+
+    <div class="nav-card">
       <app-dinner></app-dinner>
     </div>
 
@@ -22,17 +26,9 @@
       <app-create-vacation></app-create-vacation>
     </div>
 
-    <div class="nav-card">
-      <app-action-card title="新建任务" buttonText="新建" desc="开始新建任务吧！" icon="/assets/new-task.svg"></app-action-card>
-    </div>
-
-    <div class="nav-card">
-      <app-daily-task [daily]="selectDaily"></app-daily-task>
-    </div>
-
   </div>
 
-  <div fxLayout="column" class="home-content" fxFlex>
+  <div fxLayout="column" class="home-content" fxFlex="grow">
     <app-event-title [week]="selectWeek" (weekChanged)="changeWeek($event)"></app-event-title>
     <app-event [week]="selectWeek" class="home-event" ></app-event>
   </div>
