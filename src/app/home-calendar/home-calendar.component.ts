@@ -1,12 +1,10 @@
-import {Component, ElementRef, Injector, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {Overlay} from '@angular/cdk/overlay';
-import {BeeService} from '../bee/bee.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {BeeService, Task} from '../bee/bee.service';
 import {EventTitleComponent} from '../event-title/event-title.component';
 import {EventComponent} from '../event/event.component';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {Daily} from '../daily/daily.component';
-import {SnackBar} from "../utils/snack-bar";
+import {SnackBar} from '../utils/snack-bar';
 
 @Component({
   selector: 'app-home-calendar',
@@ -24,6 +22,7 @@ export class HomeCalendarComponent implements OnInit {
   calendarComponent: CalendarComponent
 
   public selectWeek: Array<Daily>; // 选中并正在展示的周
+  public selectDaily:Daily; // 选中的Daily
 
   constructor(private beeService: BeeService, private snackBar: SnackBar) {
   }
@@ -60,7 +59,12 @@ export class HomeCalendarComponent implements OnInit {
     this.selectWeek = week;
   }
 
+  onSelectDaily(daily: Daily) {
+    this.selectDaily = daily
+  }
+
   changeWeek(event: number) {
     this.calendarComponent.changeWeek(event);
   }
+
 }

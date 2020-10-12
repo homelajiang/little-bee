@@ -11,7 +11,7 @@
   <div fxFlex fxLayout="column" fxLayoutAlign="start none" class="event-column"
        *ngFor="let index of [0,1,2,3,4,5,6] ">
 <!--    [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}"-->
-    <div class="event-item" [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}" matRipple *ngFor="let task of week[index].events" (click)="showEventInfo($event,task)">
+    <div class="event-item" [matTooltip]="task.title" [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}" matRipple *ngFor="let task of week[index].events" (click)="showEventInfo($event,task)">
       <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
         <span fxFlex=""></span>
       </div>

@@ -51,6 +51,7 @@ import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 import {ClockInComponent} from './clock-in/clock-in.component';
 import { ActionCardComponent } from './action-card/action-card.component';
 import { CreateVacationComponent } from './create-vacation/create-vacation.component';
+import { DailyTaskComponent } from './daily-task/daily-task.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { CreateVacationComponent } from './create-vacation/create-vacation.compo
     HomeCalendarComponent,
     ClockInComponent,
     ActionCardComponent,
-    CreateVacationComponent
+    CreateVacationComponent,
+    DailyTaskComponent
   ],
   imports: [
     CommonModule,

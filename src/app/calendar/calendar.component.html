@@ -22,7 +22,7 @@
   <div *ngFor="let week of displayDays" fxLayout="row" class="calendar-column"
        [ngClass]="{'calendar-column-selected':weekIsSelected(week)}">
     <div *ngFor="let column of [0,1,2,3,4,5,6]" matRipple fxLayout="column"
-         (click)="onSelectWeek(week)"
+         (click)="onSelectWeek(week,column)"
          fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
       <h2 class="calendar-button">{{ week[column].date | date:'d' }}</h2>
       <div fxLayout="row" fxLayoutAlign="center center" class="calendar-point">

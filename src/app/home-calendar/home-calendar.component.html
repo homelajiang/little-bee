@@ -1,7 +1,7 @@
 <div fxLayout="row" class="container">
   <div class="home-nav">
     <div class="nav-card nav-calendar">
-      <app-calendar (selectWeekEvent)="onSelectWeek($event)"></app-calendar>
+      <app-calendar (selectWeekEvent)="onSelectWeek($event)" (selectDailyEvent)="onSelectDaily($event)"></app-calendar>
     </div>
 
     <!--    <div class="nav-card">
@@ -20,6 +20,14 @@
 
     <div class="nav-card">
       <app-create-vacation></app-create-vacation>
+    </div>
+
+    <div class="nav-card">
+      <app-action-card title="新建任务" buttonText="新建" desc="开始新建任务吧！" icon="/assets/new-task.svg"></app-action-card>
+    </div>
+
+    <div class="nav-card">
+      <app-daily-task [daily]="selectDaily"></app-daily-task>
     </div>
 
   </div>

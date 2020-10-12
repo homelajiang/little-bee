@@ -1,0 +1,38 @@
+
+.event-column{}
+
+.event-column h2{
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 3px;
+}
+
+.event-item {
+  background: #eeeaff;
+  margin: 8px;
+  padding: 10px;
+  color: #8365db;
+  cursor: pointer;
+  border-radius: 10px;
+  /*  border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 2px solid;*/
+}
+
+.event-item-title {
+  margin-bottom: 5px;
+}
+
+.event-item p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.event-item h3 {
+  font-size: 14px;
+  margin: 0;
+}
+.event-hour {
+  font-size: 12px;
+}

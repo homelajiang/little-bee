@@ -1,0 +1,25 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="start none" class="event-column">
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <h2 fxFlex="none">任务列表</h2>
+    <span fxFlex="grow"></span>
+    <span *ngIf="daily" fxFlex="none">{{daily.date | dateFnsFormat:'yyyy-MM-dd'}}</span>
+  </div>
+
+  <div *ngIf="daily">
+    <div class="event-item" [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}" matRipple
+         *ngFor="let task of daily.events" (click)="showEventInfo($event,task)">
+      <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
+        <span fxFlex=""></span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <h3 fxFlex="none">{{task.projectName}}</h3>
+        <span fxFlex="grow"></span>
+        <span fxFlex="none" class="event-hour">{{'状态'}}</span>
+      </div>
+      <p>{{task.title}}</p>
+    </div>
+  </div>
+
+</div>

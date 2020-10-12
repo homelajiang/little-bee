@@ -6,7 +6,6 @@ import {TaskInfoComponent} from '../task-info/task-info.component';
 import {NewTaskComponent} from '../new-task/new-task.component';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TASK_INFO} from '../tokens';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {SnackBar} from '../utils/snack-bar';
 
 @Component({

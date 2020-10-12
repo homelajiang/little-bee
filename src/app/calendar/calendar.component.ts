@@ -52,6 +52,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   // 选中一周
   @Output() selectWeekEvent = new EventEmitter<Array<Daily>>();
 
+  // 选中一天
+  @Output() selectDailyEvent = new EventEmitter<Daily>();
+
   public weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']; // ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
   private colorPool = [
@@ -78,9 +81,13 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
 
   // 选择一周
-  onSelectWeek(week: Array<Daily>) {
+  onSelectWeek(week: Array<Daily>, column = -1) {
     this.selectWeek = week;
     this.selectWeekEvent.emit(week);
+
+    if (column !== -1) {
+      this.selectDailyEvent.emit(week[column])
+    }
   }
 
   preMonth() {
@@ -278,6 +285,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
         if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
           (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
           daily.events.push(task);
+        }
+
+        if (daily.today) {
+          this.selectDailyEvent.emit(daily)
         }
       });
     });
