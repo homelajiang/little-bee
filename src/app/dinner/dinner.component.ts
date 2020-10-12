@@ -13,6 +13,9 @@ export class DinnerComponent implements OnInit {
 
   isOrder = false;
   readonly = false;
+  moreAction = false;
+  actionUrl = ''
+  tips = ''
 
   constructor(private beeService: BeeService, private snackBar: SnackBar) {
   }
@@ -41,6 +44,12 @@ export class DinnerComponent implements OnInit {
   }
 
   switchOrder() {
+
+    if (this.moreAction) {
+      window.open(this.actionUrl)
+      return;
+    }
+
     if (this.readonly) {
       this.snackBar.tips('当前不可操作')
       return;
@@ -49,6 +58,11 @@ export class DinnerComponent implements OnInit {
   }
 
   getOrderDesc() {
+
+    if (this.moreAction) {
+      return '点击进入'
+    }
+
     if (this.isOrder) {
       return '已预订'
     } else {
@@ -67,6 +81,12 @@ export class DinnerComponent implements OnInit {
       if (res.sid === 1) {
         this.isOrder = res.info.isOrder === '1'
         this.readonly = res.info.readonly === '1'
+        if (res.info.qUrl && res.info.qMsg) {
+          this.moreAction = true
+          this.actionUrl = res.info.qUrl
+          this.tips = res.info.qMsg
+        }
+        console.log('handleOrderRes')
       } else {
         this.snackBar.tipsError(res.desc)
       }

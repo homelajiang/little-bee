@@ -201,8 +201,28 @@ export class BeeService {
 
   // 创建休假
   createVacation(startDate: Date, endDate: Date): Observable<any> {
-    // todo 创建休假实现
-    return of();
+    const body: HttpParams = new HttpParams()
+      .set('beginDate', format(startDate, 'yyyy-MM-dd'))
+      .set('attachments', '')
+      .set('taskContent', '休假')
+      .set('endDate', format(endDate, 'yyyy-MM-dd'))
+      .set('userIds', this.userInfo.id.toString())
+      .set('createMore', '0')
+      .set('projectId', '1')
+      .set('taskType', '1')  // 1 普通任务 2 风险
+      .set('restFlag', '1') // 1、休假任务  0或不传表示正常任务
+      .set('alarmFlag', '0');
+    return this.http.post<HttpResponse<any>>(`bee/task/operate`,
+      body, this.formHttpOptions)
+      .pipe(
+        flatMap(event => {
+          if (event.code === 0) {
+            return of(event.result)
+          } else {
+            return throwError(event.msg)
+          }
+        })
+      );
   }
 
   // 创建任务
@@ -280,21 +300,20 @@ export class BeeService {
                   const resArr: Array<Task> = [];
                   results.forEach((res, index) => {
                     if (res.code === 0) {
-                      const task: Task = {
-                        createTime: '',
-                        userNames: '',
-                        startTime: res.result.beginDate,
-                        id: event.result[index].id,
-                        endTime: res.result.endDate,
-                        state: res.result.state,
-                        projectName: res.result.projectName,
-                        title: res.result.content,
-                        type: res.result.taskType,
-                        typeState: res.result.taskType,
-                        projectId: res.result.projectId,
-                        workHours: res.result.workHours,
-                        hours: 0
-                      };
+                      const task: Task = new Task();
+                      task.createTime= ''
+                      task.userNames= ''
+                      task.startTime= res.result.beginDate
+                      task.id= event.result[index].id
+                      task.endTime= res.result.endDate
+                      task.state= res.result.state
+                      task.projectName= res.result.projectName
+                      task.title= res.result.content
+                      task.type= res.result.taskType
+                      task.typeState= res.result.taskType
+                      task.projectId= res.result.projectId
+                      task.workHours= res.result.workHours
+                      task.hours= 0
                       resArr.push(task);
                     }
                   });
@@ -639,6 +658,7 @@ export class Task {
   projectId: number;
   workHours: number;
   hours: number; // 任务时长
+  color: any; // 项目颜色,根据项目id进行区分
 }
 
 export class TaskClose {

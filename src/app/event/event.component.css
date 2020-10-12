@@ -42,7 +42,7 @@
   cursor: pointer;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-left: 2px #8365db solid;
+  border-left: 2px solid;
 }
 
 .event-item-title {

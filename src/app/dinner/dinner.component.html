@@ -5,5 +5,6 @@
     <span>09:00 - 14:00</span>
   </div>
   <button fxFlex="none" mat-button color="primary" (click)="switchOrder()"
-          [disabled]="readonly">{{getOrderDesc()}}</button>
+          [matTooltip]="tips"
+          [disabled]="readonly && !moreAction">{{getOrderDesc()}}</button>
 </div>

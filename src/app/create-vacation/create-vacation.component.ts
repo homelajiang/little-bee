@@ -71,9 +71,16 @@ export class CreateVacationComponent implements OnInit {
           return ok;
         }),
         flatMap(() => {
-          return this.beeService.createVacation(this.startDate, this.endDate);
+          return this.beeService.createVacation(this.startDate, this.endDate)
         })
-      );
+      )
+      .subscribe(res => {
+        this.snackBar.tipsSuccess('休假创建成功')
+      }, error => {
+        this.snackBar.tipsError('休假创建失败')
+      }, () => {
+        this.beeService.notifyRefreshDaily.next(this.startDate)
+      });
   }
 
 

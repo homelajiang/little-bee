@@ -10,14 +10,14 @@
 <div fxLayout="row" class="event-container">
   <div fxFlex fxLayout="column" fxLayoutAlign="start none" class="event-column"
        *ngFor="let index of [0,1,2,3,4,5,6] ">
-
-    <div class="event-item" matRipple *ngFor="let event of week[index].events" (click)="showEventInfo($event,event)">
+<!--    [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}"-->
+    <div class="event-item" [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}" matRipple *ngFor="let task of week[index].events" (click)="showEventInfo($event,task)">
       <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
         <span fxFlex=""></span>
       </div>
-      <h3>{{event.projectName}}</h3>
+      <h3>{{task.projectName}}</h3>
       <!--      <p>Mozilla 可能终止了对 Rust 语言的资助，但有 Linux 项目的支持和加持，它的未来还是安全的。</p>-->
-      <span class="event-hour">{{event.workHours}}小时</span>
+      <span class="event-hour">{{task.workHours}}小时</span>
     </div>
 
   </div>

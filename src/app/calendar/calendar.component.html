@@ -26,7 +26,8 @@
          fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
       <h2 class="calendar-button">{{ week[column].date | date:'d' }}</h2>
       <div fxLayout="row" fxLayoutAlign="center center" class="calendar-point">
-        <span *ngFor="let event of week[column].events"></span>
+        <span  [ngStyle]="{'background':task.color.primary}"
+        *ngFor="let task of week[column].events.length <= 3?week[column].events:week[column].events.slice(0,3)"></span>
       </div>
     </div>
   </div>

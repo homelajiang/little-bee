@@ -54,6 +54,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   public weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']; // ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
+  private colorPool = [
+    {primary: '#8365db', secondary: '#eeeaff'},
+    {primary: '#5bab75', secondary: '#e0f3e7'},
+    // {primary: '#ff562d', secondary: '#fff0e9'},
+    {primary: '#29a5d3', secondary: '#e2f5ff'},
+    {primary: '#455af7', secondary: '#e5f6ff'},
+  ]
+
+  private projectColorMap = {};
+
   private reqTasking = false;
 
   private refreshTaskEvent: Subscription;
@@ -122,6 +132,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
         if (date) {
           this.beeService.getTasksByDate(date, 0)
             .subscribe(tasks => {
+
+              tasks.forEach(task => {
+                this.assignProjectColor(task)
+              })
+
               this.listDays.forEach(daily => {
                 if (isSameDay(date, daily.date)) {
 
@@ -254,6 +269,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   // 不全当月的task
   private handleMonthTask() {
     this.tasks.forEach(task => {
+
+      this.assignProjectColor(task)
+
       this.listDays.forEach(daily => {
         const startDate = new Date(task.startTime);
         const endDate = new Date(task.endTime);
@@ -264,6 +282,26 @@ export class CalendarComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  private assignProjectColor(task: Task) {
+    if (!this.projectColorMap[task.projectId]) {
+      this.projectColorMap[task.projectId] =
+        this.colorPool[this.randomNum(0, this.colorPool.length - 1)]
+    }
+    task.color = this.projectColorMap[task.projectId]
+  }
+
+  private randomNum(minNum: number, maxNum: number) {
+    switch (arguments.length) {
+      case 1:
+        return parseInt((Math.random() * minNum + 1) + '', 10);
+      case 2:
+        return parseInt((Math.random() * (maxNum - minNum + 1) + minNum) + '', 10);
+      default:
+        return 0;
+    }
+  }
+
 
   ngOnDestroy(): void {
     this.refreshTaskEvent.unsubscribe()
