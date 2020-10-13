@@ -1,5 +1,5 @@
 <div fxLayout="row" class="container">
-  <div class="home-nav">
+  <div class="home-nav" fxFlex="none" fxFlex.lt-md="grow">
     <div class="nav-card nav-calendar">
       <app-calendar (selectWeekEvent)="onSelectWeek($event)" (selectDailyEvent)="onSelectDaily($event)"></app-calendar>
     </div>
@@ -14,7 +14,7 @@
     </div>
 -->
 
-    <div class="nav-card">
+    <div  fxHide.gt-sm>
       <app-daily-task [daily]="selectDaily"></app-daily-task>
     </div>
 
@@ -28,7 +28,7 @@
 
   </div>
 
-  <div fxLayout="column" class="home-content" fxFlex="grow">
+  <div fxLayout="column" class="home-content" fxFlex="grow" fxHide.lt-md>
     <app-event-title [week]="selectWeek" (weekChanged)="changeWeek($event)"></app-event-title>
     <app-event [week]="selectWeek" class="home-event" ></app-event>
   </div>

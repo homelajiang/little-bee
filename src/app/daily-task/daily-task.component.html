@@ -1,27 +1,29 @@
-<div fxFlex fxLayout="column" fxLayoutAlign="start none" class="event-column">
+<div fxLayout="column" fxLayoutAlign="start center">
+  <div class="task-list" *ngIf="daily" fxLayout="column">
 
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <h2 fxFlex="none">任务列表</h2>
-    <span fxFlex="grow"></span>
-    <span *ngIf="daily" fxFlex="none">{{daily.date | dateFnsFormat:'yyyy-MM-dd'}}</span>
-  </div>
+    <h2>{{daily.date | dateFnsFormat:'yyyy-MM-dd'}}</h2>
 
-  <div *ngIf="daily">
-    <div class="event-item" [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}" matRipple
-         *ngFor="let task of daily.events" (click)="showEventInfo($event,task)">
-      <div fxLayout="row" fxLayoutAlign="start center" class="event-item-title">
-        <span fxFlex=""></span>
-      </div>
+    <div class="task-item" fxLayout="column"
+         *ngFor="let task of daily.events">
 
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <h3 fxFlex="none">{{task.projectName}}</h3>
-        <span fxFlex="grow"></span>
+      <div class="task-title" fxLayout="column">
+        <h2 fxFlex="none">{{task.projectName}}</h2>
         <span fxFlex="none" class="event-hour">{{getStateDesc(task)}}</span>
       </div>
-      <p>{{task.title}}</p>
+
+
+        <div class="task-content">
+          {{task.title}}
+        </div>
+
+        <div fxLayout="row" class="task-action">
+          <button mat-button color="warn" *ngIf="task.state!==2">删除</button>
+          <button mat-button color="primary" *ngIf="task.state!==2">关闭</button>
+        </div>
+
     </div>
   </div>
 
-  <button mat-flat-button color="primary">新建任务</button>
+  <button  class="create-task" mat-flat-button color="primary">新建任务</button>
 
 </div>

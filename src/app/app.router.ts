@@ -6,10 +6,11 @@ import {HomeComponent} from './home/home.component';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 import {DailyTaskComponent} from './daily-task/daily-task.component';
+import {NewTaskComponent} from './new-task/new-task.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'tasks', component: DailyTaskComponent},
+  {path: 'tasks', component: NewTaskComponent},
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [
