@@ -17,13 +17,13 @@
         </div>
 
         <div fxLayout="row" class="task-action">
-          <button mat-button color="warn" *ngIf="task.state!==2">删除</button>
-          <button mat-button color="primary" *ngIf="task.state!==2">关闭</button>
+          <button mat-button color="warn" *ngIf="task.state!==2" (click)="removeTask(task)">删除</button>
+          <button mat-button color="primary" *ngIf="task.state===1 || task.state===3" (click)="closeTask(task)">关闭</button>
         </div>
 
     </div>
   </div>
 
-  <button  class="create-task" mat-flat-button color="primary">新建任务</button>
+  <button  class="create-task" mat-flat-button color="primary" (click)="toCreatePage()">新建任务</button>
 
 </div>

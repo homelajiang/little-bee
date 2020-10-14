@@ -1,0 +1,48 @@
+<div class="task-page" fxLayout="column">
+  <div fxLayout="row" [style.fontSize.px]="22">
+    <mat-form-field fxFlex="grow" style="margin-left: 40px;margin-top: 10px;">
+      <mat-label>添加任务简述</mat-label>
+      <textarea matInput class="task-input"
+                cdkTextareaAutosize
+                [(ngModel)]="taskInput"
+                #autosize="cdkTextareaAutosize"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+    <mat-icon>access_time</mat-icon>
+
+    <button mat-button (click)="picker.open()" style="position: relative;">
+      {{selectedDate | dateFnsFormat :'yyyy年 MMM d日 (EEEE)'}}
+      <mat-form-field style="opacity: 0;height: 36px;width:0;position: absolute;left: 0;">
+        <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged($event)">
+        <mat-datepicker #picker touchUi></mat-datepicker>
+      </mat-form-field>
+
+    </button>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+    <mat-icon>folder_open</mat-icon>
+    <button mat-button
+            [matMenuTriggerFor]="menu">{{getSelectProjectTitle()}}</button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="selectProject(false,project)"
+              *ngFor="let  project of projects">{{project.projectName}}</button>
+
+      <button mat-menu-item *ngIf="closedProject"
+              [matMenuTriggerFor]="closedMenu">{{closedProject.projectName}}</button>
+    </mat-menu>
+
+    <mat-menu #closedMenu="matMenu">
+      <button mat-menu-item
+              (click)="selectProject(true,project)"
+              *ngFor="let  project of closedProjects"
+      >{{project.projectName}}</button>
+    </mat-menu>
+
+  </div>
+  <button fxFlex="none" mat-flat-button class="action-button" color="primary" (click)="saveTask()">保存</button>
+</div>
+

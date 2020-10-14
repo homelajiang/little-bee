@@ -5,18 +5,17 @@ import {AuthGuard} from './auth/auth.guard';
 import {HomeComponent} from './home/home.component';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
-import {DailyTaskComponent} from './daily-task/daily-task.component';
-import {NewTaskComponent} from './new-task/new-task.component';
+import {CreateTaskPageComponent} from './create-task-page/create-task-page.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'tasks', component: NewTaskComponent},
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [
       {path: '', redirectTo: '/daily', pathMatch: 'full'},
       {path: 'daily', component: HomeCalendarComponent},
-      {path: 'gift', component: ShopComponent}
+      {path: 'gift', component: ShopComponent},
+      {path: 'newTask', component: CreateTaskPageComponent}
     ]
   },
   {path: '**', component: Page404Component}

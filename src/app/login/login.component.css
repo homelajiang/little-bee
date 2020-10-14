@@ -1,9 +1,14 @@
-.login-card {
-  max-width: 380px;
+
+.login-layout {
+  max-width: 420px;
   width: 100%;
-  padding: 60px 0;
-  border-radius: 10px;
+  padding: 0 20px;
   margin: 100px auto;
+}
+
+.login-card {
+  border-radius: 10px;
+  padding: 60px 0;
 }
 
 .login-card p {
