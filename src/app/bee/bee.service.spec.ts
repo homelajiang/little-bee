@@ -16,7 +16,7 @@ describe('BeeService', () => {
   });
 
   it('decodeMsg', () => {
-    const res = service.desDecrypt('wBBlBrCt5hRJrKLAYl6l7Ug6o/gSgNQtaY+mRwHbP9aQVfqaeJfcumeDcko2 5sA9Y5rLzEyCd9NmrHk5DspFfZFY/tMPTNxUkwQucdgknOi97Ny7aRSJpsmo rQHDuVtRHLWp+n0zf0yZ9Ti9usttr7Gtk+b93n8ADfNF0gnZtvO8J3EbeKqm Yzmm5FxBzD6pHd5XQmzDnnUJtRxgrUCEUXd2zOHrohpklGvAl8aHvwIE15Om k4bN2gByp0oDXf1pvCdxG3iqpmM5puRcQcw+qT8VrVNV91ntGAFa0XQgv2M=')
+    const res = service.desDecrypt('JgBrfgPYxP4aOGKHvOFyrde4fcytf7uPJeXMmT0oMpPwMtoNAOrw2Z84tZuv AoJdtSO23/a3zgRTWFOyodunHW0ONCci2YH2qPCTjtANWt/lnD9kG2fM35tW A/7PWUqleqQxcowwhsmOxtLU2nJ7Xw==')
     console.log(res)
     // expect(res).toBeTrue()
   });

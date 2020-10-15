@@ -1,0 +1,10 @@
+.loading-button {
+  position: relative;
+  min-width: 64px;
+}
+
+.loading-button mat-spinner {
+  position: absolute;
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
+}

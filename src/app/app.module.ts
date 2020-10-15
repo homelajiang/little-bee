@@ -53,6 +53,8 @@ import { ActionCardComponent } from './action-card/action-card.component';
 import { CreateVacationComponent } from './create-vacation/create-vacation.component';
 import { DailyTaskComponent } from './daily-task/daily-task.component';
 import { CreateTaskPageComponent } from './create-task-page/create-task-page.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { LoadingButtonComponent } from './loading-button/loading-button.component';
 
 @NgModule({
   declarations: [
@@ -82,36 +84,38 @@ import { CreateTaskPageComponent } from './create-task-page/create-task-page.com
     ActionCardComponent,
     CreateVacationComponent,
     DailyTaskComponent,
-    CreateTaskPageComponent
+    CreateTaskPageComponent,
+    LoadingButtonComponent
   ],
-  imports: [
-    CommonModule,
-    OverlayModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule,
-    appRouting,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatRippleModule,
-    HttpClientModule,
-    FormsModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatMenuModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        CommonModule,
+        OverlayModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        appRouting,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatRippleModule,
+        HttpClientModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatMenuModule,
+        MatCheckboxModule,
+        MatProgressSpinnerModule
+    ],
   entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent, ConfirmDialogComponent],
   providers: [
     httpInterceptorProviders,

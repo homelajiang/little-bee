@@ -16,6 +16,7 @@ export class DinnerComponent implements OnInit {
   moreAction = false;
   actionUrl = ''
   tips = ''
+  isLoading = true;
 
   constructor(private beeService: BeeService, private snackBar: SnackBar) {
   }
@@ -44,7 +45,6 @@ export class DinnerComponent implements OnInit {
   }
 
   switchOrder() {
-
     if (this.moreAction) {
       window.open(this.actionUrl)
       return;
@@ -91,6 +91,8 @@ export class DinnerComponent implements OnInit {
       }
     }, error => {
       this.snackBar.tipsError(error)
+    }, () => {
+      this.isLoading = false
     })
   }
 }

@@ -567,7 +567,7 @@ export class BeeService {
   orderDinner(isOrder: number) {
     const paramsBody = {
       clientType: 'android',
-      idOrder: isOrder === 1 ? '1' : '0',
+      isOrder: isOrder === 1 ? '1' : '0',
       userEmail: this.userInfo.userAccount,
       class: '.kmoa.MealRequest'
     };

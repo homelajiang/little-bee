@@ -4,7 +4,11 @@
     <h2>晚餐预定</h2>
     <span>09:00 - 14:00</span>
   </div>
-  <button fxFlex="none" mat-button color="primary" (click)="switchOrder()"
-          [matTooltip]="tips"
-          [disabled]="readonly && !moreAction">{{getOrderDesc()}}</button>
+
+  <app-loading-button fxFlex="none"
+                      [tooltip]="tips"
+                      [disabled]="readonly && !moreAction"
+                      [loading]="isLoading"
+                      (action)="switchOrder()"
+                      [buttonText]="getOrderDesc()"></app-loading-button>
 </div>
