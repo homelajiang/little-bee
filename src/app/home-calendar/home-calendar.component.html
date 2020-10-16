@@ -1,4 +1,4 @@
-<div fxLayout="row" class="container">
+<div fxLayout="row" class="container" [ngStyle.lt-sm]="{'padding':'0 20px'}">
   <div class="home-nav" fxFlex="none" fxFlex.lt-md="grow">
     <div class="nav-card nav-calendar">
       <app-calendar (selectWeekEvent)="onSelectWeek($event)" (selectDailyEvent)="onSelectDaily($event)"></app-calendar>

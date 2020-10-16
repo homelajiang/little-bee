@@ -12,6 +12,10 @@
   margin-top: 60px;
 }
 
+.action-button-cancel{
+  margin-top: 20px;
+}
+
 .mat-card {
   border-radius: 8px;
 }

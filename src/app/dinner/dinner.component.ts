@@ -54,7 +54,7 @@ export class DinnerComponent implements OnInit {
       this.snackBar.tips('当前不可操作')
       return;
     }
-    this.handleOrderRes(this.beeService.orderDinner(this.isOrder ? 0 : 1));
+    this.handleOrderRes(this.beeService.orderDinner(this.isOrder ? 0 : 1), true);
   }
 
   getOrderDesc() {
@@ -75,7 +75,8 @@ export class DinnerComponent implements OnInit {
   }
 
 
-  private handleOrderRes(observable: Observable<any>) {
+  private handleOrderRes(observable: Observable<any>, showTips: boolean = false) {
+    this.isLoading = true
     observable.subscribe(r => {
       const res = JSON.parse(JSON.stringify(r))
       if (res.sid === 1) {
@@ -85,6 +86,10 @@ export class DinnerComponent implements OnInit {
           this.moreAction = true
           this.actionUrl = res.info.qUrl
           this.tips = res.info.qMsg
+        } else {
+          if (showTips) {
+            this.snackBar.tipsSuccess(this.isOrder ? '订餐成功' : '已取消订餐')
+          }
         }
       } else {
         this.snackBar.tipsError(res.desc)

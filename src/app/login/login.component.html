@@ -1,52 +1,54 @@
 <div class="night-bg">
-<!--  <div class="night">
-    <div class="shooting_star" *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
-  </div>-->
+  <!--  <div class="night">
+      <div class="shooting_star" *ngFor="let index of[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+    </div>-->
 </div>
 
-<div class="login-layout">
-  <mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
-    <h1>Login</h1>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
-      <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
+<div fxLayout="row" fxLayoutAlign="center start">
+  <div class="login-layout" [ngStyle.lt-sm]="{'margin-top':'40px'}">
+    <mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
+      <h1>Login</h1>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
+        <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
 
-      <div fxFlex="grow" fxLayout="column">
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
-          <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
-        </div>
+        <div fxFlex="grow" fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+            <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
+          </div>
 
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
-          <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="password" placeholder="Password">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+            <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="password" placeholder="Password">
 
-          <button fxFlex="none" mat-button color="warn">Forget?</button>
+            <button fxFlex="none" mat-button color="warn">Forget?</button>
+          </div>
+
         </div>
 
       </div>
 
-    </div>
+      <mat-form-field appearance="outline" style="display: none">
+        <mat-label>用户名</mat-label>
+        <input matInput [(ngModel)]="username" placeholder="请输入用户名">
+        <!--        <mat-hint>Hint</mat-hint>-->
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" style="display: none">
-      <mat-label>用户名</mat-label>
-      <input matInput [(ngModel)]="username" placeholder="请输入用户名">
-      <!--        <mat-hint>Hint</mat-hint>-->
-    </mat-form-field>
+      <mat-form-field appearance="outline" style="display: none">
+        <mat-label>密码</mat-label>
+        <!--        <mat-hint>Hint</mat-hint>-->
+        <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" style="display: none">
-      <mat-label>密码</mat-label>
-      <!--        <mat-hint>Hint</mat-hint>-->
-      <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
-    </mat-form-field>
+      <div class="login-button" fxFlexAlign="stretch">
+        <div class="login-dash"></div>
+        <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
+      </div>
 
-    <div class="login-button" fxFlexAlign="stretch">
-      <div class="login-dash"></div>
-      <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">SIGN IN</button>
-    </div>
-
-    <p>Don't have an account?&nbsp;&nbsp;
-      <a href="#"><b>Sign Up</b></a>
-    </p>
+      <p>Don't have an account?&nbsp;&nbsp;
+        <a href="#"><b>Sign Up</b></a>
+      </p>
 
 
-  </mat-card>
+    </mat-card>
+  </div>
 </div>
 
