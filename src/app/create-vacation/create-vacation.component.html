@@ -8,7 +8,7 @@
         <button mat-button (click)="startPicker.open()">{{startDate | dateFnsFormat:'MM/dd'}}</button>
         <mat-form-field>
           <input matInput [matDatepicker]="startPicker" (dateChange)="changeDate(true,$event)">
-          <mat-datepicker #startPicker></mat-datepicker>
+          <mat-datepicker #startPicker [touchUi]="isMobile"></mat-datepicker>
         </mat-form-field>
       </div>
       <button mat-button [mat-menu-trigger-for]="startTime">{{startDate | dateFnsFormat:'HH:mm'}}</button>

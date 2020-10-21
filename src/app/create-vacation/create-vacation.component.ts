@@ -5,6 +5,7 @@ import {ConfirmDialog} from '../utils/confirm-dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {BeeService} from '../bee/bee.service';
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-create-vacation',
@@ -16,7 +17,8 @@ export class CreateVacationComponent implements OnInit {
   startDate = new Date();
   endDate;
 
-  constructor(private snackBar: SnackBar, private matDialog: MatDialog, private beeService: BeeService) {
+  constructor(private snackBar: SnackBar, private matDialog: MatDialog, private beeService: BeeService,
+              private breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit(): void {
@@ -24,6 +26,10 @@ export class CreateVacationComponent implements OnInit {
     this.startDate = addDays(this.startDate, 1);
     this.endDate = new Date(this.startDate);
     this.endDate.setHours(18);
+  }
+
+  get isMobile(){
+    return this.breakpointObserver.isMatched('(max-width: 599px)');
   }
 
   changeDate(start: boolean, event) {
