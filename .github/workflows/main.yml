@@ -31,7 +31,7 @@ jobs:
 
       # Install required dependencies to build app
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # Build pro project
       - name: Build with Angular cli
