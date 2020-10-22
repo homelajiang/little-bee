@@ -27,18 +27,25 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm install
       - run: npm install -g @angular/cli
 
       # Install required dependencies to build app
       - name: Install dependencies
         run: npm ci
 
-      # Build app
-      - name: Build app with ng cli
-        run: npm build
+      # Build pro project
+      - name: Build with Angular cli
+        run: npm run build
       
-      # deploy app
-      - name: Deploy app
-        run: echo test...
+      # Deploy
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "docs/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.TARGET }}
     
