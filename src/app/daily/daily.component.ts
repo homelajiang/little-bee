@@ -29,7 +29,7 @@ import {BeeService, Task, TaskClose} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
 import {TaskInfoComponent} from '../task-info/task-info.component';
 import {TASK_INFO} from '../tokens';
-import solarLunar from 'solarLunar';
+import solarLunar from 'solarlunar';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
 import {Subscription} from 'rxjs';
