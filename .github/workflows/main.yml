@@ -23,10 +23,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      # Create Source Zip
-      - name: Create Source Zip
-        run: zip -q -r source *
 
       # Install nodejs and angular-cli
       - name: Setup Node.js environment
@@ -58,39 +54,31 @@ jobs:
       # Create Release Zip
       - name: Create Release Zip
         run: zip -q -r release ./docs
-      
-      # Upload Release And Source
-      - name: Upload Release And Source
-        run: 
-          hub release create source.zip
-          hub release create release.zip
+
+      # Create Release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#       # Create Release
-#       - name: Create Release
-#         id: create_release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           tag_name: ${{ github.ref }}
-#           release_name: Release ${{ github.ref }}
-#           body: |
-#             Changes in this Release
-#             - First Change
-#             - Second Change
-#           draft: false
-#           prerelease: false
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
           
-#       # Upload Release Asset
-#       - name: Upload Release Asset
-#         id: upload-release-asset
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with: 
-#           upload_url: ${{ steps.create_release.outputs.upload.url }}
-#           asset_path: ./release.zip
-#           asset_name: release.zip
-#           asset_content_tye: application/zip
+      # Upload Release Asset
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload.url }}
+          asset_path: ./release.zip
+          asset_name: release.zip
+          asset_content_tye: application/zip
