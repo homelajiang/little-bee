@@ -18,7 +18,7 @@ import {httpInterceptorProviders} from './http-interceptor';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {TaskInfoComponent} from './task-info/task-info.component';
-import {DateFnsFormatPipe, TaskStateColorPip} from './bee/bee.pipe';
+import {DateFnsFormatPipe, Hour2TimePipe, TaskStateColorPip} from './bee/bee.pipe';
 import {ConfirmDialogComponent} from './component/confirm-dialog/confirm-dialog.component';
 import {WorkHoursDialogComponent} from './new-task/work-hours-dialog';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -53,7 +53,7 @@ import { ActionCardComponent } from './action-card/action-card.component';
 import { CreateVacationComponent } from './create-vacation/create-vacation.component';
 import { DailyTaskComponent } from './daily-task/daily-task.component';
 import { CreateTaskPageComponent } from './create-task-page/create-task-page.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingButtonComponent } from './loading-button/loading-button.component';
 
 @NgModule({
@@ -69,6 +69,7 @@ import { LoadingButtonComponent } from './loading-button/loading-button.componen
     DinnerComponent,
     TaskInfoComponent,
     DateFnsFormatPipe,
+    Hour2TimePipe,
     TaskStateColorPip,
     ConfirmDialogComponent,
     HomeComponent,

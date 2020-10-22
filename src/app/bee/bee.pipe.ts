@@ -13,6 +13,16 @@ export class DateFnsFormatPipe implements PipeTransform {
   }
 }
 
+@Pipe({name: 'hour2Time'})
+export class Hour2TimePipe implements PipeTransform {
+  // 9 -> 09:00
+  transform(value: number, ...args): string {
+    const date = new Date()
+    date.setHours(value,0)
+    return format(date, 'HH:mm')
+  }
+}
+
 @Pipe({name: 'taskStateColor'})
 export class TaskStateColorPip implements PipeTransform {
   //  1、正常  2、关闭  3、延期

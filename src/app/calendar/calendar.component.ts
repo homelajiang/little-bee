@@ -23,7 +23,7 @@ import {
 } from 'date-fns';
 import {Config} from '../config';
 
-import solarLunar from 'solarLunar';
+import solarLunar from 'solarlunar';
 import {SnackBar} from '../utils/snack-bar';
 import {Overlay} from '@angular/cdk/overlay';
 import {BeeService, Task} from '../bee/bee.service';

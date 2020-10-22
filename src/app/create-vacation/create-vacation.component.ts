@@ -5,7 +5,7 @@ import {ConfirmDialog} from '../utils/confirm-dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {BeeService} from '../bee/bee.service';
-import {BreakpointObserver} from "@angular/cdk/layout";
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-create-vacation',
@@ -16,6 +16,8 @@ export class CreateVacationComponent implements OnInit {
 
   startDate = new Date();
   endDate;
+  startArr = [9,10,11,12,13,14,15,16,17]
+  endArr=[10,11,12,13,14,15,16,17,18]
 
   constructor(private snackBar: SnackBar, private matDialog: MatDialog, private beeService: BeeService,
               private breakpointObserver: BreakpointObserver) {

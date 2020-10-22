@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" class="shop-content">
 
-    <div fxFlex="25" *ngFor="let gift of gifts" class="goods-item">
+    <div fxFlex="25" fxFlex.lt-sm="100" fxFlex.lt-md="50" fxFlex.lt-lg="33" *ngFor="let gift of gifts" class="goods-item">
       <div fxLayout="column" class="goods-content hover-shadow">
         <div class="goods-img" [ngStyle]="{'background-image': 'url(' + gift.img + ')'}"></div>
 
