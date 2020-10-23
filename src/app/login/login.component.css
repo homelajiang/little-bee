@@ -29,9 +29,8 @@
   color: #1e1738;
 }
 
-
-.login-card input {
-  line-height: 70px;
+.login-input{
+  height:70px;
 }
 
 .login-card img {

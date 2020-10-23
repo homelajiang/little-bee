@@ -10,10 +10,9 @@
           <h4 fxFlex="grow">{{gift.name}}</h4>
           <div fxFlex="none" class="integral-icon"></div>
           <span fxFlex="none">{{gift.price}}</span>
-
         </div>
 
-        <button fxFlex mat-flat-button color="primary"
+        <button mat-flat-button color="primary"
                 (click)="exchangeGift(gift)"
                 [disabled]="gift.leftCount<=0">{{gift.leftCount <= 0 ? '库存不足' : '兑换'}}</button>
       </div>

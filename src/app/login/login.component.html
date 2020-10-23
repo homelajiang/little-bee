@@ -7,18 +7,17 @@
 <div fxLayout="row" fxLayoutAlign="center start">
   <div class="login-layout" [ngStyle.lt-sm]="{'margin-top':'40px'}">
     <mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
-      <h1>Login</h1>
+      <h1>登录123456789</h1>
       <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
         <img style="height: 95px;" fxFlex="" src="./assets/username_password.png">
 
         <div fxFlex="grow" fxLayout="column">
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-input">
             <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-input">
             <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="password" placeholder="Password">
-
             <button fxFlex="none" mat-button color="warn">Forget?</button>
           </div>
 

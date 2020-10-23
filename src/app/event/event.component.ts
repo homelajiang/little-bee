@@ -7,6 +7,8 @@ import {NewTaskComponent} from '../new-task/new-task.component';
 import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 import {TASK_INFO} from '../tokens';
 import {SnackBar} from '../utils/snack-bar';
+import {format} from 'date-fns';
+import {Config} from '../config';
 
 @Component({
   selector: 'app-event',
@@ -40,7 +42,7 @@ export class EventComponent implements OnInit {
   newEvent(event: any, date: Date) {
     this.createOverlayRef(event);
     const popupComponentPortal = new ComponentPortal(NewTaskComponent, this.viewContainerRef,
-      this.createInjector({createTime: date}, this.overlayRef));
+      this.createInjector({createTime: format(date, 'yyyy-MM-dd HH:mm:ss',Config.dateOptions)}, this.overlayRef));
     this.overlayRef.attach(popupComponentPortal);
     this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
   }

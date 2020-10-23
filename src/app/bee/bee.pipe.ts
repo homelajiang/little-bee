@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import locale from 'date-fns/esm/locale/zh-CN';
-import {format} from 'date-fns';
+import {format, parse} from 'date-fns';
 import {zhCN} from 'date-fns/locale';
 import {Config} from '../config';
 
@@ -8,7 +8,12 @@ import {Config} from '../config';
 export class DateFnsFormatPipe implements PipeTransform {
   // 2020-01-28 04:06:16 -> 2月 8日 (星期六)
   transform(datetimeString: string | Date, formatString: string = 'yyyy/MM/dd'): string {
-    const date = new Date(datetimeString);
+    let date: Date;
+    if (datetimeString instanceof Date) {
+      date = datetimeString;
+    } else {
+      date = parse(datetimeString, 'yyyy-MM-dd HH:mm:ss', new Date());
+    }
     return format(date, formatString, Config.dateOptions);
   }
 }
@@ -17,9 +22,9 @@ export class DateFnsFormatPipe implements PipeTransform {
 export class Hour2TimePipe implements PipeTransform {
   // 9 -> 09:00
   transform(value: number, ...args): string {
-    const date = new Date()
-    date.setHours(value,0)
-    return format(date, 'HH:mm')
+    const date = new Date();
+    date.setHours(value, 0);
+    return format(date, 'HH:mm', Config.dateOptions);
   }
 }
 

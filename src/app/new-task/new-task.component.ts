@@ -5,6 +5,7 @@ import {TASK_INFO} from '../tokens';
 import {SnackBar} from '../utils/snack-bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
+import {parse} from 'date-fns';
 
 @Component({
   selector: 'app-new-todo',
@@ -17,22 +18,22 @@ export class NewTaskComponent implements OnInit {
   // 选中维护项目时该project为维护项目项
   selectedProject: Project;
   isClosedProject: boolean;
-  projects: Array<Project> = []
-  closedProject: Project
-  closedProjects: Array<Project> = []
+  projects: Array<Project> = [];
+  closedProject: Project;
+  closedProjects: Array<Project> = [];
   taskInput = '';
 
   constructor(@Inject(TASK_INFO) public task: Task, private beeService: BeeService, private snackBar: MatSnackBar,
               public dialog: MatDialog, public overlayRef: OverlayRef) {
     if (this.task && this.task.createTime) {
-      this.selectedDate = new Date(this.task.createTime);
+      this.selectedDate = parse(this.task.createTime, 'yyyy-MM-dd HH:mm:ss', new Date());
     } else {
       this.selectedDate = new Date();
     }
   }
 
   ngOnInit() {
-    this.initProject()
+    this.initProject();
   }
 
   checkDefaultProject(projects: Array<Project>) {
@@ -50,27 +51,27 @@ export class NewTaskComponent implements OnInit {
   }
 
   initProject() {
-    this.getAllProjects()
+    this.getAllProjects();
   }
 
   getAllProjects() {
     this.beeService.getProjects().subscribe(projects => {
-      this.projects = projects
+      this.projects = projects;
       let theOneIndex = -1;
       this.projects.forEach((value, index) => {
         if (value.projectName === '维护项目') {
-          theOneIndex = index
+          theOneIndex = index;
         }
-      })
+      });
 
       if (theOneIndex !== -1) {
-        this.closedProject = this.projects[theOneIndex]
-        this.projects.splice(theOneIndex, 1)
+        this.closedProject = this.projects[theOneIndex];
+        this.projects.splice(theOneIndex, 1);
       }
     }, error => SnackBar.open(this.snackBar, error));
 
     this.beeService.getClosedProjects().subscribe(projects => {
-      this.closedProjects = projects
+      this.closedProjects = projects;
     }, error => SnackBar.open(this.snackBar, error));
   }
 
@@ -86,11 +87,11 @@ export class NewTaskComponent implements OnInit {
   getSelectProjectTitle() {
     if (this.selectedProject) {
       if (this.isClosedProject) {
-        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`
+        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`;
       } else {
-        return this.selectedProject.projectName
+        return this.selectedProject.projectName;
       }
-    }else {
+    } else {
       return '请选择一个项目';
     }
   }
@@ -111,7 +112,7 @@ export class NewTaskComponent implements OnInit {
     }
 
     this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
-      this.isClosedProject ? this.closedProject : null))
+      this.isClosedProject ? this.closedProject : null));
 
     this.closeEdit();
   }

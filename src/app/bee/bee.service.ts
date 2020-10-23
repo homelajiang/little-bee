@@ -20,6 +20,7 @@ import CryptoJS from 'crypto-js';
 
 const DEFAULT_PROJECT = 'default_project';
 const USER_INFO = 'user_info';
+const LAST_USERNAME = 'last_username';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +57,9 @@ export class BeeService {
   DEVICE_ID = '9AD89D0791C59431';
 
   userInfo: UserInfo = new UserInfo(); // 用户信息
-  projects: Array<Project> = []; // 用户项目列表
   defaultProject: Project = null; // 默认选中的项目
+
+  projects: Array<Project> = []; // 用户项目列表
   redirectUrl: string;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -70,6 +72,14 @@ export class BeeService {
     if (user) {
       this.userInfo = user;
     }
+
+  }
+
+  /**
+   * 获取最后登录的用户名
+   */
+  getLastUsername(): string {
+    return localStorage.getItem(LAST_USERNAME);
   }
 
   // 登录小蜜蜂
@@ -85,6 +95,7 @@ export class BeeService {
         flatMap(event => {
           if (event.code === 0) {
             localStorage.setItem(USER_INFO, JSON.stringify(event.result));
+            localStorage.setItem(LAST_USERNAME, username); // 保存最后登录的用户名
             this.userInfo = event.result;
             return of(event.result);
           } else {
@@ -613,7 +624,7 @@ export class BeeService {
 
   // 退出登录
   signOut() {
-    localStorage.clear();
+    localStorage.removeItem(USER_INFO)
     this.router.navigate(['/login']);
   }
 }

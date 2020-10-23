@@ -5,10 +5,10 @@ import {BeeService, Task, TaskClose, TaskInfo} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
 import {ConfirmDialog} from '../utils/confirm-dialog';
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
-import {pipe} from 'rxjs';
 import {filter, flatMap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
+import {parse} from 'date-fns';
 
 @Component({
   selector: 'app-task-info',
@@ -33,7 +33,7 @@ export class TaskInfoComponent implements OnInit {
     this.beeService.deleteTask(this.task.id.toString())
       .subscribe(res => {
         SnackBar.open(this.snackBar, `删除成功`);
-        this.beeService.notifyRefreshDaily.next(new Date(this.task.startTime));
+        this.beeService.notifyRefreshDaily.next(parse(this.task.createTime,'yyyy-MM-dd HH:mm:ss',new Date()));
         this.close();
       }, error => {
         SnackBar.open(this.snackBar, `删除失败${error}`);

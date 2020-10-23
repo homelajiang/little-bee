@@ -16,24 +16,18 @@ export class CreateTaskPageComponent implements OnInit {
   // 选中维护项目时该project为维护项目项
   selectedProject: Project;
   isClosedProject: boolean;
-  projects: Array<Project> = []
-  closedProject: Project
-  closedProjects: Array<Project> = []
+  projects: Array<Project> = [];
+  closedProject: Project;
+  closedProjects: Array<Project> = [];
   taskInput = '';
 
   constructor(private beeService: BeeService, private snackBar: SnackBar,
               public dialog: MatDialog, private router: Router) {
-    if (this.task && this.task.createTime) {
-      this.selectedDate = new Date(this.task.createTime);
-    } else {
-      this.selectedDate = new Date();
-    }
+    this.selectedDate = new Date();
   }
 
-  task: Task;
-
   ngOnInit() {
-    this.initProject()
+    this.initProject();
   }
 
   checkDefaultProject(projects: Array<Project>) {
@@ -51,27 +45,27 @@ export class CreateTaskPageComponent implements OnInit {
   }
 
   initProject() {
-    this.getAllProjects()
+    this.getAllProjects();
   }
 
   getAllProjects() {
     this.beeService.getProjects().subscribe(projects => {
-      this.projects = projects
+      this.projects = projects;
       let theOneIndex = -1;
       this.projects.forEach((value, index) => {
         if (value.projectName === '维护项目') {
-          theOneIndex = index
+          theOneIndex = index;
         }
-      })
+      });
 
       if (theOneIndex !== -1) {
-        this.closedProject = this.projects[theOneIndex]
-        this.projects.splice(theOneIndex, 1)
+        this.closedProject = this.projects[theOneIndex];
+        this.projects.splice(theOneIndex, 1);
       }
     }, error => this.snackBar.tipsError(error));
 
     this.beeService.getClosedProjects().subscribe(projects => {
-      this.closedProjects = projects
+      this.closedProjects = projects;
     }, error => this.snackBar.tipsError(error));
   }
 
@@ -87,9 +81,9 @@ export class CreateTaskPageComponent implements OnInit {
   getSelectProjectTitle() {
     if (this.selectedProject) {
       if (this.isClosedProject) {
-        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`
+        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`;
       } else {
-        return this.selectedProject.projectName
+        return this.selectedProject.projectName;
       }
     } else {
       return '请选择一个项目';
@@ -108,20 +102,20 @@ export class CreateTaskPageComponent implements OnInit {
       return;
     }
 
-    this.snackBar.tipsForever('任务创建中，请稍等')
+    this.snackBar.tipsForever('任务创建中，请稍等');
 
     this.beeService.createTask(
       new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
         this.isClosedProject ? this.closedProject : null)
     )
       .subscribe(res => {
-        this.snackBar.tipsSuccess('创建成功')
+        this.snackBar.tipsSuccess('创建成功');
         setTimeout(() => {
           this.router.navigate(['/daily']);
-        }, 1000)
+        }, 1000);
       }, error => {
-        this.snackBar.tipsError(`创建失败:${error}`)
-      })
+        this.snackBar.tipsError(`创建失败:${error}`);
+      });
 
   }
 }

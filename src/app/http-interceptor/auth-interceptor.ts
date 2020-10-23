@@ -26,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
         mergeMap((event: any) => {
           if (event && event.body && event.body.code === 20001) {
             this.beeService.signOut();
-            this.router.navigateByUrl(`/login`);
           }
           return of(event);
         }),

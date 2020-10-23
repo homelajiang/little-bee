@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BeeService} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
 import {Router} from '@angular/router';
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -15,21 +14,23 @@ export class LoginComponent implements OnInit {
   public password: string;
   public loading: boolean;
 
-  constructor(private beeService: BeeService, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private beeService: BeeService,
+              private snackBar: SnackBar, private router: Router) {
   }
 
   ngOnInit() {
+    this.username = this.beeService.getLastUsername();
   }
 
   login() {
 
     if (!this.username) {
-      SnackBar.open(this.snackBar, '用户名不能为空');
+      this.snackBar.tipsError('用户名不能为空');
       return;
     }
 
     if (!this.password) {
-      SnackBar.open(this.snackBar, '密码不能为空');
+      this.snackBar.tipsError('密码不能为空');
       return;
     }
 
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }, error => {
         this.loading = false;
-        SnackBar.open(this.snackBar, error.toString());
+        this.snackBar.tipsError(error.toString());
       });
   }
 }

@@ -17,9 +17,9 @@ import {
   endOfMonth,
   endOfWeek, isAfter, isBefore, isEqual,
   isSameDay,
-  isSameMonth, isSameWeek,
+  isSameMonth, isSameWeek, parse, parseJSON,
   startOfMonth,
-  startOfWeek
+  startOfWeek, toDate
 } from 'date-fns';
 import {Config} from '../config';
 
@@ -63,7 +63,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     // {primary: '#ff562d', secondary: '#fff0e9'},
     {primary: '#29a5d3', secondary: '#e2f5ff'},
     {primary: '#455af7', secondary: '#e5f6ff'},
-  ]
+  ];
 
   private projectColorMap = {};
 
@@ -76,7 +76,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateCalendar(true);
-    this.subscribeEvent()
+    this.subscribeEvent();
   }
 
 
@@ -86,7 +86,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.selectWeekEvent.emit(week);
 
     if (column !== -1) {
-      this.selectDailyEvent.emit(week[column])
+      this.selectDailyEvent.emit(week[column]);
     }
   }
 
@@ -141,8 +141,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
             .subscribe(tasks => {
 
               tasks.forEach(task => {
-                this.assignProjectColor(task)
-              })
+                this.assignProjectColor(task);
+              });
 
               this.listDays.forEach(daily => {
                 if (isSameDay(date, daily.date)) {
@@ -150,61 +150,63 @@ export class CalendarComponent implements OnInit, OnDestroy {
                   // 更新任务源数据
                   daily.events.forEach(e => {
                     const index = this.tasks.indexOf(e);
-                    this.tasks.splice(index, 1)
-                  })
-                  this.tasks.push.apply(this.tasks, tasks)
+                    this.tasks.splice(index, 1);
+                  });
+                  this.tasks.push.apply(this.tasks, tasks);
 
                   // 更新daily数据
                   daily.events = tasks;
                 }
-              })
-            })
+              });
+            });
         }
       }
-    )
+    );
 
     // 关闭任务
     this.closeTaskEvent = this.beeService.notifyCloseTask.subscribe(task => {
       if (task) {
         this.beeService.closeTask(task.task, task.workHours)
           .subscribe(res => {
-            this.snackBar.tipsSuccess('关闭成功')
+            this.snackBar.tipsSuccess('关闭成功');
           }, error => {
-            this.snackBar.tipsError('关闭失败')
+            this.snackBar.tipsError('关闭失败');
           }, () => {
-            this.beeService.notifyRefreshDaily.next(new Date(task.task.endDate))
-          })
+            this.beeService.notifyRefreshDaily.next(parse(task.task.endDate,'yyyy-MM-dd HH:mm:ss',new Date()));
+          });
       }
-    })
+    });
 
     // 创建任务
     this.createTaskEvent = this.beeService.notifyCreateTask.subscribe(task => {
       if (task) {
         this.beeService.createTask(task)
           .subscribe(res => {
-            this.snackBar.tipsSuccess('创建成功')
+            this.snackBar.tipsSuccess('创建成功');
           }, error => {
-            this.snackBar.tipsSuccess('创建失败')
+            this.snackBar.tipsSuccess('创建失败');
           }, () => {
-            this.beeService.notifyRefreshDaily.next(task.date)
-          })
+            this.beeService.notifyRefreshDaily.next(task.date);
+          });
       }
-    })
+    });
 
     // 删除任务
     this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
-        if (task) {
+      console.log(task)
+      if (task) {
           this.beeService.deleteTask(task.id.toString())
             .subscribe(res => {
-              this.snackBar.tipsSuccess('已删除')
+              this.snackBar.tipsSuccess('已删除');
             }, error => {
-              this.snackBar.tipsSuccess('删除失败')
+              this.snackBar.tipsSuccess('删除失败');
             }, () => {
-              this.beeService.notifyRefreshDaily.next(new Date(task.startTime))
-            })
+              console.log(task.startTime)
+              this.beeService.notifyRefreshDaily.next(parse(task.startTime,'yyyy-MM-dd HH:mm:ss',new Date()));
+            });
         }
       }
-    )
+    );
   }
 
   updateCalendar(onInit: boolean) {
@@ -269,37 +271,39 @@ export class CalendarComponent implements OnInit, OnDestroy {
         this.reqTasking = false;
       }, error => {
         this.reqTasking = false;
-        this.snackBar.tipsError(error.toString())
+        this.snackBar.tipsError(error.toString());
       });
   }
 
-  // 不全当月的task
+  // 补全当月的task
   private handleMonthTask() {
     this.tasks.forEach(task => {
 
-      this.assignProjectColor(task)
+      this.assignProjectColor(task);
 
       this.listDays.forEach(daily => {
-        const startDate = new Date(task.startTime);
-        const endDate = new Date(task.endTime);
+        const startDate = parse(task.startTime,'yyyy-MM-dd HH:mm:ss',new Date());
+        const endDate = parse(task.endTime,'yyyy-MM-dd HH:mm:ss',new Date());
         if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
           (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
           daily.events.push(task);
         }
 
         if (daily.today) {
-          this.selectDailyEvent.emit(daily)
+          this.selectDailyEvent.emit(daily);
         }
       });
     });
+
+    console.log(this.projectColorMap)
   }
 
   private assignProjectColor(task: Task) {
     if (!this.projectColorMap[task.projectId]) {
       this.projectColorMap[task.projectId] =
-        this.colorPool[this.randomNum(0, this.colorPool.length - 1)]
+        this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
     }
-    task.color = this.projectColorMap[task.projectId]
+    task.color = this.projectColorMap[task.projectId];
   }
 
   private randomNum(minNum: number, maxNum: number) {
@@ -315,9 +319,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.refreshTaskEvent.unsubscribe()
-    this.createTaskEvent.unsubscribe()
-    this.closeTaskEvent.unsubscribe()
-    this.deleteTaskEvent.unsubscribe()
+    this.refreshTaskEvent.unsubscribe();
+    this.createTaskEvent.unsubscribe();
+    this.closeTaskEvent.unsubscribe();
+    this.deleteTaskEvent.unsubscribe();
   }
 }
