@@ -1,5 +1,4 @@
 .calendar-container {
-  display: inline-block;
 }
 
 .calendar-bar {
@@ -15,7 +14,6 @@
 }
 
 .calendar-label-item {
-  width: 40px;
   line-height: 30px;
   text-align: center;
   font-size: 12px;
@@ -30,14 +28,11 @@
   background: #eaeaea;
 }
 
-.calendar-button {
+.calendar-day {
+  position: absolute;
   min-width: 0;
-  border-radius: 12px;
   font-size: 14px;
-  width: 40px;
   margin: 0;
-  height: 40px;
-  line-height: 40px;
   text-align: center;
   padding: 0;
   flex-shrink: 0;

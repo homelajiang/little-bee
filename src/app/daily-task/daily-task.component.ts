@@ -36,13 +36,7 @@ export class DailyTaskComponent implements OnInit {
   }
 
   removeTask(task: Task) {
-    this.beeService.deleteTask(task.id.toString())
-      .subscribe(res => {
-        this.snackBar.tipsSuccess('删除成功')
-        this.beeService.notifyRefreshDaily.next(new Date(task.startTime));
-      }, error => {
-        this.snackBar.tipsError(`删除失败：${error}`)
-      });
+    this.beeService.notifyDeleteTask.next(task)
   }
 
   closeTask(task: Task) {

@@ -103,7 +103,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   changeWeek(event: number) {
     const index = this.displayDays.indexOf(this.selectWeek);
-    console.log(index);
     if (event < 0) {
       if (index < 1) { // 需要跳转上一月
         this.preMonth();
@@ -193,7 +192,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 删除任务
     this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
-      console.log(task)
       if (task) {
           this.beeService.deleteTask(task.id.toString())
             .subscribe(res => {
@@ -201,7 +199,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
             }, error => {
               this.snackBar.tipsSuccess('删除失败');
             }, () => {
-              console.log(task.startTime)
               this.beeService.notifyRefreshDaily.next(parse(task.startTime,'yyyy-MM-dd HH:mm:ss',new Date()));
             });
         }
@@ -295,7 +292,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       });
     });
 
-    console.log(this.projectColorMap)
   }
 
   private assignProjectColor(task: Task) {

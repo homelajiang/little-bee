@@ -30,14 +30,8 @@ export class TaskInfoComponent implements OnInit {
   }
 
   deleteTask() {
-    this.beeService.deleteTask(this.task.id.toString())
-      .subscribe(res => {
-        SnackBar.open(this.snackBar, `删除成功`);
-        this.beeService.notifyRefreshDaily.next(parse(this.task.createTime,'yyyy-MM-dd HH:mm:ss',new Date()));
-        this.close();
-      }, error => {
-        SnackBar.open(this.snackBar, `删除失败${error}`);
-      });
+    this.beeService.notifyDeleteTask.next(this.task)
+    this.close()
   }
 
   // 关闭任务
