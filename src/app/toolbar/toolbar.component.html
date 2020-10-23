@@ -28,11 +28,11 @@
 
     </div>
 
-    <button mat-icon-button matTooltip="日报" routerLink="./daily" style="margin-right: 10px;">
+    <button mat-icon-button matTooltip="日报" routerLink="./daily" style="margin-right: 10px;" id="to-daily" class="umami--click--to-daily">
       <mat-icon svgIcon="bee:daily"></mat-icon>
     </button>
 
-    <button mat-icon-button matTooltip="商城" routerLink="./gift">
+    <button mat-icon-button matTooltip="商城" routerLink="./gift" id="to-shop" class="umami--click--to-shop">
       <mat-icon svgIcon="bee:gift"></mat-icon>
     </button>
 
@@ -55,7 +55,7 @@
             <mat-icon>settings</mat-icon>
             <span>系统设置</span>
           </button>-->
-      <button mat-menu-item (click)="signOut()">
+      <button mat-menu-item (click)="signOut()" id="signout-button" class="umami--click--signout-button">
         <mat-icon>power_settings_new</mat-icon>
         <span>退出登录</span>
       </button>
