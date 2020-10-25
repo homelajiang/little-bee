@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-page404',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Page404Component implements OnInit {
 
-  constructor() { }
+  active = false;
+
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
+    setTimeout(() => {
+      // document.querySelector('.cont_principal').className = 'cont_principal cont_error_active';
+      this.active = true;
+    }, 500);
+  }
+
+  toHome() {
+    this.router.navigate(['/']);
   }
 
 }
