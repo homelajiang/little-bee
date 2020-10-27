@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Daily} from '../daily/daily.component';
-import {BeeService, Task, TaskClose} from '../bee/bee.service';
+import {BeeService, Daily, Task, TaskClose} from '../bee/bee.service';
 import {MatDialog} from '@angular/material/dialog';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {Router} from '@angular/router';
@@ -41,8 +40,7 @@ export class DailyTaskComponent implements OnInit {
 
   closeTask(task: Task) {
     if (!this.beeService.checkSyncOa(task.endTime)) {
-      ConfirmDialog.open(this.matDialog, '当前关闭的任务不可同步工时' +
-        '<br/>' + '是否继续关闭？', '', '提示')
+      ConfirmDialog.open(this.matDialog, new ConfirmData('提示', '当前关闭的任务不可同步工时' + '<br/>' + '是否继续关闭？'))
         .afterClosed()
         .pipe(
           filter(ok => {

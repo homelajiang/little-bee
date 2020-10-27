@@ -9,7 +9,6 @@ import {
   Output,
   ViewContainerRef
 } from '@angular/core';
-import {Daily} from '../daily/daily.component';
 import {
   addDays,
   addMonths, addWeeks,
@@ -26,7 +25,7 @@ import {Config} from '../config';
 import solarLunar from 'solarlunar';
 import {SnackBar} from '../utils/snack-bar';
 import {Overlay} from '@angular/cdk/overlay';
-import {BeeService, Task} from '../bee/bee.service';
+import {BeeService, Daily, Task} from '../bee/bee.service';
 import {Subscription} from 'rxjs';
 
 @Component({

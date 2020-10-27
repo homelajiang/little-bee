@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {Page404Component} from './page404/page404.component';
-import {DailyComponent} from './daily/daily.component';
 import {SettingComponent} from './setting/setting.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoginComponent} from './login/login.component';
@@ -49,18 +48,18 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 import {ClockInComponent} from './clock-in/clock-in.component';
-import { ActionCardComponent } from './action-card/action-card.component';
-import { CreateVacationComponent } from './create-vacation/create-vacation.component';
-import { DailyTaskComponent } from './daily-task/daily-task.component';
-import { CreateTaskPageComponent } from './create-task-page/create-task-page.component';
+import {ActionCardComponent} from './action-card/action-card.component';
+import {CreateVacationComponent} from './create-vacation/create-vacation.component';
+import {DailyTaskComponent} from './daily-task/daily-task.component';
+import {CreateTaskPageComponent} from './create-task-page/create-task-page.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { LoadingButtonComponent } from './loading-button/loading-button.component';
+import {LoadingButtonComponent} from './loading-button/loading-button.component';
+import {CreateTaskDialogComponent} from './create-task-dialog/create-task-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Page404Component,
-    DailyComponent,
     SettingComponent,
     LoginComponent,
     MainComponent,
@@ -86,38 +85,40 @@ import { LoadingButtonComponent } from './loading-button/loading-button.componen
     CreateVacationComponent,
     DailyTaskComponent,
     CreateTaskPageComponent,
-    LoadingButtonComponent
+    LoadingButtonComponent,
+    CreateTaskDialogComponent
   ],
-    imports: [
-        CommonModule,
-        OverlayModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterModule,
-        appRouting,
-        FlexLayoutModule,
-        MatToolbarModule,
-        MatNativeDateModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDividerModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatRippleModule,
-        HttpClientModule,
-        FormsModule,
-        MatSnackBarModule,
-        MatSelectModule,
-        MatDialogModule,
-        MatTooltipModule,
-        MatMenuModule,
-        MatCheckboxModule,
-        MatProgressSpinnerModule
-    ],
-  entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent, ConfirmDialogComponent],
+  imports: [
+    CommonModule,
+    OverlayModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    appRouting,
+    FlexLayoutModule,
+    MatToolbarModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatRippleModule,
+    HttpClientModule,
+    FormsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule
+  ],
+  entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent,
+    ConfirmDialogComponent, CreateTaskDialogComponent],
   providers: [
     httpInterceptorProviders,
     {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
@@ -134,7 +135,7 @@ export class AppModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIconInNamespace('bee', 'gift',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/gift.svg'))
-    this.matIconRegistry.addSvgIconInNamespace('bee','daily',
+    this.matIconRegistry.addSvgIconInNamespace('bee', 'daily',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/calendar.svg'))
   }
 }

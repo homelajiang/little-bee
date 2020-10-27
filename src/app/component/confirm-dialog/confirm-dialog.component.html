@@ -2,7 +2,7 @@
 <div mat-dialog-content *ngIf="data.content" [innerHTML]="data.content">
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="false">{{data.cancel ? data.cancel : '取消'}}</button>
-  <button mat-button [color]="data.color?data.color:'primary'" [mat-dialog-close]="true"
-          cdkFocusInitial>{{data.ok ? data.ok : '确定'}}</button>
+  <button mat-button [mat-dialog-close]="false" *ngIf="data.negativeText">{{data.negativeText}}</button>
+  <button mat-button [color]="data.color" [mat-dialog-close]="true"
+          cdkFocusInitial>{{data.positiveText}}</button>
 </div>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BeeService, Gift} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 
@@ -30,7 +30,7 @@ export class ShopComponent implements OnInit {
       this.snackBar.tipsError('积分不足')
       return
     }
-    ConfirmDialog.open(this.matDialog, '确定兑换？', '', '提示')
+    ConfirmDialog.open(this.matDialog, new ConfirmData('提示', '确定兑换？'))
       .afterClosed()
       .pipe(
         filter(ok => {
@@ -41,7 +41,7 @@ export class ShopComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        this.snackBar.tipsSuccess('兑换成功')
+        ConfirmDialog.open(this.matDialog, new ConfirmData('提示', '兑换成功', ''))
       }, error => {
         this.snackBar.tipsError(error)
       }, () => {

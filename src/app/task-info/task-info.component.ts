@@ -3,11 +3,11 @@ import {TASK_INFO} from '../tokens';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {BeeService, Task, TaskClose, TaskInfo} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {parse} from 'date-fns';
 
 @Component({
@@ -38,9 +38,7 @@ export class TaskInfoComponent implements OnInit {
   closeTask() {
     const sycOaWorkHours = this.beeService.checkSyncOa(this.task.endTime);
     if (!sycOaWorkHours) {
-      ConfirmDialog.open(this.dialog, '当前关闭的任务不可同步工时' +
-        '<br/>' +
-        '是否继续关闭？', '', '提示')
+      ConfirmDialog.open(this.dialog, new ConfirmData('提示', '当前关闭的任务不可同步工时' + '<br/>' + '是否继续关闭？'))
         .afterClosed()
         .pipe(
           filter(ok => {

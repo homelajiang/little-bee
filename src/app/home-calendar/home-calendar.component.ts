@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BeeService, Task} from '../bee/bee.service';
+import {BeeService, Daily, Task} from '../bee/bee.service';
 import {EventTitleComponent} from '../event-title/event-title.component';
 import {EventComponent} from '../event/event.component';
 import {CalendarComponent} from '../calendar/calendar.component';
-import {Daily} from '../daily/daily.component';
 import {SnackBar} from '../utils/snack-bar';
 
 @Component({

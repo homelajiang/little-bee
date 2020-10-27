@@ -33,3 +33,7 @@ body {
   -moz-transform: translateY(-5px);
   transform: translateY(-5px);
 }
+
+.space-pre{
+  white-space: pre-wrap;
+}

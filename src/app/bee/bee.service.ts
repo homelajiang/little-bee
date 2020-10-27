@@ -742,6 +742,15 @@ export class TaskInfo {
   workHours: number;
 }
 
+export class Daily {
+  date: Date;
+  events: Array<Task> = [];
+  lunar: string; // 阴历
+  currentMonth: boolean; // 属于当前月
+  today: boolean; // 是否是当天
+  workDay: boolean; // 工作日
+}
+
 class CustomEncoder implements HttpParameterCodec {
   encodeKey(key: string): string {
     return encodeURIComponent(key);

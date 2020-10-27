@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {addDays, differenceInDays, format, isAfter} from 'date-fns';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {BeeService} from '../bee/bee.service';
@@ -16,8 +16,8 @@ export class CreateVacationComponent implements OnInit {
 
   startDate = new Date();
   endDate;
-  startArr = [9,10,11,12,13,14,15,16,17]
-  endArr=[10,11,12,13,14,15,16,17,18]
+  startArr = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+  endArr = [10, 11, 12, 13, 14, 15, 16, 17, 18]
 
   constructor(private snackBar: SnackBar, private matDialog: MatDialog, private beeService: BeeService,
               private breakpointObserver: BreakpointObserver) {
@@ -30,7 +30,7 @@ export class CreateVacationComponent implements OnInit {
     this.endDate.setHours(18);
   }
 
-  get isMobile(){
+  get isMobile() {
     return this.breakpointObserver.isMatched('(max-width: 599px)');
   }
 
@@ -67,12 +67,10 @@ export class CreateVacationComponent implements OnInit {
       this.snackBar.tipsError('结束时间需要大于开始时间');
       return;
     }
-
-    ConfirmDialog.open(this.matDialog,
+    ConfirmDialog.open(this.matDialog, new ConfirmData('提示',
       `请确认休假时间：</br>
                 开始时间：<b>${format(this.startDate, 'yyyy-MM-dd HH:mm')}</b></br>
-                结束时间：<b>${format(this.endDate, 'yyyy-MM-dd HH:mm')}</b>`,
-      '', '提示')
+                结束时间：<b>${format(this.endDate, 'yyyy-MM-dd HH:mm')}</b>`))
       .afterClosed()
       .pipe(
         filter(ok => {

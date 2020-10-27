@@ -1,6 +1,5 @@
 import {Component, ElementRef, Injector, Input, OnInit, ViewContainerRef} from '@angular/core';
-import {Daily} from '../daily/daily.component';
-import {BeeService, Task} from '../bee/bee.service';
+import {BeeService, Daily, Task} from '../bee/bee.service';
 import {ComponentPortal, PortalInjector} from '@angular/cdk/portal';
 import {TaskInfoComponent} from '../task-info/task-info.component';
 import {NewTaskComponent} from '../new-task/new-task.component';
@@ -42,7 +41,7 @@ export class EventComponent implements OnInit {
   newEvent(event: any, date: Date) {
     this.createOverlayRef(event);
     const popupComponentPortal = new ComponentPortal(NewTaskComponent, this.viewContainerRef,
-      this.createInjector({createTime: format(date, 'yyyy-MM-dd HH:mm:ss',Config.dateOptions)}, this.overlayRef));
+      this.createInjector({createTime: format(date, 'yyyy-MM-dd HH:mm:ss', Config.dateOptions)}, this.overlayRef));
     this.overlayRef.attach(popupComponentPortal);
     this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
   }

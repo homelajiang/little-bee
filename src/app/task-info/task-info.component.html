@@ -20,7 +20,7 @@
            [ngClass]="getTaskStateColorClass(task.state)"></div>
       <div fxFlex="grow" class="task-info">
         <div class="task-content">
-          <span>{{task.title}}</span>
+          <span class="space-pre">{{task.title}}</span>
         </div>
         <div class="task-date">{{task.startTime | dateFnsFormat:'MMM d (EEEE)'}}</div>
       </div>

@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Daily} from '../daily/daily.component';
 import {format, isSameMonth, isSameYear} from 'date-fns';
 import {Config} from '../config';
+import {Daily} from '../bee/bee.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
   selector: 'app-event-title',
@@ -12,7 +14,7 @@ export class EventTitleComponent implements OnInit {
   @Input() week: Array<Daily>;
   @Output() weekChanged = new EventEmitter<number>();
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -39,4 +41,10 @@ export class EventTitleComponent implements OnInit {
     }
   }
 
+  newTask() {
+    this.dialog.open(CreateTaskDialogComponent, {
+      disableClose: true,
+      data: {}
+    })
+  }
 }

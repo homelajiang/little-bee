@@ -1,0 +1,44 @@
+.full-width-field {
+  width: 100%;
+}
+
+.mat-card {
+  border-radius: 8px;
+}
+
+.task-input {
+  color: #3c4043;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  font-size: 22px;
+  position: relative;
+  top: 0;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+
+mat-form-field label {
+  font-size: 22px;
+}
+
+.task-selection mat-icon {
+  width: 20px;
+  height: 24px;
+  font-size: 20px;
+  color: #5f6368;
+}
+
+.task-selection button {
+  padding: 0 10px;
+  margin-left: 10px;
+  color: #70757a;
+}
+
+.task-close-button {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+}
+
+.task-close-button mat-icon {
+  color: #5f6368;
+}
