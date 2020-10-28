@@ -43,7 +43,7 @@
   font-size: 22px;
   position: relative;
   top: 0;
-  line-height: 1.5;
+  /*line-height: 1.5;*/
   letter-spacing: 1px;
 }
 
@@ -51,7 +51,7 @@
   color: #3c4043;
   font-size: 14px;
   line-height: 18px;
-  margin-top: 3px;
+  margin-top: 10px;
 }
 
 .task-info {
