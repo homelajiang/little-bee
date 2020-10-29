@@ -1,59 +1,62 @@
 <div style="width: 500px;">
 
-<!--  <mat-card style="padding-left: 28px;" class="mat-elevation-z20">-->
-    <div fxLayout="row" [style.fontSize.px]="22">
-      <mat-form-field fxFlex="grow" style="margin-left: 40px;margin-top: 10px;">
-        <mat-label>添加任务简述</mat-label>
-        <textarea matInput class="task-input"
-                  cdkTextareaAutosize
-                  [(ngModel)]="taskInput"
-                  #autosize="cdkTextareaAutosize"></textarea>
+  <!--  <mat-card style="padding-left: 28px;" class="mat-elevation-z20">-->
+  <div fxLayout="row" [style.fontSize.px]="22">
+    <mat-form-field fxFlex="grow" style="margin-left: 40px;margin-top: 10px;">
+      <mat-label>{{editMode ? '编辑任务简述' : '添加任务简述'}}</mat-label>
+      <textarea matInput class="task-input"
+                cdkTextareaAutosize
+                [(ngModel)]="taskInput"
+                #autosize="cdkTextareaAutosize"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+    <mat-icon>access_time</mat-icon>
+
+    <button mat-button (click)="picker.open()" [disabled]="editMode" style="position: relative;">
+      {{selectedDate | dateFnsFormat :'yyyy年 MMM d日 (EEEE)'}}
+      <mat-form-field style="opacity: 0;height: 36px;width:0;position: absolute;left: 0;">
+        <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged($event)">
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-    </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
-      <mat-icon>access_time</mat-icon>
+    </button>
+  </div>
 
-      <button mat-button (click)="picker.open()" style="position: relative;">
-        {{selectedDate | dateFnsFormat :'yyyy年 MMM d日 (EEEE)'}}
-        <mat-form-field style="opacity: 0;height: 36px;width:0;position: absolute;left: 0;">
-          <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged($event)">
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
+    <mat-icon>folder_open</mat-icon>
+    <button mat-button [disabled]="editMode"
+            [matMenuTriggerFor]="menu">{{getSelectProjectTitle()}}</button>
 
-      </button>
-    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="selectProject(false,project)"
+              *ngFor="let  project of projects">{{project.projectName}}</button>
 
-    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
-      <mat-icon>folder_open</mat-icon>
-      <button mat-button
-              [matMenuTriggerFor]="menu">{{getSelectProjectTitle()}}</button>
+      <button mat-menu-item *ngIf="closedProject"
+              [matMenuTriggerFor]="closedMenu">{{closedProject.projectName}}</button>
+    </mat-menu>
 
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="selectProject(false,project)" *ngFor="let  project of projects">{{project.projectName}}</button>
+    <mat-menu #closedMenu="matMenu">
+      <button mat-menu-item
+              (click)="selectProject(true,project)"
+              *ngFor="let  project of closedProjects"
+      >{{project.projectName}}</button>
+    </mat-menu>
 
-        <button mat-menu-item *ngIf="closedProject" [matMenuTriggerFor]="closedMenu">{{closedProject.projectName}}</button>
-      </mat-menu>
+  </div>
 
-      <mat-menu #closedMenu="matMenu">
-        <button mat-menu-item
-                (click)="selectProject(true,project)"
-                *ngFor="let  project of closedProjects"
-        >{{project.projectName}}</button>
-      </mat-menu>
+  <div fxLayout="row">
+    <span fxFlex="grow"></span>
+    <button fxFlex="none" mat-button color="primary" (click)="closeEdit()">取消</button>
+    <button fxFlex="none" mat-flat-button color="primary" (click)="editMode?updateTask():saveTask()"
+            style="margin-left: 20px;">{{editMode ? '修改' : '创建'}}</button>
+  </div>
 
-    </div>
+  <!--    <button mat-icon-button class="task-close-button" (click)="closeEdit()">
+        <mat-icon>close</mat-icon>
+      </button>-->
 
-    <div fxLayout="row">
-      <span fxFlex="grow"></span>
-            <button fxFlex="none" mat-button color="primary" (click)="closeEdit()">关闭</button>
-      <button fxFlex="none" mat-flat-button color="primary" (click)="saveTask()" style="margin-left: 20px;">保存</button>
-    </div>
-
-<!--    <button mat-icon-button class="task-close-button" (click)="closeEdit()">
-      <mat-icon>close</mat-icon>
-    </button>-->
-
-<!--  </mat-card>-->
+  <!--  </mat-card>-->
 
 </div>

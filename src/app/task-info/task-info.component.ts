@@ -8,7 +8,7 @@ import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {parse} from 'date-fns';
+import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialog.component';
 
 @Component({
   selector: 'app-task-info',
@@ -27,6 +27,16 @@ export class TaskInfoComponent implements OnInit {
 
   close() {
     this.overlayRef.dispose();
+  }
+
+  editTask(task: Task) {
+    this.overlayRef.dispose();
+    this.dialog.open(CreateTaskDialogComponent, {
+      disableClose: true,
+      data: {
+        task
+      }
+    })
   }
 
   deleteTask() {

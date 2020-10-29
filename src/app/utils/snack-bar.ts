@@ -26,7 +26,7 @@ export class SnackBar {
   }
 
   tipsForever(msg: string, action?: string) {
-    this.snackBar.open(msg, action, {duration: 0})
+    return this.snackBar.open(msg, action, {duration: 0})
   }
 
 }

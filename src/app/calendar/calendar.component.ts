@@ -164,6 +164,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     // 关闭任务
     this.closeTaskEvent = this.beeService.notifyCloseTask.subscribe(task => {
       if (task) {
+        this.snackBar.tipsForever('关闭中...')
         this.beeService.closeTask(task.task, task.workHours)
           .subscribe(res => {
             this.snackBar.tipsSuccess('关闭成功');
@@ -177,6 +178,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 创建任务
     this.createTaskEvent = this.beeService.notifyCreateTask.subscribe(task => {
+      this.snackBar.tipsForever('创建中...')
       if (task) {
         this.beeService.createTask(task)
           .subscribe(res => {
@@ -192,7 +194,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     // 删除任务
     this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
       if (task) {
-          this.beeService.deleteTask(task.id.toString())
+        this.snackBar.tipsForever('删除中...')
+        this.beeService.deleteTask(task.id.toString())
             .subscribe(res => {
               this.snackBar.tipsSuccess('已删除');
             }, error => {

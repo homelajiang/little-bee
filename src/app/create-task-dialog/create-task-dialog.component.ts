@@ -5,6 +5,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {SnackBar} from '../utils/snack-bar';
+import {parse} from "date-fns";
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -23,10 +24,22 @@ export class CreateTaskDialogComponent implements OnInit {
   closedProjects: Array<Project> = [];
   taskInput = '';
 
+  editMode = false;
+  task: Task;
+  projectName = '';
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private beeService: BeeService,
               private snackBar: MatSnackBar, public dialog: MatDialog,
               public dialogRef: MatDialogRef<CreateTaskDialogComponent>) {
-    this.selectedDate = new Date();
+    if (data.task) {
+      this.editMode = true
+      this.task = data.task
+      this.selectedDate = parse(this.task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date());
+      this.taskInput = this.task.title
+      this.projectName = this.task.projectName
+    } else {
+      this.selectedDate = new Date();
+    }
   }
 
   ngOnInit() {
@@ -82,19 +95,32 @@ export class CreateTaskDialogComponent implements OnInit {
   }
 
   getSelectProjectTitle() {
-    if (this.selectedProject) {
-      if (this.isClosedProject) {
-        return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`;
-      } else {
-        return this.selectedProject.projectName;
-      }
+    if (this.editMode) {
+      return this.projectName
     } else {
-      return '请选择一个项目';
+      if (this.selectedProject) {
+        if (this.isClosedProject) {
+          return `${this.selectedProject.projectName}（${this.closedProject.projectName}）`;
+        } else {
+          return this.selectedProject.projectName;
+        }
+      } else {
+        return '请选择一个项目';
+      }
     }
   }
 
   closeEdit() {
     this.dialogRef.close()
+  }
+
+  updateTask() {
+    if (!this.taskInput) {
+      SnackBar.open(this.snackBar, '请输入任务简述');
+      return;
+    }
+
+    this.closeEdit()
   }
 
   saveTask() {
