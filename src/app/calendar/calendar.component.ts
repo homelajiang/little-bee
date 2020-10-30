@@ -27,6 +27,8 @@ import {SnackBar} from '../utils/snack-bar';
 import {Overlay} from '@angular/cdk/overlay';
 import {BeeService, Daily, Task} from '../bee/bee.service';
 import {Subscription} from 'rxjs';
+import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calendar',
@@ -37,7 +39,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
 
   constructor(public overlay: Overlay, private viewContainerRef: ViewContainerRef, private elementRef: ElementRef,
-              private beeService: BeeService, private snackBar: SnackBar, private injector: Injector) {
+              private beeService: BeeService, private snackBar: SnackBar, private dialog: MatDialog) {
   }
 
   private rows; // 日历行数
@@ -72,10 +74,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private createTaskEvent: Subscription;
   private closeTaskEvent: Subscription;
   private deleteTaskEvent: Subscription;
+  private editTaskEvent: Subscription;
+  private updateTaskEvent: Subscription;
+
+  assignColorIndex = 0
 
   ngOnInit(): void {
     this.updateCalendar(true);
     this.subscribeEvent();
+    this.reqProjects();
   }
 
 
@@ -156,6 +163,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
                   daily.events = tasks;
                 }
               });
+
+              // 更新缓存
+              this.beeService.cacheTasks(this.tasks)
             });
         }
       }
@@ -171,7 +181,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
           }, error => {
             this.snackBar.tipsError('关闭失败');
           }, () => {
-            this.beeService.notifyRefreshDaily.next(parse(task.task.endDate,'yyyy-MM-dd HH:mm:ss',new Date()));
+            this.beeService.notifyRefreshDaily.next(parse(task.task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
           });
       }
     });
@@ -193,19 +203,46 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 删除任务
     this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
-      if (task) {
-        this.snackBar.tipsForever('删除中...')
-        this.beeService.deleteTask(task.id.toString())
+        if (task) {
+          this.snackBar.tipsForever('删除中...')
+          this.beeService.deleteTask(task.id.toString())
             .subscribe(res => {
               this.snackBar.tipsSuccess('已删除');
             }, error => {
-              this.snackBar.tipsSuccess('删除失败');
+              this.snackBar.tipsError('删除失败');
             }, () => {
-              this.beeService.notifyRefreshDaily.next(parse(task.startTime,'yyyy-MM-dd HH:mm:ss',new Date()));
+              this.beeService.notifyRefreshDaily.next(parse(task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date()));
             });
         }
       }
     );
+
+    // 编辑任务
+    this.editTaskEvent = this.beeService.notifyEditTask.subscribe(taskInfo => {
+      if (taskInfo) {
+        this.dialog.open(CreateTaskDialogComponent, {
+          disableClose: true,
+          data: {
+            taskInfo
+          }
+        })
+      }
+    })
+
+    // 更新任务
+    this.updateTaskEvent = this.beeService.notifyUpdateTask.subscribe(taskInfo => {
+      if (taskInfo) {
+        this.snackBar.tipsForever('更新中...')
+        this.beeService.updateTask(taskInfo)
+          .subscribe(res => {
+            this.snackBar.tipsSuccess('已更新');
+          }, error => {
+            this.snackBar.tipsError('更新失败');
+          }, () => {
+            this.beeService.notifyRefreshDaily.next(parse(taskInfo.beginDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
+          })
+      }
+    })
   }
 
   updateCalendar(onInit: boolean) {
@@ -281,8 +318,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.assignProjectColor(task);
 
       this.listDays.forEach(daily => {
-        const startDate = parse(task.startTime,'yyyy-MM-dd HH:mm:ss',new Date());
-        const endDate = parse(task.endTime,'yyyy-MM-dd HH:mm:ss',new Date());
+        const startDate = parse(task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date());
+        const endDate = parse(task.endTime, 'yyyy-MM-dd HH:mm:ss', new Date());
         if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
           (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
           daily.events.push(task);
@@ -299,7 +336,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private assignProjectColor(task: Task) {
     if (!this.projectColorMap[task.projectId]) {
       this.projectColorMap[task.projectId] =
-        this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
+        this.colorPool[this.assignColorIndex % this.colorPool.length]
+      // this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
+      this.assignColorIndex++
     }
     task.color = this.projectColorMap[task.projectId];
   }
@@ -321,5 +360,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.createTaskEvent.unsubscribe();
     this.closeTaskEvent.unsubscribe();
     this.deleteTaskEvent.unsubscribe();
+  }
+
+  private reqProjects() {
+    this.beeService.getProjects().subscribe()
+    this.beeService.getClosedProjects().subscribe()
   }
 }

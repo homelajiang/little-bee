@@ -4,23 +4,24 @@ import {HttpClient, HttpHeaders, HttpParameterCodec, HttpParams} from '@angular/
 import {forkJoin, Observable, of, Subject, throwError} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {
-  addDays,
   differenceInDays,
   endOfWeek,
   format,
   getDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  isSameWeek,
+  isSameWeek, parse,
   startOfWeek
 } from 'date-fns';
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
+import LRUCache from 'lru-cache';
 
 const DEFAULT_PROJECT = 'default_project';
 const USER_INFO = 'user_info';
 const LAST_USERNAME = 'last_username';
+const lruCache = new LRUCache({
+  max: 100,
+  maxAge: 60 * 60 * 1000
+});
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,12 @@ export class BeeService {
 
   // 通知删除任务
   public notifyDeleteTask = new Subject<Task>();
+
+  // 通知编辑任务
+  public notifyEditTask = new Subject<TaskInfo>()
+
+  // 通知更新任务信息
+  public notifyUpdateTask = new Subject<TaskInfo>();
 
   // 通知更新用户信息
   public notifyUserInfoUpdated = new Subject<UserInfo>();
@@ -73,6 +80,10 @@ export class BeeService {
       this.userInfo = user;
     }
 
+  }
+
+  cacheTasks(tasks: Array<Task>) {
+    lruCache.set('tasks', JSON.stringify(tasks))
   }
 
   /**
@@ -163,6 +174,9 @@ export class BeeService {
 
   // 从小蜜蜂获取搜索代办事项
   getTasks(): Observable<Array<Task>> {
+    if (lruCache.get('tasks')) { // 页面切换时才会有效
+      return of(JSON.parse(lruCache.get('tasks')))
+    }
     const body: HttpParams = new HttpParams()
       .set('pageNo', '1')
       .set('pageSize', '100') // 为加快速度只获取最近100条
@@ -172,6 +186,7 @@ export class BeeService {
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
+            lruCache.set('tasks', JSON.stringify(event.result))
             return of(event.result);
           } else {
             return throwError(event.msg);
@@ -182,11 +197,16 @@ export class BeeService {
 
   // 获取所有项目
   getProjects(): Observable<Array<Project>> {
+    if (lruCache.get('projects')) {
+      const projects = JSON.parse(lruCache.get('projects'))
+      return of(projects)
+    }
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
+            lruCache.set('projects', JSON.stringify(event.result))
             return of(event.result);
           } else {
             return throwError(event.msg);
@@ -197,11 +217,15 @@ export class BeeService {
 
   // 获取已关闭的项目
   getClosedProjects(): Observable<Array<Project>> {
+    if (lruCache.get('sub_projects')) {
+      return of(JSON.parse(lruCache.get('sub_projects')))
+    }
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myCloseProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(res => {
           if (res.code === 0) {
+            lruCache.set('sub_projects', JSON.stringify(res.result))
             return of(res.result);
           } else {
             return throwError(res.msg);
@@ -261,6 +285,32 @@ export class BeeService {
           if (event.code === 0) {
             /*            localStorage.setItem(DEFAULT_PROJECT, JSON.stringify(project));
                         this.defaultProject = project;*/
+            return of(event.result);
+          } else {
+            return throwError(event.msg);
+          }
+        })
+      );
+  }
+
+  // 更新任务
+  updateTask(taskInfo: TaskInfo): Observable<any> {
+    const body: HttpParams = new HttpParams()
+      .set('beginDate', format(parse(taskInfo.beginDate, 'yyyy-MM-dd HH:mm:ss', new Date()), 'yyyy-MM-dd'))
+      .set('attachments', '')
+      .set('taskContent', taskInfo.content)
+      .set('endDate', format(parse(taskInfo.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()), 'yyyy-MM-dd'))
+      .set('userIds', this.userInfo.id.toString())
+      .set('taskType', taskInfo.taskType.toString())
+      .set('subProjectId', taskInfo.subProjectId ? taskInfo.subProjectId.toString() : '0')
+      .set('projectId', taskInfo.projectId.toString())
+      .set('alarmFlag', '0')
+      .set('taskId', taskInfo.id)
+    return this.http.post<HttpResponse<any>>(`bee/task/operate`,
+      body, this.formHttpOptions)
+      .pipe(
+        flatMap(event => {
+          if (event.code === 0) {
             return of(event.result);
           } else {
             return throwError(event.msg);

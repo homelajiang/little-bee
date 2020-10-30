@@ -3,12 +3,12 @@ import {TASK_INFO} from '../tokens';
 import {OverlayRef} from '@angular/cdk/overlay';
 import {BeeService, Task, TaskClose, TaskInfo} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData} from '../component/confirm-dialog/confirm-dialog.component';
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {filter, flatMap} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {isSameDay, parse} from 'date-fns';
 
 @Component({
   selector: 'app-task-info',
@@ -18,7 +18,7 @@ import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialo
 export class TaskInfoComponent implements OnInit {
 
   constructor(@Inject(TASK_INFO) public task: Task, private beeService: BeeService,
-              private snackBar: MatSnackBar,
+              private snackBar: SnackBar,
               public dialog: MatDialog, public overlayRef: OverlayRef) {
   }
 
@@ -30,13 +30,21 @@ export class TaskInfoComponent implements OnInit {
   }
 
   editTask(task: Task) {
-    this.overlayRef.dispose();
-    this.dialog.open(CreateTaskDialogComponent, {
-      disableClose: true,
-      data: {
-        task
-      }
-    })
+    const startDate = parse(task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date())
+    const endDate = parse(task.endTime, 'yyyy-MM-dd HH:mm:ss', new Date())
+    if (!isSameDay(startDate, endDate)) {
+      this.snackBar.tipsError('暂不支持编辑跨天任务')
+      return;
+    }
+    const ref = this.snackBar.tipsForever('获取任务详情中...')
+    this.beeService.getTaskInfo(task.id.toString())
+      .subscribe(res => {
+        ref.dismiss()
+        this.close()
+        this.beeService.notifyEditTask.next(res)
+      }, error => {
+        this.snackBar.tipsError(error)
+      })
   }
 
   deleteTask() {
@@ -64,7 +72,7 @@ export class TaskInfoComponent implements OnInit {
           this.beeService.notifyCloseTask.next(taskClose);
           this.overlayRef.dispose();
         }, error => {
-          SnackBar.open(this.snackBar, error);
+          this.snackBar.tipsError(error);
         });
     } else {
       this.showInputWorkHoursDialog();
@@ -92,7 +100,7 @@ export class TaskInfoComponent implements OnInit {
         this.beeService.notifyCloseTask.next(taskClose);
         this.overlayRef.dispose();
       }, error => {
-        SnackBar.open(this.snackBar, error);
+        this.snackBar.tipsError(error);
       });
   }
 

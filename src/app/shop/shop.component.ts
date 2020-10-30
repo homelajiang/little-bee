@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BeeService, Gift} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData} from '../component/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 

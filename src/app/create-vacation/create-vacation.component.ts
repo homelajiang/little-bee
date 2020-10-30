@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {addDays, differenceInDays, format, isAfter} from 'date-fns';
 import {SnackBar} from '../utils/snack-bar';
-import {ConfirmData, ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmDialog} from '../utils/confirm-dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {BeeService} from '../bee/bee.service';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {ConfirmData} from '../component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-create-vacation',

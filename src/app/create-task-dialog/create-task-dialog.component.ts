@@ -1,11 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {BeeService, Project, Task, TaskCreate} from '../bee/bee.service';
-import {TASK_INFO} from '../tokens';
+import {BeeService, Project, Task, TaskCreate, TaskInfo} from '../bee/bee.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {OverlayRef} from '@angular/cdk/overlay';
 import {SnackBar} from '../utils/snack-bar';
-import {parse} from "date-fns";
+import {parse} from 'date-fns';
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -25,25 +23,27 @@ export class CreateTaskDialogComponent implements OnInit {
   taskInput = '';
 
   editMode = false;
-  task: Task;
+  taskInfo: TaskInfo;
   projectName = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private beeService: BeeService,
               private snackBar: MatSnackBar, public dialog: MatDialog,
               public dialogRef: MatDialogRef<CreateTaskDialogComponent>) {
-    if (data.task) {
+    if (data.taskInfo) {
       this.editMode = true
-      this.task = data.task
-      this.selectedDate = parse(this.task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date());
-      this.taskInput = this.task.title
-      this.projectName = this.task.projectName
+      this.taskInfo = data.taskInfo
+      this.selectedDate = parse(this.taskInfo.beginDate, 'yyyy-MM-dd HH:mm:ss', new Date());
+      this.taskInput = this.taskInfo.content
+      this.projectName = '维护项目' === this.taskInfo.projectName ? `${this.taskInfo.subProjectName} （维护项目）` : this.taskInfo.projectName
     } else {
       this.selectedDate = new Date();
     }
   }
 
   ngOnInit() {
-    this.initProject();
+    if (!this.editMode) {
+      this.initProject();
+    }
   }
 
   checkDefaultProject(projects: Array<Project>) {
@@ -119,7 +119,8 @@ export class CreateTaskDialogComponent implements OnInit {
       SnackBar.open(this.snackBar, '请输入任务简述');
       return;
     }
-
+    this.taskInfo.content = this.taskInput
+    this.beeService.notifyUpdateTask.next(this.taskInfo)
     this.closeEdit()
   }
 
