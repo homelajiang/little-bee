@@ -426,8 +426,8 @@ export class BeeService {
    *  2、周一可同步上一周的工时
    *  3、周二及以后只能同步当前周的工时
    */
-  checkSyncOa(taskEndDate: Date | string) {
-    const endDate = new Date(taskEndDate);
+  checkSyncOa(taskEndDate: string) {
+    const endDate = parse(taskEndDate, 'yyyy-MM-dd HH:mm:ss', new Date())
     const currentDate = new Date();
     const dayOfWeek = getDay(currentDate);  // 0 周日
     const differenceDays = differenceInDays(currentDate, endDate);
@@ -446,7 +446,7 @@ export class BeeService {
    * @param workHours 任务时长
    */
   closeTask(task: TaskInfo, workHours: number = 0): Observable<ScoreAndExp> {
-    const taskEndTime = new Date(task.endDate);
+    const taskEndTime = parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date())
     const taskDay = format(taskEndTime, 'yyyy-MM-dd', Config.dateOptions);
     let dayOfWeek: number = getDay(taskEndTime);
     // 周六是7、周日是1
@@ -455,8 +455,15 @@ export class BeeService {
     }
 
     if (workHours) {
+      let pn;
+      if ('维护项目' === task.projectName) {
+        pn = `【${task.projectName}(${task.subProjectName})】`
+      } else {
+        pn = `【${task.projectName}项目】`
+      }
       // oa创建任务
-      return this.queryOaTask(new Date(task.endDate), new Date(task.endDate))
+      return this.queryOaTask(parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()),
+        parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()))
         .pipe(
           flatMap(result => {
             if (result.sid === 1) {
@@ -468,7 +475,7 @@ export class BeeService {
 
                 if (project.date === taskDay) {
                   project.tasks.some((t) => {
-                    if (t.taskName === `【${task.projectName}】${task.content}`) {
+                    if (t.taskName === `${pn}${task.content}`) {
                       targetTask = t;
                       return true;
                     }
@@ -493,7 +500,7 @@ export class BeeService {
                       endDate: taskDay,
                       startDate: taskDay,
                       taskCode: 'TMP' + Date.now(),
-                      taskName: `【${task.projectName}】${task.content}`
+                      taskName: `${pn}${task.content}`
                     };
                     targetTask.dateFlag[dayOfWeek - 1] = '1';
                   }
@@ -502,7 +509,7 @@ export class BeeService {
               });
 
               if (readOnly) {
-                return throwError('已提交， 无法编辑');
+                return throwError('已提交相同任务，不可重复提交~');
               }
 
               if (targetTask && targetTask.taskCode.startsWith('TMP')) {

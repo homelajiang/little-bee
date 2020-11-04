@@ -179,7 +179,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
           .subscribe(res => {
             this.snackBar.tipsSuccess('关闭成功');
           }, error => {
-            this.snackBar.tipsError('关闭失败');
+            this.snackBar.tipsError(error);
           }, () => {
             this.beeService.notifyRefreshDaily.next(parse(task.task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
           });
