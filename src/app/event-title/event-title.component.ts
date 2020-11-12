@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {format, isSameMonth, isSameYear} from 'date-fns';
 import {Config} from '../config';
 import {Daily} from '../bee/bee.service';
@@ -8,7 +8,10 @@ import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialo
 @Component({
   selector: 'app-event-title',
   templateUrl: './event-title.component.html',
-  styleUrls: ['./event-title.component.css']
+  styleUrls: ['./event-title.component.css'],
+  // Need to remove view encapsulation so that the custom tooltip style defined in
+  // `tooltip-custom-class-example.css` will not be scoped to this component's view.
+  encapsulation: ViewEncapsulation.None,
 })
 export class EventTitleComponent implements OnInit {
   @Input() week: Array<Daily>;
@@ -18,6 +21,27 @@ export class EventTitleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  statisticsTask() {
+    const temp = {};
+    this.week.forEach(daily => {
+      daily.events.forEach(task => {
+        if (temp[task.projectName]) {
+          temp[task.projectName] = temp[task.projectName] + task.workHours
+        } else {
+          temp[task.projectName] = task.workHours
+        }
+      })
+    })
+    let desc = ''
+    let total = 0
+    // tslint:disable-next-line:forin
+    for (const projectName in temp) {
+      total += temp[projectName]
+      desc += `\n${projectName}：${temp[projectName]} 小时`
+    }
+    return `总工时：${total} 小时 \n`+desc
   }
 
   // December 15 - 21,2019

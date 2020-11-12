@@ -137,5 +137,7 @@ export class AppModule {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/gift.svg'))
     this.matIconRegistry.addSvgIconInNamespace('bee', 'daily',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/calendar.svg'))
+    this.matIconRegistry.addSvgIconInNamespace('bee', 'pie-chart',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/pie-chart.svg'))
   }
 }
