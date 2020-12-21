@@ -13,7 +13,7 @@
       </div>
       <button mat-button [mat-menu-trigger-for]="startTime">{{startDate | dateFnsFormat:'HH:mm'}}</button>
       <mat-menu #startTime="matMenu">
-        <button *ngFor="let hour of startArr" mat-menu-item (click)="changeHour(true,10)">{{hour | hour2Time }}</button>
+        <button *ngFor="let hour of startArr" mat-menu-item (click)="changeHour(true,hour)">{{hour | hour2Time }}</button>
       </mat-menu>
     </div>
 
@@ -28,7 +28,7 @@
       </div>
       <button mat-button [mat-menu-trigger-for]="endTime">{{endDate | dateFnsFormat:'HH:mm'}}</button>
       <mat-menu #endTime="matMenu">
-        <button *ngFor="let hour of endArr" mat-menu-item (click)="changeHour(false,10)">{{hour | hour2Time }}</button>
+        <button *ngFor="let hour of endArr" mat-menu-item (click)="changeHour(false,hour)">{{hour | hour2Time }}</button>
       </mat-menu>
     </div>
   </div>
