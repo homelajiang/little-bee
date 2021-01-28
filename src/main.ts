@@ -9,7 +9,7 @@ if (environment.production) {
   const umami = window.document.createElement('script')
   umami.async = true
   umami.defer = true
-  umami.setAttribute('data-website-id', '9275873e-6855-44eb-866e-9a11f9cdfd65')
+  umami.setAttribute('data-website-id', '9293c8fb-ba9f-4620-b650-4e7e1178d130')
   umami.src = 'https://umami.homela.top/umami.js'
   window.document.head.appendChild(umami)
 }
