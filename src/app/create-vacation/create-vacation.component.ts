@@ -26,7 +26,7 @@ export class CreateVacationComponent implements OnInit {
 
   ngOnInit(): void {
     this.startDate.setHours(9, 0, 0, 0);
-    this.startDate = addDays(this.startDate, 1);
+    // this.startDate = addDays(this.startDate, 1);
     this.endDate = new Date(this.startDate);
     this.endDate.setHours(18);
   }

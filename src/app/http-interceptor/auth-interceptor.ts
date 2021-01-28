@@ -43,7 +43,8 @@ export class AuthInterceptor implements HttpInterceptor {
                           this.router.navigateByUrl(`/login`);
                         }*/
           }
-          return throwError(errorMessage);
+          console.error(errorMessage)
+          return throwError('网络请求失败');
         })
       );
   }
