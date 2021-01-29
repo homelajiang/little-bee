@@ -1,6 +1,6 @@
 {
   "name": "little-bee",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4201 --proxy-config proxy.config.json",
@@ -27,6 +27,8 @@
     "hammerjs": "^2.0.8",
     "http-server": "^0.12.3",
     "lru-cache": "^6.0.0",
+    "material-icons": "^0.5.2",
+    "roboto-fontface": "^0.10.0",
     "rxjs": "~6.5.5",
     "solarlunar": "^2.0.7",
     "tslib": "^2.0.0",
