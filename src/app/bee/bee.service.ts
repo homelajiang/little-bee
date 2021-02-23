@@ -682,6 +682,7 @@ export class BeeService {
   // 退出登录
   signOut() {
     localStorage.removeItem(USER_INFO)
+    lruCache.reset();
     this.router.navigate(['/login']);
   }
 }
