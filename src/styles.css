@@ -7,13 +7,7 @@ https://gist.github.com/timbophillips/455ac41659fddcd774c5550650665b66*/
 @import '~material-icons/iconfont/material-icons.css';
 body {
   margin: 0;
-  /*background-color: rgb(247,248,252);*/
   background: #f5f6fa;
-/*  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-image: url("./assets/bg.svg");*/
   font-family: Roboto,Helvetica Neue,sans-serif;
 }
 

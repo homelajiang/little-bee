@@ -66,15 +66,6 @@
   background-repeat: repeat-x;
 }
 
-.login-left {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url("../../assets/bg.jpg");
-}
-
 .login-right {
   padding: 20px 40px;
 }
