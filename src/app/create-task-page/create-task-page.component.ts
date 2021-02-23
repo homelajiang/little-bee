@@ -110,6 +110,7 @@ export class CreateTaskPageComponent implements OnInit {
     )
       .subscribe(res => {
         this.snackBar.tipsSuccess('创建成功');
+        this.beeService.clearCache('tasks')
         setTimeout(() => {
           this.router.navigate(['/daily']);
         }, 1000);

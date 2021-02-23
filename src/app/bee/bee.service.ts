@@ -86,6 +86,10 @@ export class BeeService {
     lruCache.set('tasks', JSON.stringify(tasks))
   }
 
+  clearCache(cacheKey: string) {
+    lruCache.del(cacheKey)
+  }
+
   /**
    * 获取最后登录的用户名
    */
@@ -336,7 +340,7 @@ export class BeeService {
       );
   }
 
-  // 获取末日的任务列表 2020-01-20 0、任何类型 1、正常 2、关闭 3、延期 4、未关闭（正常 + 延期）
+  // 获取某日的任务列表 2020-01-20 0、任何类型 1、正常 2、关闭 3、延期 4、未关闭（正常 + 延期）
   getTasksByDate(date: Date, state: number): Observable<Array<Task>> {
     const body: HttpParams = new HttpParams()
       .set('searchDate', format(date, 'yyyy-MM-dd'))

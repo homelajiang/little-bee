@@ -3,6 +3,10 @@
   min-width: 360px;
 }
 
+.home-nav-clear-width{
+  min-width: 0;
+}
+
 .home-content {
   margin-left: 40px;
 }

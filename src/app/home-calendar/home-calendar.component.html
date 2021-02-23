@@ -1,5 +1,5 @@
 <div fxLayout="row" class="container" [ngStyle.lt-sm]="{'padding':'0 20px'}">
-  <div class="home-nav" fxFlex="none" fxFlex.lt-md="grow">
+  <div fxFlex="none" fxFlex.lt-md="grow" class="home-nav" [ngClass.lt-sm]="'home-nav-clear-width'">
     <div class="nav-card nav-calendar">
       <app-calendar (selectWeekEvent)="onSelectWeek($event)" (selectDailyEvent)="onSelectDaily($event)"></app-calendar>
     </div>
@@ -8,13 +8,13 @@
           <app-event-filter></app-event-filter>
         </div>-->
 
-<!--
-    <div class="nav-card hover-shadow">
-      <app-clock-in></app-clock-in>
-    </div>
--->
+    <!--
+        <div class="nav-card hover-shadow">
+          <app-clock-in></app-clock-in>
+        </div>
+    -->
 
-    <div  fxHide.gt-sm>
+    <div fxHide.gt-sm>
       <app-daily-task [daily]="selectDaily"></app-daily-task>
     </div>
 
@@ -30,7 +30,7 @@
 
   <div fxLayout="column" class="home-content" fxFlex="grow" fxHide.lt-md>
     <app-event-title [week]="selectWeek" (weekChanged)="changeWeek($event)"></app-event-title>
-    <app-event [week]="selectWeek" class="home-event" ></app-event>
+    <app-event [week]="selectWeek" class="home-event"></app-event>
   </div>
 
 </div>

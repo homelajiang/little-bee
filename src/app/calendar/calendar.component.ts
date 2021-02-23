@@ -61,10 +61,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private colorPool = [
     {primary: '#8365db', secondary: '#eeeaff'},
     {primary: '#5bab75', secondary: '#e0f3e7'},
-    // {primary: '#ff562d', secondary: '#fff0e9'},
     {primary: '#29a5d3', secondary: '#e2f5ff'},
     {primary: '#455af7', secondary: '#e5f6ff'},
   ];
+
+  // 休假颜色
+  private vacationColor = {primary: '#ff562d', secondary: '#fff0e9'}
 
   private projectColorMap = {};
 
@@ -335,12 +337,25 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   private assignProjectColor(task: Task) {
     if (!this.projectColorMap[task.projectId]) {
-      this.projectColorMap[task.projectId] =
-        this.colorPool[this.assignColorIndex % this.colorPool.length]
-      // this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
-      this.assignColorIndex++
+      if (this.isVacationTask(task)) {
+        this.projectColorMap[task.projectId] = this.vacationColor
+      } else {
+        this.projectColorMap[task.projectId] =
+          this.colorPool[this.assignColorIndex % this.colorPool.length]
+        // this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
+        this.assignColorIndex++
+      }
+    }
+
+    if (this.isVacationTask(task)) {
+      task.projectName = '休假'
     }
     task.color = this.projectColorMap[task.projectId];
+  }
+
+  private isVacationTask(task: Task) {
+    return task.projectName === '部门常规项目' && task.title === '休假'
+      && task.workHours === 0;
   }
 
   private randomNum(minNum: number, maxNum: number) {

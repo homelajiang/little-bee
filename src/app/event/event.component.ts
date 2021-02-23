@@ -118,7 +118,11 @@ export class EventComponent implements OnInit {
   getStateDesc(task: Task) {
     switch (task.state) {
       case 2:
-        return task.workHours + '小时'
+        if (task.title === '休假') {
+          return ''
+        } else {
+          return task.workHours + '小时'
+        }
       case 3:
         return '已延期'
       default:
