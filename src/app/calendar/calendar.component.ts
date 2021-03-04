@@ -337,7 +337,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   private assignProjectColor(task: Task) {
     if (!this.projectColorMap[task.projectId]) {
-      if (this.isVacationTask(task)) {
+      if (task.type===6) {
         this.projectColorMap[task.projectId] = this.vacationColor
       } else {
         this.projectColorMap[task.projectId] =
@@ -347,15 +347,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.isVacationTask(task)) {
+    if (task.type===6) {
       task.projectName = '休假'
     }
     task.color = this.projectColorMap[task.projectId];
-  }
-
-  private isVacationTask(task: Task) {
-    return task.projectName === '部门常规项目' && task.title === '休假'
-      && task.workHours === 0;
   }
 
   private randomNum(minNum: number, maxNum: number) {

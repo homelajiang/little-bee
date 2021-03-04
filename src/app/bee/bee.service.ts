@@ -724,7 +724,7 @@ export class Task {
   projectName: string;
   title: string;
   /**
-   * 1、项目  2、任务  3、会议 4、周报
+   * 1、项目  2、任务  3、会议 4、周报  6、休假
    */
   type: number;
   typeState: number;
