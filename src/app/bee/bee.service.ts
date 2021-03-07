@@ -448,6 +448,7 @@ export class BeeService {
    * 关闭任务,workHour有时间时需要同步工时
    * @param task 任务
    * @param workHours 任务时长
+   * @param closeReadOnly 是否关闭oa已经关闭的任务
    */
   closeTask(task: TaskInfo, workHours: number = 0, closeReadOnly: boolean): Observable<ScoreAndExp> {
     const taskEndTime = parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date());

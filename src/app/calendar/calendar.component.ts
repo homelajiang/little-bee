@@ -178,7 +178,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 关闭任务
     this.closeTaskEvent = this.beeService.notifyCloseTask.subscribe(task => {
-      this.closeTask(task,false)
+      this.closeTask(task, false);
     });
 
     // 创建任务
@@ -243,11 +243,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private closeTask(task: TaskClose, closeReadOnly: boolean = false) {
     if (task) {
       this.snackBar.tipsForever('关闭中...');
-      this.beeService.closeTask(task.task, task.workHours,closeReadOnly)
+      this.beeService.closeTask(task.task, task.workHours, closeReadOnly)
         .subscribe(res => {
           this.snackBar.tipsSuccess('关闭成功');
         }, error => {
-          if (error==='337845815') {
+          if (error === '337845815') {
             ConfirmDialog.open(this.dialog, new ConfirmData('提示',
               'OA已存在相同任务，不可重复提交，是否继续关闭小蜜蜂上的任务？'))
               .afterClosed()
@@ -257,9 +257,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
                 })
               )
               .subscribe(res => {
-                this.closeTask(task,true)
+                this.closeTask(task, true);
               });
-          }else {
+          } else {
             this.snackBar.tipsError(error);
           }
         }, () => {
@@ -378,6 +378,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
       task.projectName = '休假';
     }
     task.color = this.projectColorMap[task.projectId];
+  }
+
+  isCurrentMonth(daily: Daily) {
+    return isSameMonth(daily.date, this.currentDate);
   }
 
   private randomNum(minNum: number, maxNum: number) {

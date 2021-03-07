@@ -22,6 +22,7 @@
        [ngClass]="{'calendar-column-selected':weekIsSelected(week)}">
     <div *ngFor="let column of [0,1,2,3,4,5,6]" matRipple fxLayout="column"
          (click)="onSelectWeek(week,column)" fxFlex
+         [ngStyle]="{'opacity':isCurrentMonth(week[column])?1:0}"
          fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
 
       <div style="width: 100%;padding-bottom: 100%;">
@@ -33,6 +34,7 @@
                       *ngFor="let task of week[column].events.length <= 3?week[column].events:week[column].events.slice(0,3)"></span>
         </div>
       </div>
+
     </div>
   </div>
 
