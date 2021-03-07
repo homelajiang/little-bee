@@ -41,7 +41,7 @@ export class BeeService {
   public notifyDeleteTask = new Subject<Task>();
 
   // 通知编辑任务
-  public notifyEditTask = new Subject<TaskInfo>()
+  public notifyEditTask = new Subject<TaskInfo>();
 
   // 通知更新任务信息
   public notifyUpdateTask = new Subject<TaskInfo>();
@@ -83,11 +83,11 @@ export class BeeService {
   }
 
   cacheTasks(tasks: Array<Task>) {
-    lruCache.set('tasks', JSON.stringify(tasks))
+    lruCache.set('tasks', JSON.stringify(tasks));
   }
 
   clearCache(cacheKey: string) {
-    lruCache.del(cacheKey)
+    lruCache.del(cacheKey);
   }
 
   /**
@@ -179,7 +179,7 @@ export class BeeService {
   // 从小蜜蜂获取搜索代办事项
   getTasks(): Observable<Array<Task>> {
     if (lruCache.get('tasks')) { // 页面切换时才会有效
-      return of(JSON.parse(lruCache.get('tasks')))
+      return of(JSON.parse(lruCache.get('tasks')));
     }
     const body: HttpParams = new HttpParams()
       .set('pageNo', '1')
@@ -190,7 +190,7 @@ export class BeeService {
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            lruCache.set('tasks', JSON.stringify(event.result))
+            lruCache.set('tasks', JSON.stringify(event.result));
             return of(event.result);
           } else {
             return throwError(event.msg);
@@ -202,15 +202,15 @@ export class BeeService {
   // 获取所有项目
   getProjects(): Observable<Array<Project>> {
     if (lruCache.get('projects')) {
-      const projects = JSON.parse(lruCache.get('projects'))
-      return of(projects)
+      const projects = JSON.parse(lruCache.get('projects'));
+      return of(projects);
     }
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(event => {
           if (event.code === 0) {
-            lruCache.set('projects', JSON.stringify(event.result))
+            lruCache.set('projects', JSON.stringify(event.result));
             return of(event.result);
           } else {
             return throwError(event.msg);
@@ -222,14 +222,14 @@ export class BeeService {
   // 获取已关闭的项目
   getClosedProjects(): Observable<Array<Project>> {
     if (lruCache.get('sub_projects')) {
-      return of(JSON.parse(lruCache.get('sub_projects')))
+      return of(JSON.parse(lruCache.get('sub_projects')));
     }
     return this.http.post<HttpResponse<Array<Project>>>(`bee/user/myCloseProjects`,
       {}, this.formHttpOptions)
       .pipe(
         flatMap(res => {
           if (res.code === 0) {
-            lruCache.set('sub_projects', JSON.stringify(res.result))
+            lruCache.set('sub_projects', JSON.stringify(res.result));
             return of(res.result);
           } else {
             return throwError(res.msg);
@@ -309,7 +309,7 @@ export class BeeService {
       .set('subProjectId', taskInfo.subProjectId ? taskInfo.subProjectId.toString() : '0')
       .set('projectId', taskInfo.projectId.toString())
       .set('alarmFlag', '0')
-      .set('taskId', taskInfo.id)
+      .set('taskId', taskInfo.id);
     return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
@@ -431,7 +431,7 @@ export class BeeService {
    *  3、周二及以后只能同步当前周的工时
    */
   checkSyncOa(taskEndDate: string) {
-    const endDate = parse(taskEndDate, 'yyyy-MM-dd HH:mm:ss', new Date())
+    const endDate = parse(taskEndDate, 'yyyy-MM-dd HH:mm:ss', new Date());
     const currentDate = new Date();
     const dayOfWeek = getDay(currentDate);  // 0 周日
     const differenceDays = differenceInDays(currentDate, endDate);
@@ -449,8 +449,8 @@ export class BeeService {
    * @param task 任务
    * @param workHours 任务时长
    */
-  closeTask(task: TaskInfo, workHours: number = 0): Observable<ScoreAndExp> {
-    const taskEndTime = parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date())
+  closeTask(task: TaskInfo, workHours: number = 0, closeReadOnly: boolean): Observable<ScoreAndExp> {
+    const taskEndTime = parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date());
     const taskDay = format(taskEndTime, 'yyyy-MM-dd', Config.dateOptions);
     let dayOfWeek: number = getDay(taskEndTime);
     // 周六是7、周日是1
@@ -461,9 +461,9 @@ export class BeeService {
     if (workHours) {
       let pn;
       if ('维护项目' === task.projectName) {
-        pn = `【${task.projectName}(${task.subProjectName})】`
+        pn = `【${task.projectName}(${task.subProjectName})】`;
       } else {
-        pn = `【${task.projectName}项目】`
+        pn = `【${task.projectName}项目】`;
       }
       // oa创建任务
       return this.queryOaTask(parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()),
@@ -513,7 +513,11 @@ export class BeeService {
               });
 
               if (readOnly) {
-                return throwError('已提交相同任务，不可重复提交~');
+                if (closeReadOnly) {
+                  return this.closeBeeTask(task, workHours, taskDay); // 关闭小蜜蜂任务
+                } else {
+                  return throwError('337845815'); // oa已存在任务，无法创建
+                }
               }
 
               if (targetTask && targetTask.taskCode.startsWith('TMP')) {
@@ -685,7 +689,7 @@ export class BeeService {
 
   // 退出登录
   signOut() {
-    localStorage.removeItem(USER_INFO)
+    localStorage.removeItem(USER_INFO);
     lruCache.reset();
     this.router.navigate(['/login']);
   }

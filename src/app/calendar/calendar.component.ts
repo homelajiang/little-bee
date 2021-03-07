@@ -14,7 +14,7 @@ import {
   addMonths, addWeeks,
   differenceInDays,
   endOfMonth,
-  endOfWeek, isAfter, isBefore, isEqual,
+  endOfWeek, format, isAfter, isBefore, isEqual,
   isSameDay,
   isSameMonth, isSameWeek, parse, parseJSON,
   startOfMonth,
@@ -25,10 +25,13 @@ import {Config} from '../config';
 import solarLunar from 'solarlunar';
 import {SnackBar} from '../utils/snack-bar';
 import {Overlay} from '@angular/cdk/overlay';
-import {BeeService, Daily, Task} from '../bee/bee.service';
+import {BeeService, Daily, Task, TaskClose, TaskInfo} from '../bee/bee.service';
 import {Subscription} from 'rxjs';
 import {CreateTaskDialogComponent} from '../create-task-dialog/create-task-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialog} from '../utils/confirm-dialog';
+import {ConfirmData} from '../component/confirm-dialog/confirm-dialog.component';
+import {filter, flatMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar',
@@ -66,7 +69,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ];
 
   // 休假颜色
-  private vacationColor = {primary: '#ff562d', secondary: '#fff0e9'}
+  private vacationColor = {primary: '#ff562d', secondary: '#fff0e9'};
 
   private projectColorMap = {};
 
@@ -79,7 +82,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   private editTaskEvent: Subscription;
   private updateTaskEvent: Subscription;
 
-  assignColorIndex = 0
+  assignColorIndex = 0;
 
   ngOnInit(): void {
     this.updateCalendar(true);
@@ -167,7 +170,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
               });
 
               // 更新缓存
-              this.beeService.cacheTasks(this.tasks)
+              this.beeService.cacheTasks(this.tasks);
             });
         }
       }
@@ -175,22 +178,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
     // 关闭任务
     this.closeTaskEvent = this.beeService.notifyCloseTask.subscribe(task => {
-      if (task) {
-        this.snackBar.tipsForever('关闭中...')
-        this.beeService.closeTask(task.task, task.workHours)
-          .subscribe(res => {
-            this.snackBar.tipsSuccess('关闭成功');
-          }, error => {
-            this.snackBar.tipsError(error);
-          }, () => {
-            this.beeService.notifyRefreshDaily.next(parse(task.task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
-          });
-      }
+      this.closeTask(task,false)
     });
 
     // 创建任务
     this.createTaskEvent = this.beeService.notifyCreateTask.subscribe(task => {
-      this.snackBar.tipsForever('创建中...')
+      this.snackBar.tipsForever('创建中...');
       if (task) {
         this.beeService.createTask(task)
           .subscribe(res => {
@@ -206,7 +199,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     // 删除任务
     this.deleteTaskEvent = this.beeService.notifyDeleteTask.subscribe(task => {
         if (task) {
-          this.snackBar.tipsForever('删除中...')
+          this.snackBar.tipsForever('删除中...');
           this.beeService.deleteTask(task.id.toString())
             .subscribe(res => {
               this.snackBar.tipsSuccess('已删除');
@@ -227,14 +220,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
           data: {
             taskInfo
           }
-        })
+        });
       }
-    })
+    });
 
     // 更新任务
     this.updateTaskEvent = this.beeService.notifyUpdateTask.subscribe(taskInfo => {
       if (taskInfo) {
-        this.snackBar.tipsForever('更新中...')
+        this.snackBar.tipsForever('更新中...');
         this.beeService.updateTask(taskInfo)
           .subscribe(res => {
             this.snackBar.tipsSuccess('已更新');
@@ -242,9 +235,37 @@ export class CalendarComponent implements OnInit, OnDestroy {
             this.snackBar.tipsError('更新失败');
           }, () => {
             this.beeService.notifyRefreshDaily.next(parse(taskInfo.beginDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
-          })
+          });
       }
-    })
+    });
+  }
+
+  private closeTask(task: TaskClose, closeReadOnly: boolean = false) {
+    if (task) {
+      this.snackBar.tipsForever('关闭中...');
+      this.beeService.closeTask(task.task, task.workHours,closeReadOnly)
+        .subscribe(res => {
+          this.snackBar.tipsSuccess('关闭成功');
+        }, error => {
+          if (error==='337845815') {
+            ConfirmDialog.open(this.dialog, new ConfirmData('提示',
+              'OA已存在相同任务，不可重复提交，是否继续关闭小蜜蜂上的任务？'))
+              .afterClosed()
+              .pipe(
+                filter(ok => {
+                  return ok;
+                })
+              )
+              .subscribe(res => {
+                this.closeTask(task,true)
+              });
+          }else {
+            this.snackBar.tipsError(error);
+          }
+        }, () => {
+          this.beeService.notifyRefreshDaily.next(parse(task.task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()));
+        });
+    }
   }
 
   updateCalendar(onInit: boolean) {
@@ -322,8 +343,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.listDays.forEach(daily => {
         const startDate = parse(task.startTime, 'yyyy-MM-dd HH:mm:ss', new Date());
         const endDate = parse(task.endTime, 'yyyy-MM-dd HH:mm:ss', new Date());
-        if ((isAfter(daily.date, startDate) || isEqual(daily.date, startDate)) &&
-          (isBefore(daily.date, endDate) || isEqual(daily.date, endDate))) {
+
+        // 三种情况可以判断任务属于当天
+        const nextDate = addDays(daily.date, 1);
+        const inStart = (isAfter(startDate, daily.date) || isEqual(startDate, daily.date)) &&
+          isBefore(startDate, nextDate);
+        const inEnd = isAfter(endDate, daily.date) && isBefore(endDate, nextDate);
+        const inMiddle = isBefore(startDate, daily.date) && isAfter(endDate, nextDate);
+
+        if (inStart || inMiddle || inEnd) {
           daily.events.push(task);
         }
 
@@ -332,23 +360,22 @@ export class CalendarComponent implements OnInit, OnDestroy {
         }
       });
     });
-
   }
 
   private assignProjectColor(task: Task) {
     if (!this.projectColorMap[task.projectId]) {
-      if (task.type===6) {
-        this.projectColorMap[task.projectId] = this.vacationColor
+      if (task.type === 6) {
+        this.projectColorMap[task.projectId] = this.vacationColor;
       } else {
         this.projectColorMap[task.projectId] =
-          this.colorPool[this.assignColorIndex % this.colorPool.length]
+          this.colorPool[this.assignColorIndex % this.colorPool.length];
         // this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
-        this.assignColorIndex++
+        this.assignColorIndex++;
       }
     }
 
-    if (task.type===6) {
-      task.projectName = '休假'
+    if (task.type === 6) {
+      task.projectName = '休假';
     }
     task.color = this.projectColorMap[task.projectId];
   }
@@ -373,7 +400,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   private reqProjects() {
-    this.beeService.getProjects().subscribe()
-    this.beeService.getClosedProjects().subscribe()
+    this.beeService.getProjects().subscribe();
+    this.beeService.getClosedProjects().subscribe();
   }
 }

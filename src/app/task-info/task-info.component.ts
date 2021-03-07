@@ -8,7 +8,9 @@ import {ConfirmData} from '../component/confirm-dialog/confirm-dialog.component'
 import {WorkHoursDialogComponent} from '../new-task/work-hours-dialog';
 import {filter, flatMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
-import {isSameDay, parse} from 'date-fns';
+import {format, isSameDay, parse} from 'date-fns';
+import {DateFnsFormatPipe} from '../bee/bee.pipe';
+import {Config} from '../config';
 
 @Component({
   selector: 'app-task-info',
@@ -123,6 +125,16 @@ export class TaskInfoComponent implements OnInit {
       return '正常';
     } else {
       return '其他状态';
+    }
+  }
+
+  getTaskDateDes(startTime:string,endTime:string){
+    const start= parse(startTime, 'yyyy-MM-dd HH:mm:ss', new Date());
+    const end= parse(endTime, 'yyyy-MM-dd HH:mm:ss', new Date());
+    if(isSameDay(start,end)){
+      return format(start,'MMM d (EEEE)',Config.dateOptions)
+    }else {
+      return `${format(start,'MMM d (EEEE)',Config.dateOptions)} - ${format(end,'MMM d (EEEE)',Config.dateOptions)}`
     }
   }
 
