@@ -14,7 +14,7 @@ import {NewTaskComponent} from './new-task/new-task.component';
 import {DinnerComponent} from './dinner/dinner.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {httpInterceptorProviders} from './http-interceptor';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {TaskInfoComponent} from './task-info/task-info.component';
 import {DateFnsFormatPipe, Hour2TimePipe, TaskStateColorPip} from './bee/bee.pipe';
@@ -88,35 +88,36 @@ import {CreateTaskDialogComponent} from './create-task-dialog/create-task-dialog
     LoadingButtonComponent,
     CreateTaskDialogComponent
   ],
-  imports: [
-    CommonModule,
-    OverlayModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule,
-    appRouting,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatRippleModule,
-    HttpClientModule,
-    FormsModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        CommonModule,
+        OverlayModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule,
+        appRouting,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatRippleModule,
+        HttpClientModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatMenuModule,
+        MatCheckboxModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule
+    ],
   entryComponents: [NewTaskComponent, TaskInfoComponent, WorkHoursDialogComponent,
     ConfirmDialogComponent, CreateTaskDialogComponent],
   providers: [

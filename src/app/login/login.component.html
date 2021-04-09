@@ -5,7 +5,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center start">
-  <div class="login-layout" [ngStyle.lt-sm]="{'margin-top':'40px'}">
+  <form (ngSubmit)="login()" [formGroup]="loginForm" class="login-layout" [ngStyle.lt-sm]="{'margin-top':'40px'}">
     <mat-card class="mat-elevation-z8 login-card" fxLayout="column" fxLayoutAlign="start center">
       <h1>欢迎登录</h1>
       <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-form">
@@ -13,41 +13,31 @@
 
         <div fxFlex="grow" fxLayout="column">
           <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-input">
-            <input fxFlexAlign="stretch" matInput [(ngModel)]="username" placeholder="Username">
+            <input fxFlexAlign="stretch" formControlName="username" matInput  placeholder="用户名">
           </div>
 
           <div fxLayout="row" fxLayoutAlign="start center" fxFlexAlign="stretch" class="login-input">
-            <input fxFlexAlign="stretch" type="password" matInput [(ngModel)]="password" placeholder="Password">
-            <button fxFlex="none" mat-button color="warn">Forget?</button>
+            <input fxFlexAlign="stretch" formControlName="password" type="password" matInput placeholder="密码">
+            <button fxFlex="none" mat-button color="warn" matTooltip="请联系管理员">忘记密码?</button>
           </div>
 
         </div>
 
       </div>
 
-      <mat-form-field appearance="outline" style="display: none">
-        <mat-label>用户名</mat-label>
-        <input matInput [(ngModel)]="username" placeholder="请输入用户名">
-        <!--        <mat-hint>Hint</mat-hint>-->
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" style="display: none">
-        <mat-label>密码</mat-label>
-        <!--        <mat-hint>Hint</mat-hint>-->
-        <input matInput [(ngModel)]="password" type="password" placeholder="请输入密码">
+      <mat-form-field style="display: none;">
+        <input matInput type="text" />
       </mat-form-field>
 
       <div class="login-button" fxFlexAlign="stretch">
         <div class="login-dash"></div>
-        <button [disabled]="loading" mat-flat-button color="primary" (click)="login()" id="login-button" class="umami--click--login-button">SIGN IN</button>
+        <button [disabled]="loading" type="submit" mat-flat-button color="primary" id="login-button" class="umami--click--login-button">登录</button>
       </div>
 
-      <p>Don't have an account?&nbsp;&nbsp;
-        <a href="#"><b>Sign Up</b></a>
+      <p>还没有帐号?&nbsp;&nbsp;
+        <a href="#" matTooltip="请联系管理员"><b>注册</b></a>
       </p>
-
-
     </mat-card>
-  </div>
+  </form>
 </div>
 
