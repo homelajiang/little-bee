@@ -14,10 +14,13 @@ import {
 import {Config} from '../config';
 import CryptoJS from 'crypto-js';
 import LRUCache from 'lru-cache';
+import {environment} from '../../environments/environment';
+import yaml from 'js-yaml'
 
 const DEFAULT_PROJECT = 'default_project';
 const USER_INFO = 'user_info';
 const LAST_USERNAME = 'last_username';
+const APP_VERSION = 'app_version'
 const lruCache = new LRUCache({
   max: 100,
   maxAge: 60 * 60 * 1000
@@ -95,6 +98,45 @@ export class BeeService {
    */
   getLastUsername(): string {
     return localStorage.getItem(LAST_USERNAME);
+  }
+
+  /**
+   * 获取升级日志内容
+   */
+  checkChangeLogs(allLogs: boolean = false): Observable<Array<ChangeLog>|ChangeLog> {
+    return this.http.get('assets/changelog.yml', {
+      observe: 'body',
+      responseType: 'text'
+    })
+      .pipe(
+        flatMap(data => {
+          const logs = yaml.load(data, 'utf8')
+          if (allLogs) {
+            return of(logs);
+          }
+          const localVersion = localStorage.getItem(APP_VERSION) ? localStorage.getItem(APP_VERSION) : '';
+          const currentVersion = environment.version;
+          const log = logs[currentVersion]
+
+          if (currentVersion > localVersion && log) {
+            // localStorage.setItem(APP_VERSION, environment.version)
+            return of(log);
+          } else {
+            return of(null)
+          }
+        })
+      );
+  }
+
+  /**
+   * 获取存储的版本号
+   */
+  getVersion(): string {
+    return localStorage.getItem(APP_VERSION)
+  }
+
+  setVersion() {
+    localStorage.setItem(APP_VERSION, environment.version)
   }
 
   // 登录小蜜蜂
@@ -807,6 +849,13 @@ export class TaskInfo {
   subProjectId: number;
   subProjectName: string;
   workHours: number;
+}
+
+export class ChangeLog{
+  name: string;
+  date: Date;
+  new: string[];
+  improved: string[]
 }
 
 export class Daily {

@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BeeService, Daily, Task} from '../bee/bee.service';
+import {BeeService, ChangeLog, Daily, Task} from '../bee/bee.service';
 import {EventTitleComponent} from '../event-title/event-title.component';
 import {EventComponent} from '../event/event.component';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {SnackBar} from '../utils/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {ChangelogDialogComponent} from '../changelog/changelog-dialog/changelog-dialog.component';
 
 @Component({
   selector: 'app-home-calendar',
@@ -21,13 +23,14 @@ export class HomeCalendarComponent implements OnInit {
   calendarComponent: CalendarComponent
 
   public selectWeek: Array<Daily>; // 选中并正在展示的周
-  public selectDaily:Daily; // 选中的Daily
+  public selectDaily: Daily; // 选中的Daily
 
-  constructor(private beeService: BeeService, private snackBar: SnackBar) {
+  constructor(private beeService: BeeService, private snackBar: SnackBar, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.checkIn()
+    this.checkChangeLog()
   }
 
   checkIn() {
@@ -66,4 +69,22 @@ export class HomeCalendarComponent implements OnInit {
     this.calendarComponent.changeWeek(event);
   }
 
+  private checkChangeLog() {
+    this.beeService.checkChangeLogs()
+      .subscribe((log: ChangeLog) => {
+        this.dialog.open(ChangelogDialogComponent, {
+          data: {log}
+        })
+      })
+    /*    this.beeService.checkChangeLogs()
+          .subscribe(res => {
+            if (res) {
+              this.dialog.open(ChangelogDialogComponent, {
+                data: {
+                  log: res
+                }
+              })
+            }
+          })*/
+  }
 }

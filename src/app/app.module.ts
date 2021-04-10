@@ -55,6 +55,9 @@ import {CreateTaskPageComponent} from './create-task-page/create-task-page.compo
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoadingButtonComponent} from './loading-button/loading-button.component';
 import {CreateTaskDialogComponent} from './create-task-dialog/create-task-dialog.component';
+import { ChangelogDialogComponent } from './changelog/changelog-dialog/changelog-dialog.component';
+import { ChangelogPageComponent } from './changelog/changelog-page/changelog-page.component';
+import { ChangelogComponent } from './changelog/changelog/changelog.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,10 @@ import {CreateTaskDialogComponent} from './create-task-dialog/create-task-dialog
     DailyTaskComponent,
     CreateTaskPageComponent,
     LoadingButtonComponent,
-    CreateTaskDialogComponent
+    CreateTaskDialogComponent,
+    ChangelogDialogComponent,
+    ChangelogPageComponent,
+    ChangelogComponent
   ],
     imports: [
         CommonModule,

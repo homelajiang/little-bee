@@ -1,0 +1,10 @@
+<p>{{log.name}}</p>
+
+<div>
+  <h2>{{log.date | dateFnsFormat:'yyyy年 MMM d日 (EEEE)'}}</h2>
+  <h3>New</h3>
+  <p *ngFor="let n of log.new">{{n}}</p>
+
+  <h3>Improved</h3>
+  <p *ngFor="let i of log.improved">{{i}}</p>
+</div>
