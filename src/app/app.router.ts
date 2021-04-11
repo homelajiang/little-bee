@@ -6,9 +6,15 @@ import {HomeComponent} from './home/home.component';
 import {ShopComponent} from './shop/shop.component';
 import {HomeCalendarComponent} from './home-calendar/home-calendar.component';
 import {CreateTaskPageComponent} from './create-task-page/create-task-page.component';
+import {ChangelogComponent} from './changelog/changelog/changelog.component';
+import {StatisticsComponent} from './statistics/statistics.component';
+import {DinnerComponent} from './dinner/dinner.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'changelog', component: ChangelogComponent},
+  {path: 'statistics', component: StatisticsComponent},
+  {path: 'dinner', component: DinnerComponent},
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [

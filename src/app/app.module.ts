@@ -58,6 +58,10 @@ import {CreateTaskDialogComponent} from './create-task-dialog/create-task-dialog
 import { ChangelogDialogComponent } from './changelog/changelog-dialog/changelog-dialog.component';
 import { ChangelogPageComponent } from './changelog/changelog-page/changelog-page.component';
 import { ChangelogComponent } from './changelog/changelog/changelog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MessageComponent } from './message/message.component';
+import { MessageItemComponent } from './message/message-item/message-item.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +96,11 @@ import { ChangelogComponent } from './changelog/changelog/changelog.component';
     CreateTaskDialogComponent,
     ChangelogDialogComponent,
     ChangelogPageComponent,
-    ChangelogComponent
+    ChangelogComponent,
+    DashboardComponent,
+    MessageComponent,
+    MessageItemComponent,
+    StatisticsComponent
   ],
     imports: [
         CommonModule,

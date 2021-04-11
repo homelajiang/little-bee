@@ -1,14 +1,19 @@
-<div fxLayout="row" class="dinner" fxLayoutAlign="start center">
-  <img fxFlex="none" src="assets/dinner-icon.svg">
-  <div fxLayout="column" fxFlex="grow">
-    <h2>晚餐预定</h2>
-    <span>09:00 - 14:00</span>
+<div>
+  <div fxLayout="row" class="dinner" fxLayoutAlign="start center">
+    <img fxFlex="none" src="assets/dinner-icon.svg">
+    <div fxLayout="column" fxFlex="grow">
+      <h2>晚餐预定</h2>
+      <span>09:00 - 14:00</span>
+    </div>
+
+    <app-loading-button fxFlex="none"
+                        [tooltip]="tips"
+                        [disabled]="readonly && !moreAction"
+                        [loading]="isLoading"
+                        (action)="switchOrder()"
+                        [buttonText]="getOrderDesc()"></app-loading-button>
   </div>
 
-  <app-loading-button fxFlex="none"
-                      [tooltip]="tips"
-                      [disabled]="readonly && !moreAction"
-                      [loading]="isLoading"
-                      (action)="switchOrder()"
-                      [buttonText]="getOrderDesc()"></app-loading-button>
+  <div>午餐</div>
+  <div>红烧茄子 红烧茄子 红烧茄子 红烧茄子</div>
 </div>

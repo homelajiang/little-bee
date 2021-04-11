@@ -70,21 +70,11 @@ export class HomeCalendarComponent implements OnInit {
   }
 
   private checkChangeLog() {
-    this.beeService.checkChangeLogs()
+/*    this.beeService.getChangeLogs()
       .subscribe((log: ChangeLog) => {
         this.dialog.open(ChangelogDialogComponent, {
           data: {log}
         })
-      })
-    /*    this.beeService.checkChangeLogs()
-          .subscribe(res => {
-            if (res) {
-              this.dialog.open(ChangelogDialogComponent, {
-                data: {
-                  log: res
-                }
-              })
-            }
-          })*/
+      })*/
   }
 }

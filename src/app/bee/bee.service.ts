@@ -103,7 +103,7 @@ export class BeeService {
   /**
    * 获取升级日志内容
    */
-  checkChangeLogs(allLogs: boolean = false): Observable<Array<ChangeLog>|ChangeLog> {
+  getChangeLogs(allLogs: boolean = false): Observable<Array<ChangeLog>|ChangeLog> {
     return this.http.get('assets/changelog.yml', {
       observe: 'body',
       responseType: 'text'
@@ -126,17 +126,6 @@ export class BeeService {
           }
         })
       );
-  }
-
-  /**
-   * 获取存储的版本号
-   */
-  getVersion(): string {
-    return localStorage.getItem(APP_VERSION)
-  }
-
-  setVersion() {
-    localStorage.setItem(APP_VERSION, environment.version)
   }
 
   // 登录小蜜蜂

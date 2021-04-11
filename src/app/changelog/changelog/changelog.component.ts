@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BeeService, ChangeLog} from '../../bee/bee.service';
 
 @Component({
   selector: 'app-changelog',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangelogComponent implements OnInit {
 
-  constructor() { }
+  constructor(private beeService: BeeService) {
+  }
+
+  log: ChangeLog = new ChangeLog();
 
   ngOnInit(): void {
+    this.beeService.getChangeLogs().subscribe((res:ChangeLog) => {
+      this.log = res;
+    });
   }
 
 }
