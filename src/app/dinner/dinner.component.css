@@ -24,6 +24,25 @@
   color: #999999;
 }
 
+.meal-order{
+  margin-top: 20px;
+}
+
+.food-label{
+  font-weight: 600;
+}
+
+.food{
+  background: #dcdcdc;
+  border-radius: 12px;
+  color: #464646;
+  padding: 2px 6px;
+  font-size: 14px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+
 /*
 .dinner button {
   width: 200px;

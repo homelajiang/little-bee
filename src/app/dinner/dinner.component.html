@@ -1,5 +1,5 @@
-<div>
-  <div fxLayout="row" class="dinner" fxLayoutAlign="start center">
+<div  class="dinner">
+  <div fxLayout="row" fxLayoutAlign="start center">
     <img fxFlex="none" src="assets/dinner-icon.svg">
     <div fxLayout="column" fxFlex="grow">
       <h2>晚餐预定</h2>
@@ -14,6 +14,22 @@
                         [buttonText]="getOrderDesc()"></app-loading-button>
   </div>
 
-  <div>午餐</div>
-  <div>红烧茄子 红烧茄子 红烧茄子 红烧茄子</div>
+<!--  <mat-divider></mat-divider>-->
+
+  <div class="meal-order" fxLayout="column" >
+    <div fxLayout="row wrap"  fxLayoutAlign="start center">
+      <div fxFlex="none" class="food-label">午餐：</div>
+      <div fxFlex="none" class="food" *ngFor="let food of ['红烧茄子','红烧茄子','红烧茄子','红烧茄子']">
+        {{food}}
+      </div>
+    </div>
+
+<!--    <div fxLayout="row" fxLayoutAlign="start">
+      <div class="food-label">晚餐：</div>
+      <div class="food" *ngFor="let food of ['红烧茄子','红烧茄子','红烧茄子','红烧茄子']">
+        {{food}}
+      </div>
+    </div>-->
+
+  </div>
 </div>
