@@ -1,6 +1,7 @@
 
 .home-nav {
-  min-width: 360px;
+  /*min-width: 360px;*/
+  width: 360px;
 }
 
 .home-nav-clear-width{
