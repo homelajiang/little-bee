@@ -1,0 +1,43 @@
+<div style="width: 360px;padding:20px;background: white;">
+
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <!--  <div class="work-hour-icon work-hour-time"></div>-->
+    <div fxFlex="none">工时统计</div>
+    <div fxFlex="grow"></div>
+    <mat-button-toggle-group fxFlex="none" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="bold">月度</mat-button-toggle>
+      <mat-button-toggle value="italic">季度</mat-button-toggle>
+      <mat-button-toggle value="underline">年度</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div fxLayout="row" class="work-hour-layout">
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start center">
+      <div class="work-hour-icon work-hour-ranking"></div>
+      <div fxLayout="column">
+        <div class="work-hour-label">排行</div>
+        <div class="work-hour-text">1</div>
+      </div>
+    </div>
+    <div fxFlex="50" fxLayout="row" fxLayoutAlign="start center">
+      <div class="work-hour-icon work-hour-rating"></div>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="work-hour-label">工时</div>
+        <div class="work-hour-text">321</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ranking-layout">
+    <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let a of [1,2,3,4,5]">
+      <div fxFlex="none" fxLayout="row" fxLayoutAlign="center center" class="user-ranking">
+        <p>1</p>
+      </div>
+      <div fxFlex="none" class="work-hour-icon user-avatar"></div>
+      <div fxFlex="none">梁戏院</div>
+      <div fxFlex="grow"></div>
+      <div fxFlex="none" class="ranking-hours">433</div>
+    </div>
+  </div>
+
+</div>

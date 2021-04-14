@@ -9,12 +9,13 @@ import {CreateTaskPageComponent} from './create-task-page/create-task-page.compo
 import {ChangelogComponent} from './changelog/changelog/changelog.component';
 import {StatisticsComponent} from './statistics/statistics.component';
 import {DinnerComponent} from './dinner/dinner.component';
+import {WorkHourComponent} from './work-hour/work-hour.component';
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'changelog', component: ChangelogComponent},
   {path: 'statistics', component: StatisticsComponent},
-  {path: 'dinner', component: DinnerComponent},
+  {path: 'workhour', component: WorkHourComponent},
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [

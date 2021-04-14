@@ -35,3 +35,12 @@ body {
 .space-pre{
   white-space: pre-wrap;
 }
+
+.mat-button-toggle-appearance-standard div.mat-button-toggle-label-content {
+  line-height: 28px;
+  font-size: 14px;
+}
+
+.mat-button-toggle-group{
+  height: 28px;
+}

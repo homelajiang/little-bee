@@ -34,7 +34,7 @@
 }
 
 .food{
-  background: #dcdcdc;
+  /*background: #dcdcdc;*/
   border-radius: 4px;
   padding: 2px 2px;
   font-size: 13px;
@@ -43,6 +43,8 @@
   cursor: pointer;
 }
 .food p{
+  color: rgb(36, 67, 87);
+  background-color: rgb(251, 251, 252);
   margin-block:0;
 /*  overflow: hidden;
   text-overflow: ellipsis;

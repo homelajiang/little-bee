@@ -62,6 +62,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MessageComponent } from './message/message.component';
 import { MessageItemComponent } from './message/message-item/message-item.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { WorkHourComponent } from './work-hour/work-hour.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
     DashboardComponent,
     MessageComponent,
     MessageItemComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    WorkHourComponent
   ],
     imports: [
         CommonModule,
