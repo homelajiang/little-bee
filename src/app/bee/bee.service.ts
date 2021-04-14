@@ -103,7 +103,7 @@ export class BeeService {
   /**
    * 获取升级日志内容
    */
-  getChangeLogs(allLogs: boolean = false): Observable<Array<ChangeLog>|ChangeLog> {
+  getChangeLogs(allLogs: boolean = false): Observable<Array<ChangeLog> | ChangeLog> {
     return this.http.get('assets/changelog.yml', {
       observe: 'body',
       responseType: 'text'
@@ -747,6 +747,13 @@ export class UserInfo {
   exp: number;
 }
 
+export class RankUser {
+  head: string;
+  workHours: number;
+  userName: string;
+  userId: string;
+}
+
 export class Task {
   createTime: string;
   userNames: string;
@@ -840,7 +847,7 @@ export class TaskInfo {
   workHours: number;
 }
 
-export class ChangeLog{
+export class ChangeLog {
   name: string;
   date: Date;
   new: string[];
