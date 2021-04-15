@@ -14,5 +14,13 @@
     "pathRewrite": {
       "^/bee": ""
     }
+  },
+  "/gitee": {
+    "target": "https://gitee.com/homelajiang",
+    "secure": "true",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/gitee": ""
+    }
   }
 }

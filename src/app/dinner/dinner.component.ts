@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {BeeService} from '../bee/bee.service';
 import {SnackBar} from '../utils/snack-bar';
 import {Observable} from 'rxjs';
-import {isAfter, isBefore} from 'date-fns';
+import {getDay, isAfter, isBefore} from 'date-fns';
+import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-dinner',
@@ -17,6 +18,12 @@ export class DinnerComponent implements OnInit {
   actionUrl = ''
   tips = ''
   isLoading = true;
+  weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+  currentWeekDay = ''
+  weekMealOrder = []
+  showOrder = false
+  mealOrder = {午餐: [], 晚餐: []}
+  showTrr = true
 
   constructor(private beeService: BeeService, private snackBar: SnackBar) {
   }
@@ -24,6 +31,7 @@ export class DinnerComponent implements OnInit {
   ngOnInit() {
 
     const today = new Date()
+    this.currentWeekDay = this.weekDays[getDay(today)]
 
     const startDate = new Date(today)
     startDate.setHours(9)
@@ -42,6 +50,8 @@ export class DinnerComponent implements OnInit {
       || today === endDate)
 
     this.handleOrderRes(this.beeService.getDinnerOrder())
+
+    this.getMealOrder()
   }
 
   switchOrder() {
@@ -99,5 +109,18 @@ export class DinnerComponent implements OnInit {
     }, () => {
       this.isLoading = false
     })
+  }
+
+  private getMealOrder() {
+    this.beeService.getMealOrder()
+      .subscribe(res => {
+        this.showOrder = true
+        this.weekMealOrder = res
+        this.mealOrder = this.weekMealOrder[this.currentWeekDay]
+      })
+  }
+
+  getMealDes(key: string): string {
+    return this.mealOrder[key].join().replace(/,/g,' | ')
   }
 }

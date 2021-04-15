@@ -89,6 +89,19 @@ export class BeeService {
     lruCache.set('tasks', JSON.stringify(tasks));
   }
 
+  cacheMealOrder(date: string, order: any) {
+    lruCache.set(`meal-order-${date}`, JSON.stringify(order))
+  }
+
+  private getCachedMealOrder(date: string) {
+    const cache = lruCache.get(`meal-order-${date}`)
+    if (cache) {
+      return JSON.parse(cache)
+    } else {
+      return ''
+    }
+  }
+
   clearCache(cacheKey: string) {
     lruCache.del(cacheKey);
   }
@@ -455,6 +468,46 @@ export class BeeService {
       );
   }
 
+  // 获取工时排行
+  getHourRanking(searchType: string, searchDate: Date, quarter?: number): Observable<Array<RankUser>> {
+    const sd = format(searchDate, searchType === '1' ? 'yyyy-MM' : 'yyyy')
+    const body: HttpParams = new HttpParams()
+      .set('deptId', this.userInfo.deptId.toString())
+      .set('searchType', searchType)
+      .set('searchDate', sd)
+      .set('quarter', quarter.toString())
+    return this.http.post<HttpResponse<Array<RankUser>>>(`bee/task/workHoursOrderByDate`, body, this.formHttpOptions)
+      .pipe(
+        flatMap(event => {
+          if (event.code === 0) {
+            return of(event.result)
+          } else {
+            throwError(event.msg)
+          }
+        })
+      )
+  }
+
+  // 获取菜单
+  getMealOrder(): Observable<any> {
+    const dateString = format(startOfWeek(new Date(), Config.dateOptions), 'yyyyMMdd', Config.dateOptions);
+    const cacheOrder = this.getCachedMealOrder(dateString)
+    if (cacheOrder) {
+      return of(cacheOrder)
+    }
+    return this.http.get(`gitee/static/raw/master/${dateString}.yaml`, {
+      observe: 'body',
+      responseType: 'text'
+    })
+      .pipe(
+        flatMap(data => {
+          const orders = yaml.load(data, 'utf8')
+          this.cacheMealOrder(dateString, JSON.stringify(orders))
+          return of(orders)
+        })
+      )
+  }
+
   /**
    *  检查是否可以同步工时
    *  1、不可同步未来的工时
@@ -751,7 +804,7 @@ export class RankUser {
   head: string;
   workHours: number;
   userName: string;
-  userId: string;
+  userId: number;
 }
 
 export class Task {

@@ -24,32 +24,35 @@
   color: #999999;
 }
 
-.meal-order{
-  margin-top: 20px;
+.meal-order {
+  margin-top: 12px;
 }
 
-.food-label{
+.food-label {
   font-weight: 600;
   font-size: 16px;
 }
 
-.food{
-  /*background: #dcdcdc;*/
+.food-layout {
+  margin-top: 8px;
+}
+
+.food {
   border-radius: 4px;
-  padding: 2px 2px;
   font-size: 13px;
   font-weight: 500;
-  margin: 3px;
+  line-height: 21px;
   cursor: pointer;
 }
-.food p{
+
+.food p {
   color: rgb(36, 67, 87);
   background-color: rgb(251, 251, 252);
-  margin-block:0;
-/*  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 60px;
-  white-space: nowrap;*/
+  margin-block: 0;
+  /*  overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60px;
+    white-space: nowrap;*/
 }
 
 
