@@ -493,7 +493,7 @@ export class BeeService {
     const dateString = format(startOfWeek(new Date(), Config.dateOptions), 'yyyyMMdd', Config.dateOptions);
     const cacheOrder = this.getCachedMealOrder(dateString)
     if (cacheOrder) {
-      return of(cacheOrder)
+      return of(JSON.parse(cacheOrder))
     }
     return this.http.get(`gitee/static/raw/master/${dateString}.yaml`, {
       observe: 'body',
