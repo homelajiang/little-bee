@@ -21,7 +21,6 @@ export class DinnerComponent implements OnInit {
   weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
   currentWeekDay = ''
   weekMealOrder = []
-  showOrder = false
   mealOrder = {午餐: [], 晚餐: []}
   showTrr = true
 
@@ -114,7 +113,6 @@ export class DinnerComponent implements OnInit {
   private getMealOrder() {
     this.beeService.getMealOrder()
       .subscribe(res => {
-        this.showOrder = true
         this.weekMealOrder = res
         this.mealOrder = this.weekMealOrder[this.currentWeekDay]
       })
