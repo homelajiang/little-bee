@@ -21,8 +21,7 @@ export class DinnerComponent implements OnInit {
   weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
   currentWeekDay = ''
   weekMealOrder = []
-  mealOrder = {午餐: [], 晚餐: []}
-  showTrr = true
+  mealOrder
 
   constructor(private beeService: BeeService, private snackBar: SnackBar) {
   }
