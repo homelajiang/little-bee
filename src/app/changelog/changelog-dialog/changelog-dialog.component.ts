@@ -9,7 +9,8 @@ import {BeeService, ChangeLog} from '../../bee/bee.service';
 })
 export class ChangelogDialogComponent implements OnInit {
 
-  log:ChangeLog
+  log: ChangeLog = null
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private beeService: BeeService) {
     this.log = this.data.log
   }

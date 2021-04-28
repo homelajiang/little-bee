@@ -124,13 +124,17 @@ export class BeeService {
       .pipe(
         flatMap(data => {
           const logs = yaml.load(data, 'utf8')
+          if (logs != null) {
+            Object.keys(logs).forEach((key) => {
+              logs[key].name = key;
+            })
+          }
           if (allLogs) {
             return of(logs);
           }
           const localVersion = localStorage.getItem(APP_VERSION) ? localStorage.getItem(APP_VERSION) : '';
           const currentVersion = environment.version;
           const log = logs[currentVersion]
-
           if (currentVersion > localVersion && log) {
             // localStorage.setItem(APP_VERSION, environment.version)
             return of(log);
