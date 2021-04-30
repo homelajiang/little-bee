@@ -30,7 +30,7 @@ export class HomeCalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkIn()
-    this.checkChangeLog()
+    // this.checkChangeLog()
   }
 
   checkIn() {
