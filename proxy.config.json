@@ -8,7 +8,7 @@
     }
   },
   "/bee": {
-    "target": "http://132.232.11.114:8180",
+    "target": "http://bestkunlun.com/honeyBee",
     "secure": "false",
     "changeOrigin": true,
     "pathRewrite": {

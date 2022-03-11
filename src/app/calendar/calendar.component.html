@@ -25,6 +25,8 @@
          fxLayoutAlign="start none" class="calendar-item" [ngClass]="{'calendar-today':week[column].today}">
 
       <div style="width: 100%;padding-bottom: 100%;">
+<!--        <div style="position: absolute;left: 4px;top: 4px;height: calc(100% - 8px);width:calc(100% - 8px);background: #455af7;border-radius: 8px;">
+        </div>-->
         <div style="position: absolute;left: 0;top: 0;height: 100%;width: 100%;" fxLayout="row" fxLayoutAlign="center center">
           <h2 class="calendar-day"
               [ngStyle]="{'opacity':isCurrentMonth(week[column])?1:0.3}">
