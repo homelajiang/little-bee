@@ -43,6 +43,19 @@
     </mat-menu>
 
   </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection"
+       *ngIf="(selectedProject && selectedProject.scene) || scene">
+    <mat-icon>folder_open</mat-icon>
+    <button mat-button
+            [matMenuTriggerFor]="sceneMenu">{{getSelectSceneTitle()}}</button>
+
+    <mat-menu #sceneMenu="matMenu">
+      <button mat-menu-item (click)="selectScene(scene)"
+              *ngFor="let  scene of sceneList">{{scene}}</button>
+    </mat-menu>
+  </div>
+
   <button fxFlex="none" mat-flat-button class="action-button" color="primary" (click)="saveTask()">保存</button>
   <button fxFlex="none" mat-stroked-button class="action-button action-button-cancel" routerLink="/daily"
           color="primary">返回

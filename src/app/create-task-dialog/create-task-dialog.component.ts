@@ -25,6 +25,9 @@ export class CreateTaskDialogComponent implements OnInit {
   editMode = false;
   taskInfo: TaskInfo;
   projectName = '';
+  scene = '';
+  selectedScene: string; // 选中的现场
+  sceneList = []; // 现场列表
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private beeService: BeeService,
               private snackBar: MatSnackBar, public dialog: MatDialog,
@@ -35,6 +38,7 @@ export class CreateTaskDialogComponent implements OnInit {
       this.selectedDate = parse(this.taskInfo.beginDate, 'yyyy-MM-dd HH:mm:ss', new Date());
       this.taskInput = this.taskInfo.content
       this.projectName = '维护项目' === this.taskInfo.projectName ? `${this.taskInfo.subProjectName} （维护项目）` : this.taskInfo.projectName
+      this.scene = data.taskInfo.scene
     } else {
       this.selectedDate = new Date();
     }
@@ -90,6 +94,11 @@ export class CreateTaskDialogComponent implements OnInit {
   }
 
   selectProject(isClosedProject: boolean, project: Project) {
+    if (this.selectedProject !== project) {
+      // 清空已经选择的现场
+      this.selectedScene = ''
+    }
+    this.sceneList = project.scene ? project.scene.split(',') : []
     this.isClosedProject = isClosedProject;
     this.selectedProject = project;
   }
@@ -107,6 +116,19 @@ export class CreateTaskDialogComponent implements OnInit {
       } else {
         return '请选择一个项目';
       }
+    }
+  }
+
+  selectScene(scene: string) {
+    this.selectedScene = scene
+  }
+
+  // 获取现场
+  getSelectSceneTitle() {
+    if (this.editMode) {
+      return this.scene
+    } else {
+      return this.selectedScene ? this.selectedScene : '请选择一个现场'
     }
   }
 
@@ -135,8 +157,13 @@ export class CreateTaskDialogComponent implements OnInit {
       return;
     }
 
+    if (!this.selectedScene && this.selectedProject.scene) {
+      SnackBar.open(this.snackBar, '请选择一个现场');
+      return;
+    }
+
     this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
-      this.isClosedProject ? this.closedProject : null));
+      this.isClosedProject ? this.closedProject : null, this.selectedScene));
 
     this.closeEdit();
   }

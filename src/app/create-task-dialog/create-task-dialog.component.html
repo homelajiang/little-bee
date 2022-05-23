@@ -27,9 +27,9 @@
   <div fxLayout="row" fxLayoutAlign="start center" class="task-selection">
     <mat-icon>folder_open</mat-icon>
     <button mat-button [disabled]="editMode"
-            [matMenuTriggerFor]="menu">{{getSelectProjectTitle()}}</button>
+            [matMenuTriggerFor]="projectMenu">{{getSelectProjectTitle()}}</button>
 
-    <mat-menu #menu="matMenu">
+    <mat-menu #projectMenu="matMenu">
       <button mat-menu-item (click)="selectProject(false,project)"
               *ngFor="let  project of projects">{{project.projectName}}</button>
 
@@ -44,6 +44,18 @@
       >{{project.projectName}}</button>
     </mat-menu>
 
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-selection"
+       *ngIf="(selectedProject && selectedProject.scene) || scene">
+    <mat-icon>folder_open</mat-icon>
+    <button mat-button [disabled]="editMode"
+            [matMenuTriggerFor]="sceneMenu">{{getSelectSceneTitle()}}</button>
+
+    <mat-menu #sceneMenu="matMenu">
+      <button mat-menu-item (click)="selectScene(scene)"
+              *ngFor="let  scene of sceneList">{{scene}}</button>
+    </mat-menu>
   </div>
 
   <div fxLayout="row">

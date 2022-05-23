@@ -21,6 +21,10 @@ export class CreateTaskPageComponent implements OnInit {
   closedProjects: Array<Project> = [];
   taskInput = '';
 
+  scene = '';
+  selectedScene: string; // 选中的现场
+  sceneList = []; // 现场列表
+
   constructor(private beeService: BeeService, private snackBar: SnackBar,
               public dialog: MatDialog, private router: Router) {
     this.selectedDate = new Date();
@@ -74,6 +78,11 @@ export class CreateTaskPageComponent implements OnInit {
   }
 
   selectProject(isClosedProject: boolean, project: Project) {
+    if (this.selectedProject !== project) {
+      // 清空已经选择的现场
+      this.selectedScene = ''
+    }
+    this.sceneList = project.scene ? project.scene.split(',') : []
     this.isClosedProject = isClosedProject;
     this.selectedProject = project;
   }
@@ -90,6 +99,15 @@ export class CreateTaskPageComponent implements OnInit {
     }
   }
 
+  selectScene(scene: string) {
+    this.selectedScene = scene
+  }
+
+  // 获取现场
+  getSelectSceneTitle() {
+    return this.selectedScene ? this.selectedScene : '请选择一个现场'
+  }
+
 
   saveTask() {
     if (!this.taskInput) {
@@ -102,11 +120,16 @@ export class CreateTaskPageComponent implements OnInit {
       return;
     }
 
+    if (!this.selectedScene && this.selectedProject.scene) {
+      this.snackBar.tipsError('请选择一个现场');
+      return;
+    }
+
     this.snackBar.tipsForever('任务创建中，请稍等');
 
     this.beeService.createTask(
       new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
-        this.isClosedProject ? this.closedProject : null)
+        this.isClosedProject ? this.closedProject : null, this.selectedScene)
     )
       .subscribe(res => {
         this.snackBar.tipsSuccess('创建成功');

@@ -23,6 +23,10 @@ export class NewTaskComponent implements OnInit {
   closedProjects: Array<Project> = [];
   taskInput = '';
 
+  scene = '';
+  selectedScene: string; // 选中的现场
+  sceneList = []; // 现场列表
+
   constructor(@Inject(TASK_INFO) public task: Task, private beeService: BeeService, private snackBar: MatSnackBar,
               public dialog: MatDialog, public overlayRef: OverlayRef) {
     if (this.task && this.task.createTime) {
@@ -80,6 +84,11 @@ export class NewTaskComponent implements OnInit {
   }
 
   selectProject(isClosedProject: boolean, project: Project) {
+    if (this.selectedProject !== project) {
+      // 清空已经选择的现场
+      this.selectedScene = ''
+    }
+    this.sceneList = project.scene ? project.scene.split(',') : []
     this.isClosedProject = isClosedProject;
     this.selectedProject = project;
   }
@@ -94,6 +103,15 @@ export class NewTaskComponent implements OnInit {
     } else {
       return '请选择一个项目';
     }
+  }
+
+  selectScene(scene: string) {
+    this.selectedScene = scene
+  }
+
+  // 获取现场
+  getSelectSceneTitle() {
+    return this.selectedScene ? this.selectedScene : '请选择一个现场'
   }
 
   closeEdit() {
@@ -111,8 +129,13 @@ export class NewTaskComponent implements OnInit {
       return;
     }
 
+    if (!this.selectedScene && this.selectedProject.scene) {
+      SnackBar.open(this.snackBar, '请选择一个现场');
+      return;
+    }
+
     this.beeService.notifyCreateTask.next(new TaskCreate(this.selectedDate, this.taskInput, this.selectedProject,
-      this.isClosedProject ? this.closedProject : null));
+      this.isClosedProject ? this.closedProject : null, this.selectedScene));
 
     this.closeEdit();
   }

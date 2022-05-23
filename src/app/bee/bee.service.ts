@@ -324,6 +324,11 @@ export class BeeService {
       .set('taskType', '1')  // 1 普通任务 2 风险
       .set('restFlag', '0') // 1、休假任务  0或不传表示正常任务
       .set('alarmFlag', '0');
+
+    if (taskCreate.scene) {
+      body = body.set('scene', taskCreate.scene)
+    }
+
     if (taskCreate.parent) {
       body = body.set('projectId', taskCreate.parent.projectId.toString())
         .set('subProjectId', taskCreate.project.projectId.toString());
@@ -358,6 +363,11 @@ export class BeeService {
       .set('projectId', taskInfo.projectId.toString())
       .set('alarmFlag', '0')
       .set('taskId', taskInfo.id);
+
+    if (taskInfo.scene) {
+      body.set('scene', taskInfo.scene)
+    }
+
     return this.http.post<HttpResponse<any>>(`bee/task/operate`,
       body, this.formHttpOptions)
       .pipe(
@@ -427,6 +437,7 @@ export class BeeService {
                       task.projectId = res.result.projectId;
                       task.workHours = res.result.workHours;
                       task.hours = 0;
+                      task.scene = res.result.scene
                       resArr.push(task);
                     }
                   });
@@ -553,6 +564,10 @@ export class BeeService {
         pn = `【${task.projectName}(${task.subProjectName})】`;
       } else {
         pn = `【${task.projectName}项目】`;
+      }
+
+      if (task.scene) {
+        pn = `${pn}[${task.scene}]`
       }
       // oa创建任务
       return this.queryOaTask(parse(task.endDate, 'yyyy-MM-dd HH:mm:ss', new Date()),
@@ -829,6 +844,7 @@ export class Task {
   type: number;
   typeState: number;
   projectId: number;
+  scene?: string;
   workHours: number;
   hours: number; // 任务时长
   color: any; // 项目颜色,根据项目id进行区分
@@ -840,17 +856,19 @@ export class TaskClose {
 }
 
 export class TaskCreate {
-  constructor(date: Date, content: string, project: Project, parent: Project) {
+  constructor(date: Date, content: string, project: Project, parent: Project, scene?: string) {
     this.date = date;
     this.content = content;
     this.project = project;
     this.parent = parent;
+    this.scene = scene;
   }
 
   date: Date;
   content: string;
   project: Project;
   parent: Project;
+  scene?: string;
 }
 
 export class Gift {
@@ -872,6 +890,7 @@ export class Project {
   projectName: string;
   projectId: number;
   startDate: string;
+  scene?: string; // 现场，用逗号分割
 }
 
 export class HttpResponse<T> {
@@ -896,6 +915,7 @@ export class TaskInfo {
   oaProjectName: string;
   leaderIds: string;
   createById: number;
+  scene?: string;
   state: number;
   projectName: string;
   projectId: number;

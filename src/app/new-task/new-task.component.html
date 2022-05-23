@@ -44,6 +44,18 @@
 
     </div>
 
+    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection"
+         *ngIf="(selectedProject && selectedProject.scene) || scene">
+      <mat-icon>folder_open</mat-icon>
+      <button mat-button
+              [matMenuTriggerFor]="sceneMenu">{{getSelectSceneTitle()}}</button>
+
+      <mat-menu #sceneMenu="matMenu">
+        <button mat-menu-item (click)="selectScene(scene)"
+                *ngFor="let  scene of sceneList">{{scene}}</button>
+      </mat-menu>
+    </div>
+
     <div fxLayout="row">
       <span fxFlex="grow"></span>
       <!--      <button fxFlex="none" mat-button color="primary">更多</button>-->

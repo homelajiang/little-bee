@@ -8,7 +8,7 @@
     }
   },
   "/bee": {
-    "target": "http://bestkunlun.com/honeyBee",
+    "target": "http://android-space.bestkunlun.com/honeyBee",
     "secure": "false",
     "changeOrigin": true,
     "pathRewrite": {

@@ -34,5 +34,11 @@
       <span>{{task.projectName}}</span>
     </div>
 
+    <div fxLayout="row" fxLayoutAlign="start center" class="task-selection"
+    *ngIf="task.scene">
+      <mat-icon>folder_open</mat-icon>
+      <span>{{task.scene}}</span>
+    </div>
+
   </mat-card>
 </div>

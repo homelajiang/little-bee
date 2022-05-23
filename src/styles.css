@@ -3,8 +3,8 @@
 
 /*use local roboto font and material icons
 https://gist.github.com/timbophillips/455ac41659fddcd774c5550650665b66*/
-/* @import "~roboto-fontface/css/roboto/roboto-fontface.css"; */
-/* @import '~material-icons/iconfont/material-icons.css'; */
+@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+@import '~material-icons/iconfont/material-icons.css';
 body {
   margin: 0;
   background: #f5f6fa;
