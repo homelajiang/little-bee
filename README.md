@@ -1,21 +1,27 @@
 # LittleBee
 
-第三方小蜜蜂web版实现。
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
 
-（该项目仅限于学习使用）
+## Development server
 
-## 功能
- * 创建、编辑任务（不支持跨天），删除任务，关闭任务
- * 查看任务状态和任务工时（已关闭）
- * 休假申请
- * 晚餐查询及订阅
- * 每日登录积分获取
- * 商城功能
- * ✨适配手机端
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## 使用
-项目使用Angular开发，运行前确保已经安装 `node` 和 `Angular CLI`。
+## Code scaffolding
 
-1、使用 `npm install` 项目所需要的依赖。
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-2、使用 `npm run start` 运行项目，成功后访问 `http://localhost:4201` 即可。
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

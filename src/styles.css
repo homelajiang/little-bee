@@ -1,46 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-/*use local roboto font and material icons
-https://gist.github.com/timbophillips/455ac41659fddcd774c5550650665b66*/
-@import "~roboto-fontface/css/roboto/roboto-fontface.css";
-@import '~material-icons/iconfont/material-icons.css';
-body {
-  margin: 0;
-  background: #f5f6fa;
-  font-family: Roboto,Helvetica Neue,sans-serif;
-}
-
-.transparent-drop-bg {
-  background: transparent;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 46px auto;
-  padding: 0 40px;
-}
-
-.hover-shadow {
-  transition: transform .2s ease-in-out, box-shadow .15s cubic-bezier(.47, 0, .745, .715), border .3s linear .1s;
-}
-
-.hover-shadow:hover {
-  box-shadow: 0 0 20px rgba(51, 51, 51, 0.25);
-  -webkit-transform: translateY(-5px);
-  -moz-transform: translateY(-5px);
-  transform: translateY(-5px);
-}
-
-.space-pre{
-  white-space: pre-wrap;
-}
-
-.mat-button-toggle-appearance-standard div.mat-button-toggle-label-content {
-  line-height: 28px;
-  font-size: 14px;
-}
-
-.mat-button-toggle-group{
-  height: 28px;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

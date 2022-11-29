@@ -1,9 +1,0 @@
-<div fxLayout="row" class="action-card" fxLayoutAlign="start center">
-  <img fxFlex="none" [src]="icon">
-  <div fxLayout="column" fxFlex="grow">
-    <h2>{{title}}</h2>
-    <span>{{desc}}</span>
-  </div>
-  <button fxFlex="none" mat-button color="primary" *ngIf="showButton" (click)="actionClick.emit()"
-          [disabled]="readonly">{{buttonText}}</button>
-</div>

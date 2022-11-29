@@ -1,8 +1,0 @@
-<div class="loading-button">
-  <button mat-button color="primary" (click)="action.emit()"
-          [matTooltip]="tooltip"
-          *ngIf="!loading"
-          [disabled]="disabled">{{buttonText}}</button>
-
-  <mat-spinner *ngIf="loading"  diameter="30"></mat-spinner>
-</div>
