@@ -12,6 +12,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { HeaderComponent } from './component/header/header.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { DailyCalendarComponent } from './component/daily-calendar/daily-calendar.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatButtonModule} from "@angular/material/button";
+import { DailyListComponent } from './component/daily-list/daily-list.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +26,19 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FooterComponent,
     HomeComponent,
     Page404Component,
-    HeaderComponent
+    HeaderComponent,
+    DailyCalendarComponent,
+    DailyListComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterOutlet,
     appRouting,
-    MatTooltipModule
+    MatTooltipModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

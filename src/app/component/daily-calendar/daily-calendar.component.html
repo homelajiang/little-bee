@@ -1,0 +1,42 @@
+<div>
+  <div class="flex justify-between">
+    <h3>12月，2022</h3>
+    <div>
+      <button mat-icon-button
+              aria-label="pre month">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button mat-icon-button
+              aria-label="next month">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex justify-around">
+    <div *ngFor="let weekday of weekdays">{{weekday}}</div>
+  </div>
+
+  <div class="flex justify-around bg-amber-100" *ngFor="let col of [0]">
+    <div class="flex justify-center aspect-square w-full m-10" *ngFor="let column of [0,1,2,3,4,5,6]">
+
+      <div class="flex justify-center aspect-square w-full items-center bg-amber-400">
+        <span>{{column}}</span>
+        <div class="absolute self-end bg-amber-600 mb-2">
+          <span>fdsfdsfs</span>
+        </div>
+<!--
+      <div class="bg-amber-100 aspect-square w-full">
+
+        </div>-->
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>
