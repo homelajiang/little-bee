@@ -1,0 +1,7 @@
+<div class="h-9 flex items-center">
+  <button mat-button color="primary" (click)="action.emit()"
+          [matTooltip]="tooltip"
+          *ngIf="!loading"
+          [disabled]="disabled">{{buttonText}}</button>
+  <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+</div>

@@ -1,6 +1,6 @@
 {
   "name": "little-bee",
-  "version": "2.2.4",
+  "version": "3.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

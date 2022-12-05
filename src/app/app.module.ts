@@ -17,6 +17,14 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatButtonModule} from "@angular/material/button";
 import { DailyListComponent } from './component/daily-list/daily-list.component';
+import { SubToolbarComponent } from './component/sub-toolbar/sub-toolbar.component';
+import { CardWorkingHoursComponent } from './component/card-working-hours/card-working-hours.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import { CardDiningComponent } from './component/card-dining/card-dining.component';
+import { LoadingButtonComponent } from './component/loading-button/loading-button.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { GiftComponent } from './pages/gift/gift.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -28,18 +36,26 @@ import { DailyListComponent } from './component/daily-list/daily-list.component'
     Page404Component,
     HeaderComponent,
     DailyCalendarComponent,
-    DailyListComponent
+    DailyListComponent,
+    SubToolbarComponent,
+    CardWorkingHoursComponent,
+    CardDiningComponent,
+    LoadingButtonComponent,
+    GiftComponent,
+    ProjectsComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterOutlet,
-    appRouting,
-    MatTooltipModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    MatButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterOutlet,
+        appRouting,
+        MatTooltipModule,
+        MatIconModule,
+        MatSlideToggleModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatProgressSpinnerModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
