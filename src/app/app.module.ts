@@ -25,6 +25,9 @@ import { LoadingButtonComponent } from './component/loading-button/loading-butto
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { GiftComponent } from './pages/gift/gift.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { ProjectInfoComponent } from './pages/project-info/project-info.component';
+import { ProjectOverviewComponent } from './component/project/project-overview/project-overview.component';
+import { ProjectStateComponent } from './component/project/project-state/project-state.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { ProjectsComponent } from './pages/projects/projects.component';
     CardDiningComponent,
     LoadingButtonComponent,
     GiftComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    ProjectInfoComponent,
+    ProjectOverviewComponent,
+    ProjectStateComponent
   ],
     imports: [
         BrowserModule,
