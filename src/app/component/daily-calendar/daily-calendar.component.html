@@ -1,12 +1,12 @@
 <div>
   <div class="flex justify-between">
-    <h3>12月，2022</h3>
+    <h3>{{currentDate | dateFnsFormat:'MMM , yyyy'}}</h3>
     <div>
-      <button mat-icon-button
+      <button mat-icon-button (click)="preMonth()"
               aria-label="pre month">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-      <button mat-icon-button
+      <button mat-icon-button (click)="nextMonth()"
               aria-label="next month">
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
@@ -17,23 +17,21 @@
     <div *ngFor="let weekday of weekdays">{{weekday}}</div>
   </div>
 
-  <div class="flex justify-around bg-amber-100" *ngFor="let col of [0]">
-    <div class="flex justify-center aspect-square w-full m-10" *ngFor="let column of [0,1,2,3,4,5,6]">
+  <div class="flex justify-around bg-amber-100" *ngFor="let week of displayDays">
+    <div class="flex justify-center aspect-square w-full" *ngFor="let column of [0,1,2,3,4,5,6]">
 
       <div class="flex justify-center aspect-square w-full items-center bg-amber-400">
-        <span>{{column}}</span>
-        <div class="absolute self-end bg-amber-600 mb-2">
-          <span>fdsfdsfs</span>
+        <span>{{week[column].date|date:'d'}}</span>
+        <div class="hidden absolute self-end bg-amber-600 mb-2">
+          <span></span>
         </div>
-<!--
-      <div class="bg-amber-100 aspect-square w-full">
+        <!--
+              <div class="bg-amber-100 aspect-square w-full">
 
-        </div>-->
-
+                </div>-->
 
 
       </div>
-
 
 
     </div>
