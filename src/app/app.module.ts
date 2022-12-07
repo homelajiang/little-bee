@@ -28,6 +28,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectInfoComponent } from './pages/project-info/project-info.component';
 import { ProjectOverviewComponent } from './component/project/project-overview/project-overview.component';
 import { ProjectStateComponent } from './component/project/project-state/project-state.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ProjectStateComponent } from './component/project/project-state/project
         MatSlideToggleModule,
         MatButtonModule,
         MatButtonToggleModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatInputModule
     ],
   providers: [],
   bootstrap: [AppComponent]

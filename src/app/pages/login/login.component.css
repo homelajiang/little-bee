@@ -1,0 +1,4 @@
+.login-input:focus {
+  box-shadow: rgb(255, 255, 255) 0 0 0 0, rgb(99 102 241) 0 0 0 1px, rgb(0, 0, 0, 0) 0 0 0 0 !important;
+  background-color: white !important;
+}
