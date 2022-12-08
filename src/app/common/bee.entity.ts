@@ -19,7 +19,27 @@ export class Daily {
 }
 
 export class Task {
-
+  createTime='';
+  userNames='';
+  startTime='';
+  id =0;
+  endTime='';
+  /**
+   * 1、正常  2、关闭  3、延期
+   */
+  state=0;
+  projectName='';
+  title ='';
+  /**
+   * 1、项目  2、任务  3、会议 4、周报  6、休假
+   */
+  type='';
+  typeState='';
+  projectId='';
+  scene? = null;
+  workHours=0;
+  hours = 0; // 任务时长
+  color: any; // 项目颜色,根据项目id进行区分
 }
 
 export class UserInfo {

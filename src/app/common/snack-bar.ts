@@ -14,11 +14,11 @@ export class SnackBar {
   }
 
   tips(msg: string, action?: string, config?: MatSnackBarConfig) {
-    this.snackBar.open(msg, action, config ? config : {duration: 2000})
+    this.snackBar.open(msg, action, config)
   }
 
   tipsError(msg: string, action?: string, config?: MatSnackBarConfig) {
-    this.snackBar.open(msg, action, config ? config : {duration: 2000})
+    this.snackBar.open(msg, action, config)
   }
 
   tipsSuccess(msg: string, action?: string, config?: MatSnackBarConfig) {

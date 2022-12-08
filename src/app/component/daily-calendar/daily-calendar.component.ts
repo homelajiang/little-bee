@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {Daily} from "../../common/bee.entity";
+import {Daily, Task} from "../../common/bee.entity";
 import {
   addDays,
   addMonths,
   differenceInDays,
-  endOfDay,
   endOfMonth,
   endOfWeek, isSameDay, isSameMonth,
   startOfMonth,
   startOfWeek
 } from "date-fns";
 import {DateConfig} from "../../common/config";
+import {BeeService} from "../../service/bee.service";
 
 @Component({
   selector: 'app-daily-calendar',
@@ -24,6 +24,9 @@ export class DailyCalendarComponent implements OnInit {
   private listDays: Array<Daily> = [] //一维日历
   private today = new Date(); // 当前日期
   currentDate = new Date(this.today); // 正在使用的日期
+  private tasks: Array<Task> = []; // 任务列表
+  public selectWeek: Array<Daily>  =[]; // 选中的周
+
   private colorPool = [
     {primary: '#8365db', secondary: '#eeeaff'},
     {primary: '#5bab75', secondary: '#e0f3e7'},
@@ -31,11 +34,15 @@ export class DailyCalendarComponent implements OnInit {
     {primary: '#455af7', secondary: '#e5f6ff'},
   ];
 
-  // 休假颜色
   private vacationColor = {primary: '#ff562d', secondary: '#fff0e9'};
+
+  constructor(private beeService:BeeService) {
+  }
 
   ngOnInit(): void {
     this.setUpCalendar()
+
+    this.beeService.getTasks().subscribe()
   }
 
   setUpCalendar() {
@@ -72,6 +79,12 @@ export class DailyCalendarComponent implements OnInit {
 
   }
 
+  private setSelectedMonthTasks(){
+    this.tasks.forEach(task=>{
+
+    })
+  }
+
   preMonth(){
     this.currentDate = addMonths(this.currentDate,-1)
     this.setUpCalendar()
@@ -80,6 +93,24 @@ export class DailyCalendarComponent implements OnInit {
   nextMonth(){
     this.currentDate = addMonths(this.currentDate,1)
     this.setUpCalendar()
+  }
+
+  private assignProjectColor(task: Task) {
+    if (!this.projectColorMap[task.projectId]) {
+      if (task.type === 6) {
+        this.projectColorMap[task.projectId] = this.vacationColor;
+      } else {
+        this.projectColorMap[task.projectId] =
+          this.colorPool[this.assignColorIndex % this.colorPool.length];
+        // this.colorPool[this.randomNum(0, this.colorPool.length - 1)];
+        this.assignColorIndex++;
+      }
+    }
+
+    if (task.type === 6) {
+      task.projectName = '休假';
+    }
+    task.color = this.projectColorMap[task.projectId];
   }
 
 

@@ -31,8 +31,11 @@ import {ProjectStateComponent} from './component/project/project-state/project-s
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { DateFnsFormatPipe } from './common/bee.pipe';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
+import {DateFnsFormatPipe} from './common/bee.pipe';
+import {httpInterceptorProviders} from "./interceport";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -72,7 +75,15 @@ import { DateFnsFormatPipe } from './common/bee.pipe';
     HttpClientModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders,
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    {
+      provide: LocationStrategy, // 导航路径的策略设置
+      useClass: HashLocationStrategy // 使用'#'方式的策略
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
