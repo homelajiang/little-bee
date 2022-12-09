@@ -41,10 +41,11 @@ export class BeeService {
     return this.http.post<HttpResponse<UserInfo>>('bee/login/userLogin', body, this.formOptions)
       .pipe(
         mergeMap(event => {
-          if (event.code === 0) {
+          if (event.code === 0 && event.result) {
             localStorage.setItem(USER_INFO, JSON.stringify(event.result))
             localStorage.setItem(LAST_USERNAME, username)
-            return of(event.result!)
+            this.userInfo = event.result
+            return of(event.result)
           } else {
             throw new Error(event.msg)
           }
@@ -71,6 +72,8 @@ export class BeeService {
   }
 
   logout() {
-
+    localStorage.removeItem(USER_INFO)
+    lruCache.clear()
+    this.router.navigate(['/login']).then()
   }
 }

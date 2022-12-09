@@ -17,7 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let copyRequest = request;
-    console.log("ffdfds")
     if (this.beeService.userInfo && this.beeService.userInfo.token) {
       copyRequest = request.clone({
         headers: request.headers.set('token', this.beeService.userInfo.token)

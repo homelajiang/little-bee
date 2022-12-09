@@ -10,7 +10,7 @@ export class Daily {
   currentMonth: boolean;
   today: boolean
 
-  constructor(date: Date, currentMonth: boolean,today:boolean) {
+  constructor(date: Date, currentMonth: boolean, today: boolean) {
     this.date = date
     this.currentMonth = currentMonth
     this.today = today
@@ -18,29 +18,118 @@ export class Daily {
 
 }
 
+export class TaskInfo {
+  id = '';
+  attachments = '';
+  endDate = '';
+  oaProjectCode = '';
+  taskTypeState = 0;
+  leaders = '';
+  content = '';
+  alarmFlag = 0;
+  beginDate = '';
+  taskType = 0;
+  createBy = '';
+  oaProjectName = '';
+  leaderIds = '';
+  createById = 0;
+  scene? = '';
+  state = 0;
+  projectName = '';
+  projectId = 0;
+  subProjectId = 0;
+  subProjectName = '';
+  workHours = 0;
+}
+
+export class TaskClose {
+  task!: TaskInfo;
+  workHours!: number;
+}
+
+export class TaskCreate {
+  constructor(date: Date, content: string, project: Project, parent: Project, scene?: string) {
+    this.date = date;
+    this.content = content;
+    this.project = project;
+    this.parent = parent;
+    this.scene = scene;
+  }
+
+  date: Date;
+  content: string;
+  project: Project;
+  parent: Project;
+  scene?: string;
+}
+
+export class Gift {
+  id = 0;
+  img = '';
+  leftCount = 0;
+  name = '';
+  price = 0;
+}
+
+export class ScoreAndExp {
+  score = 0;
+  exp = 0;
+}
+
+export class Project {
+  endDate = '';
+  state = 0;
+  projectName = '';
+  projectId = 0;
+  startDate = '';
+  scene?: string; // 现场，用逗号分割
+}
+
 export class Task {
-  createTime='';
-  userNames='';
-  startTime='';
-  id =0;
-  endTime='';
+  createTime = '';
+  userNames = '';
+  startTime = '';
+  id = 0;
+  endTime = '';
   /**
    * 1、正常  2、关闭  3、延期
    */
-  state=0;
-  projectName='';
-  title ='';
+  state = 0;
+  projectName = '';
+  title = '';
   /**
    * 1、项目  2、任务  3、会议 4、周报  6、休假
    */
-  type='';
-  typeState='';
-  projectId='';
+  type = 0;
+  typeState = '';
+  projectId = '';
   scene? = null;
-  workHours=0;
+  workHours = 0;
   hours = 0; // 任务时长
-  color: any; // 项目颜色,根据项目id进行区分
+  color!: BeeColor; // 项目颜色,根据项目id进行区分
 }
+
+export class BeeColor {
+  primary = '#000000'
+  secondary = '#ffffff'
+
+  constructor(primary: string, secondary: string) {
+    this.primary = primary
+    this.secondary = secondary
+  }
+
+  static colorPool():Array<BeeColor>{
+    return [
+      {primary: '#8365db', secondary: '#eeeaff'},
+      {primary: '#5bab75', secondary: '#e0f3e7'},
+      {primary: '#29a5d3', secondary: '#e2f5ff'},
+      {primary: '#455af7', secondary: '#e5f6ff'},
+    ]
+  }
+
+  static vacationColor = {primary: '#ff562d', secondary: '#fff0e9'};
+}
+
 
 export class UserInfo {
   deptName = "";
