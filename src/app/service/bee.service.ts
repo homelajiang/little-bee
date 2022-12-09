@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {mergeMap, Observable, of} from "rxjs";
-import {HttpResponse, Task, UserInfo} from "../common/bee.entity";
+import {HttpResponse, RankUser, Task, UserInfo} from "../common/bee.entity";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Router} from "@angular/router";
 import LRUCache from "lru-cache";
+import {format} from "date-fns";
 
 
 const USER_INFO = 'user_info'
@@ -69,6 +70,29 @@ export class BeeService {
         })
       )
 
+  }
+
+  // 获取工时排行
+  getWorkHoursRanking(searchType: string, searchDate: Date, quarter?: number): Observable<Array<RankUser>> {
+    const sd = format(searchDate, searchType === '1' ? 'yyyy-MM' : 'yyyy')
+    let body = new HttpParams()
+      .set('deptId', this.userInfo.deptId.toString())
+      .set('searchType', searchType)
+      .set('searchDate', sd)
+    if (quarter) {
+      body = body.set('quarter', quarter.toString())
+    }
+
+    return this.http.post<HttpResponse<Array<RankUser>>>(`bee/task/workHoursOrderByDate`, body, this.formOptions)
+      .pipe(
+        mergeMap(event => {
+          if (event.code === 0) {
+            return of(event.result!)
+          } else {
+            throw new Error(event.msg)
+          }
+        })
+      )
   }
 
   logout() {

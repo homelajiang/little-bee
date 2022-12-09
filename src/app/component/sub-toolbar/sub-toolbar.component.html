@@ -1,8 +1,8 @@
 <div class="flex justify-between">
-  <h2 class="m-0">title</h2>
+  <h2 class="m-0">{{getWeekName()}}</h2>
 
   <div>
-    <button mat-flat-button color="primary">Primary</button>
-    <button mat-flat-button color="primary">Primary</button>
+    <button mat-flat-button color="primary" class="mx-8" (click)="newVacation()">创建休假</button>
+    <button mat-flat-button color="primary" (click)="newTask()">新建任务</button>
   </div>
 </div>

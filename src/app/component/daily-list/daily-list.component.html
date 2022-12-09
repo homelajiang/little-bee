@@ -1,16 +1,14 @@
 <div>
   <div class="flex justify-around">
-    <div class="flex flex-col justify-center" *ngFor="let weekday of [0,1,2,3,4,5,6]">
-      <h3 class="text-center">{{weekday}}</h3>
-      <span>周一</span>
+    <div class="flex flex-col justify-center" *ngFor="let weekday of displayWeekdays;let i = index">
+      <h3 class="text-center">{{week[i].date|date:'d'}}</h3>
+      <span>{{weekday}}</span>
     </div>
   </div>
 
-  <div class="flex justify-around bg-amber-100" style="min-height: 500px;">
-    <div class="flex flex-auto  flex-col" *ngFor="let weekday of [0,1,2,3,4,5,6]">
-      <span class="bg-amber-400 my-5">周一</span>
-      <span class="bg-amber-400 my-5">周一</span>
-      <span class="bg-amber-400 my-5">周一</span>
+  <div class="flex justify-around bg-amber-100" style="min-height: 36rem;">
+    <div class="flex flex-auto  flex-col" *ngFor="let weekday of displayWeekdays;let i = index">
+      <span *ngFor="let task of week[i].tasks" class="bg-amber-400 my-5">{{task.projectName}}</span>
     </div>
   </div>
 

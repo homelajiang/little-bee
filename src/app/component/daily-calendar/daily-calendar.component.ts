@@ -5,7 +5,7 @@ import {
   addMonths,
   differenceInDays,
   endOfMonth,
-  endOfWeek, isAfter, isBefore, isEqual, isSameDay, isSameMonth, parse,
+  endOfWeek, isAfter, isBefore, isEqual, isSameDay, isSameMonth, isSameWeek, parse,
   startOfMonth,
   startOfWeek
 } from "date-fns";
@@ -202,5 +202,18 @@ export class DailyCalendarComponent implements OnInit {
 
   private refreshProjects() {
     // TODO
+  }
+
+  onSelectWeek(week: Array<Daily>, column: number = -1) {
+    this.selectWeek = week;
+    this.selectWeekEvent.emit(week);
+
+    if (column !== -1) {
+      this.selectDailyEvent.emit(week[column]);
+    }
+  }
+
+  weekIsSelected(week: Array<Daily>) {
+    return isSameWeek(week[0].date, this.selectWeek[0].date);
   }
 }

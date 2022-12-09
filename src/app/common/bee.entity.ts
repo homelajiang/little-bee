@@ -118,7 +118,7 @@ export class BeeColor {
     this.secondary = secondary
   }
 
-  static colorPool():Array<BeeColor>{
+  static colorPool(): Array<BeeColor> {
     return [
       {primary: '#8365db', secondary: '#eeeaff'},
       {primary: '#5bab75', secondary: '#e0f3e7'},
@@ -130,6 +130,12 @@ export class BeeColor {
   static vacationColor = {primary: '#ff562d', secondary: '#fff0e9'};
 }
 
+export class RankUser {
+  head = '';
+  workHours = 0;
+  userName = '';
+  userId = 0;
+}
 
 export class UserInfo {
   deptName = "";

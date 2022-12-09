@@ -5,12 +5,12 @@
 <!--<app-projects></app-projects>-->
 <div class="flex">
   <div class="w-96">
-    <app-daily-calendar></app-daily-calendar>
-<!--    <app-card-working-hours></app-card-working-hours>
-    <app-card-dining></app-card-dining>-->
+    <app-daily-calendar (selectWeekEvent)="onSelectWeek($event)"></app-daily-calendar>
+    <app-card-working-hours></app-card-working-hours>
+    <app-card-dining></app-card-dining>
   </div>
   <div class="grow">
-<!--    <app-sub-toolbar></app-sub-toolbar>
-    <app-daily-list></app-daily-list>-->
+    <app-sub-toolbar [week]="selectWeek"></app-sub-toolbar>
+    <app-daily-list [week]="selectWeek"></app-daily-list>
   </div>
 </div>

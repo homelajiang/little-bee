@@ -17,27 +17,32 @@
     <div *ngFor="let weekday of weekdays">{{weekday}}</div>
   </div>
 
-  <div class="flex justify-around" *ngFor="let week of displayDays">
-    <div class="flex  aspect-square w-full" *ngFor="let column of [0,1,2,3,4,5,6]">
+  <div class="flex justify-around" *ngFor="let week of displayDays" [ngClass]="{'bg-gray-500':weekIsSelected(week)}">
+    <div class="flex aspect-square w-full" matRipple *ngFor="let column of [0,1,2,3,4,5,6]"
+         (click)="onSelectWeek(week,column)" [ngClass]="{'bg-amber-500':week[column].today}">
 
-      <div class="relative bg-amber-100 w-full m-2 content-center">
-        <div class="absolute bottom-0 top-0 left-0 right-0">{{week[column].date|date:'d'}}</div>
+      <div class="relative w-full m-2 content-center">
+        <div class="absolute bottom-0 top-0 left-0 right-0">
+          <div class="flex justify-center items-center h-full">
+            <span>{{week[column].date|date:'d'}}</span>
+          </div>
+        </div>
 
-        <div class="absolute bottom-0">
+        <div class="absolute bottom-0 w-full">
           <div class="flex justify-center">
             <div *ngFor="let task of week[column].tasks.length<=3?week[column].tasks:week[column].tasks.slice(0,3)"
-                 class="w-1.5 aspect-square bg-black rounded"></div>
+                 class="w-1.5 mx-0.5 aspect-square rounded" [ngStyle]="{'background':task.color.primary}"></div>
           </div>
 
         </div>
       </div>
-<!--      <div class="flex justify-center aspect-square w-full items-center">
-        <span>{{week[column].date|date:'d'}}</span>
-        <div class="absolute self-end mb-1 grow">
-          <div *ngFor="let task of week[column].tasks.length<=3?week[column].tasks:week[column].tasks.slice(0,3)"
-               class="w-1.5 aspect-square bg-black rounded"></div>
-        </div>
-      </div>-->
+      <!--      <div class="flex justify-center aspect-square w-full items-center">
+              <span>{{week[column].date|date:'d'}}</span>
+              <div class="absolute self-end mb-1 grow">
+                <div *ngFor="let task of week[column].tasks.length<=3?week[column].tasks:week[column].tasks.slice(0,3)"
+                     class="w-1.5 aspect-square bg-black rounded"></div>
+              </div>
+            </div>-->
 
 
     </div>

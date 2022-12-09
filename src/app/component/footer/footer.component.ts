@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {environment} from '../../environments/environment'
+import {getYear} from "date-fns";
 
 @Component({
   selector: 'app-footer',
@@ -8,6 +9,7 @@ import {environment} from '../../environments/environment'
 })
 export class FooterComponent {
   appVersion: string
+  year = getYear(new Date)
 
   constructor() {
     this.appVersion = environment.version

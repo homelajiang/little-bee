@@ -29,12 +29,12 @@ import {ProjectInfoComponent} from './pages/project-info/project-info.component'
 import {ProjectOverviewComponent} from './component/project/project-overview/project-overview.component';
 import {ProjectStateComponent} from './component/project/project-state/project-state.component';
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import {DateFnsFormatPipe} from './common/bee.pipe';
 import {httpInterceptorProviders} from "./interceport";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatRippleModule} from "@angular/material/core";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
@@ -73,7 +73,9 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     MatInputModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRippleModule,
+    FormsModule
   ],
   providers: [
     httpInterceptorProviders,
