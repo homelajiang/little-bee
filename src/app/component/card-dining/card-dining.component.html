@@ -1,22 +1,25 @@
-<div>
+<div class="p-4">
   <div class="flex justify-between items-center">
     <img class="w-12 aspect-square" src="assets/dining.svg"/>
-    <div class="grow">
-      <h3>晚餐预订</h3>
-      <span>附近德拉基法拉发电机是啊了发的</span>
+    <div class="grow mx-4">
+      <div class="text-lg">晚餐预订</div>
+      <span class="text-gray-500">附近德拉基法拉发电机是啊了</span>
     </div>
-    <app-loading-button></app-loading-button>
+    <app-loading-button buttonText="预定"></app-loading-button>
   </div>
 
-  <div class="flex items-center" *ngFor="let a of [0,1,2]">
-    <div class="h-3.5 w-3.5 bg-amber-400"></div>
-    <div>早餐：</div>
-    <div class="flex items-center">
-      <span>1</span>
-      <span>老鹅</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
+  <div class="mt-4">
+    <div class="flex items-center" *ngFor="let a of [0,1,2]">
+      <div class="h-3.5 w-3.5 bg-amber-400"></div>
+      <div>早餐：</div>
+      <div class="flex items-center">
+        <span>1</span>
+        <span>老鹅</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+      </div>
     </div>
   </div>
+
 </div>

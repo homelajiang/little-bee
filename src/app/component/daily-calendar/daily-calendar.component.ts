@@ -12,7 +12,6 @@ import {
 import {DateConfig} from "../../common/config";
 import {BeeService} from "../../service/bee.service";
 import {SnackBar} from "../../common/snack-bar";
-import {tr} from "date-fns/locale";
 import {Subscription} from "rxjs";
 
 @Component({

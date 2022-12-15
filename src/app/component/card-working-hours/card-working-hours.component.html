@@ -1,6 +1,6 @@
-<div>
-  <div class="flex justify-between items-center">
-    <span>工时概况</span>
+<div class="p-4">
+  <div class="flex justify-between items-center mb-6">
+    <span class="text-lg">工时概况</span>
     <mat-button-toggle-group (change)="changeSearchType()" [(ngModel)]="searchType">
       <mat-button-toggle value="1">月度</mat-button-toggle>
       <mat-button-toggle value="2">季度</mat-button-toggle>
@@ -8,19 +8,19 @@
     </mat-button-toggle-group>
   </div>
 
-  <div class="flex">
-    <div class="flex-auto flex items-center">
+  <div class="flex mb-2">
+    <div class="flex-1 flex items-center">
       <img class="w-12 aspect-square" src="./assets/ranking.svg"/>
-      <div>
-        <div>排行</div>
-        <div class="text-3xl font-semibold">{{ranking}}</div>
+      <div class="ml-4">
+        <div class="text-gray-500">排行</div>
+        <div class="text-3xl font-medium">{{ranking}}</div>
       </div>
     </div>
-    <div class="flex-auto flex items-center">
+    <div class="flex-1 flex items-center">
       <img class="w-12 aspect-square" src="./assets/ranking.svg"/>
-      <div>
-        <div>工时</div>
-        <div class="text-3xl font-semibold">{{workHours}}</div>
+      <div class="ml-4">
+        <div class="text-gray-500">工时</div>
+        <div class="text-3xl font-medium">{{workHours}}</div>
       </div>
     </div>
   </div>
