@@ -18,11 +18,11 @@
   </div>
 
   <div class="flex justify-around rounded-full" *ngFor="let week of displayDays" [ngClass]="{'bg-gray-200':weekIsSelected(week)}">
-    <div class="flex aspect-square w-full rounded-full" matRipple *ngFor="let column of [0,1,2,3,4,5,6]"
+    <div class="flex aspect-square w-full rounded-full m-1 cursor-pointer" matRipple *ngFor="let column of [0,1,2,3,4,5,6]"
          (click)="onSelectWeek(week,column)"
          [ngClass]="{'bg-blue-500':week[column].today,'text-white':week[column].today}">
 
-      <div class="relative w-full m-2 content-center">
+      <div class="relative w-full m-0.5 content-center">
         <div class="absolute bottom-0 top-0 left-0 right-0">
           <div class="flex justify-center items-center h-full">
             <span>{{week[column].date|date:'d'}}</span>

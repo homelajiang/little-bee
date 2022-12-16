@@ -1,6 +1,6 @@
 <div class="py-4">
-  <div class="flex justify-around ">
-    <div matRipple class="bg-gray-100 grow flex flex-col justify-center py-4" *ngFor="let weekday of displayWeekdays;let i = index">
+  <div class="flex justify-around">
+    <div matRipple class="grow flex flex-col justify-center py-4" *ngFor="let weekday of displayWeekdays;let i = index">
       <div class="font-medium text-xl text-center text-gray-500">{{week[i].date|date:'d'}}</div>
       <span class="text-gray-500 mt-4 text-center text-xs">{{weekday}}</span>
     </div>
