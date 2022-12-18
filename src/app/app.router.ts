@@ -4,6 +4,8 @@ import {DailyComponent} from './pages/daily/daily.component';
 import {Page404Component} from './pages/page404/page404.component';
 import {HomeComponent} from "./pages/home/home.component";
 import {ProjectsComponent} from "./pages/projects/projects.component";
+import {ProjectInfoComponent} from "./pages/project-info/project-info.component";
+import {RankingComponent} from "./pages/ranking/ranking.component";
 
 const router: Routes = [
   {path: 'login', component: LoginComponent},
@@ -13,7 +15,8 @@ const router: Routes = [
       {path: '', redirectTo: '/daily', pathMatch: 'full'},
       {path: 'daily', component: DailyComponent},
       {path: 'projects', component: ProjectsComponent},
-      // {path: 'ranking', component: Ra}
+      {path: 'projectInfo', component: ProjectInfoComponent},
+      {path: 'ranking', component: RankingComponent}
     ]
   },
   {path: '**', component: Page404Component}

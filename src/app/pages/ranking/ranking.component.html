@@ -1,0 +1,41 @@
+<div class="flex">
+  <div class="w-3/5 bg-amber-200">
+    <div class="flex flex-col items-center">
+      <img class="w-20 h-20" src="assets/ic_avatar.svg">
+      <h1>吴彦祖</h1>
+      <div>fdsfds</div>
+    </div>
+
+    <div class="flex justify-between">
+      <h2>工时排行</h2>
+      <div>所有时间</div>
+    </div>
+
+    <div class="flex mt-4">
+      <div class="flex rounded-lg p-1 bg-gray-200">
+        <div class="bg-white rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
+        <div matRipple class="rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center" *ngFor="let user of [0,1,2,3,4,5,6,7,8,9]">
+        <div>1</div>
+        <img class="w-12 h-12" src="assets/ic_avatar.svg">
+        <div class="grow flex flex-col justify-center">
+          <h3>吴彦祖</h3>
+          <span>产品经理</span>
+        </div>
+
+        <span>$ 123</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="w-2/5 bg-blue-300"></div>
+</div>
+
+<div>
+
+
+</div>

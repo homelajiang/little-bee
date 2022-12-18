@@ -36,6 +36,7 @@ import {DateFnsFormatPipe} from './common/bee.pipe';
 import {httpInterceptorProviders} from "./interceport";
 import {MAT_DATE_LOCALE, MatRippleModule} from "@angular/material/core";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { RankingComponent } from './pages/ranking/ranking.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     ProjectInfoComponent,
     ProjectOverviewComponent,
     ProjectStateComponent,
-    DateFnsFormatPipe
+    DateFnsFormatPipe,
+    RankingComponent
   ],
   imports: [
     BrowserModule,

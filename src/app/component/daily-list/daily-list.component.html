@@ -1,14 +1,14 @@
-<div class="py-4">
+<div class="py-4 rounded-lg">
   <div class="flex justify-around">
-    <div matRipple class="grow flex flex-col justify-center py-4" *ngFor="let weekday of displayWeekdays;let i = index">
+    <div matRipple class="cursor-pointer grow flex flex-col justify-center py-4" *ngFor="let weekday of displayWeekdays;let i = index">
       <div class="font-medium text-xl text-center text-gray-500">{{week[i].date|date:'d'}}</div>
       <span class="text-gray-500 mt-4 text-center text-xs">{{weekday}}</span>
     </div>
   </div>
 
-  <div class="grid grid-cols-7 divide-x divide-gray-200" style="min-height: 36rem;">
+  <div class="grid grid-cols-7 divide-x divide-gray-150" style="min-height: 36rem;">
     <div class="flex flex-col" *ngFor="let weekday of displayWeekdays;let i = index">
-      <div matRipple class="m-2 p-2 bg-amber-200 rounded" *ngFor="let task of week[i].tasks"
+      <div matRipple class="cursor-pointer m-2 p-2 bg-amber-200 rounded" *ngFor="let task of week[i].tasks"
            [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}">
         <div >{{task.projectName}}</div>
         <div >{{task.workHours +'小时'}}</div>
