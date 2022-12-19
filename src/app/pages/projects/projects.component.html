@@ -4,8 +4,8 @@
 
   <div class="flex mt-8">
     <div class="flex rounded-lg p-1 bg-gray-200">
-      <div class="bg-white rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
-      <div matRipple class="rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
+      <div (click)="changeProjectType(true)" [ngClass]="{'bg-white':isMyProject}" class="rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
+      <div (click)="changeProjectType(false)"  [ngClass]="{'bg-white':!isMyProject}" class="rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
     </div>
   </div>
 </div>
@@ -14,12 +14,13 @@
   <div class="grid grid-cols-4 gap-2">
     <div matRipple class="flex cursor-pointer items-center p-3 hover:bg-gray-100 rounded-lg"
          routerLink="/projectInfo"
-         *ngFor="let index of [0,1,2,3,4,5,6,7,8,9,10]">
-      <img class="flex-none aspect-square w-12 h-12" src="./assets/ic_android.svg">
+         *ngFor="let project of projects">
+      <img class="flex-none aspect-square w-12 h-12 rounded-lg"
+           src="{{project.projectIcon?project.projectIcon:'./assets/ic_android.svg'}}">
       <div class="flex-grow ml-4">
-        <span class="text-gray-500">PTJ202004169301</span>
+        <span class="text-gray-500">{{project.projectNo}}</span>
         <div>
-          <span class="text-base py-1" style="margin-bottom: 0!important;">融合通信APP</span>
+          <span class="text-base py-1" style="margin-bottom: 0!important;">{{project.projectName}}</span>
         </div>
       </div>
     </div>

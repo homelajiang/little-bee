@@ -85,6 +85,29 @@ export class Project {
   scene?: string; // 现场，用逗号分割
 }
 
+export class ProjectOverview {
+  projectNo = '';
+  createTime = '';
+  state = 0;
+  projectName = '';
+  projectId = 0;
+  orderState = 0;
+  projectIcon?: string
+  scene?: string = ''
+}
+
+export class NormalProjectOverview extends ProjectOverview {
+  deptName = '';
+  startDate = '';
+  endDate = '';
+  manageName = '';
+}
+
+export class MyProjectOverview extends ProjectOverview {
+  projectManagerId = ''
+  taskCount = 0;
+}
+
 export class Task {
   createTime = '';
   userNames = '';

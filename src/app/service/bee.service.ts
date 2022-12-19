@@ -1,6 +1,14 @@
 import {Injectable} from '@angular/core';
 import {mergeMap, Observable, of} from "rxjs";
-import {HttpResponse, RankUser, Task, UserInfo} from "../common/bee.entity";
+import {
+  HttpResponse,
+  MyProjectOverview,
+  NormalProjectOverview,
+  Project,
+  RankUser,
+  Task,
+  UserInfo
+} from "../common/bee.entity";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Router} from "@angular/router";
 import LRUCache from "lru-cache";
@@ -94,6 +102,88 @@ export class BeeService {
         })
       )
   }
+
+  // 获取项目列表
+  getProjects(): Observable<Array<Project>> {
+    if (lruCache.get('projects')) {
+      const projects = JSON.parse(lruCache.get('projects')!);
+      return of(projects)
+    }
+    return this.http.post<HttpResponse<Array<Project>>>('bee/user/myProjects', {}, this.formOptions)
+      .pipe(
+        mergeMap(event => {
+          if (event.code === 0) {
+            lruCache.set('projects', JSON.stringify(event.result))
+            return of(event.result!)
+          } else {
+            throw new Error(event.msg)
+          }
+        })
+      )
+  }
+
+  // 获取已关闭的项目
+  getClosedProjects(): Observable<Array<Project>> {
+    if (lruCache.get('sub_projects')) {
+      return of(JSON.parse(lruCache.get('sub_projects')!));
+    }
+    return this.http.post<HttpResponse<Array<Project>>>('bee/user/myCloseProjects',
+      {}, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            lruCache.set('sub_projects', JSON.stringify(res.result));
+            return of(res.result!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      );
+  }
+
+  // 获取我的项目列表
+  getMyProjects(): Observable<Array<MyProjectOverview>> {
+    let body = new HttpParams()
+      .set('pageNo', 1)
+      .set('pageSize', 100)
+      .set('todoFlag', 0)
+      .set('state', 0)
+      .set('manageId', 0)
+
+    return this.http.post<HttpResponse<Array<MyProjectOverview>>>('bee/user/projectList',
+      body, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            return of(res.result!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      );
+  }
+
+  // 获取所有项目列表
+  getNormalProjects(): Observable<Array<NormalProjectOverview>> {
+    let body = new HttpParams()
+      .set('pageNo', 1)
+      .set('pageSize', 100)
+      .set('state', 0)
+      .set('depId', 0)
+
+    return this.http.post<HttpResponse<Array<NormalProjectOverview>>>('bee/project/allProjects',
+      body, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            return of(res.result!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      );
+  }
+
 
   logout() {
     localStorage.removeItem(USER_INFO)
