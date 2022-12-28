@@ -34,7 +34,6 @@ export class LoginComponent {
     this.beeService.login(this.loginForm.get('username')?.value!, this.loginForm.get('password')?.value!)
       .subscribe({
         next: (userInfo) => {
-          this.snackBar.tips(JSON.stringify(userInfo))
           this.router.navigate(['/']).then(r => {
           });
         },

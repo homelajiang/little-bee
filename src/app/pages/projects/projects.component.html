@@ -13,7 +13,7 @@
 <div class="min-h-[36rem]">
   <div class="grid grid-cols-4 gap-2">
     <div matRipple class="flex cursor-pointer items-center p-3 hover:bg-gray-100 rounded-lg"
-         routerLink="/projectInfo"
+         [routerLink]="['/projects',project.projectId]"
          *ngFor="let project of projects">
       <img class="flex-none aspect-square w-12 h-12 rounded-lg"
            src="{{project.projectIcon?project.projectIcon:'./assets/ic_android.svg'}}">

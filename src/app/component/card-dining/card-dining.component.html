@@ -9,15 +9,12 @@
   </div>
 
   <div class="mt-4">
-    <div class="flex items-center" *ngFor="let a of [0,1,2]">
-      <div class="h-3.5 w-3.5 bg-amber-400"></div>
-      <div>早餐：</div>
-      <div class="flex items-center">
-        <span>1</span>
-        <span>老鹅</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
+    <div class="flex" *ngFor="let a of [0,1,2]">
+<!--      <div class="h-3.5 w-3.5 bg-amber-400 flex-none"></div>-->
+      <div class="flex-none py-1">午餐(一楼):&nbsp;&nbsp;</div>
+      <div class="flex flex-wrap items-center">
+        <span *ngFor="let name of ['辣仔鸡','小排炖萝卜','木耳炒花菜','青菜']"
+              class="bg-gray-100 rounded text-gray-700 py-0.5 px-1.5 m-0.5 text-xs">{{name}}</span>
       </div>
     </div>
   </div>

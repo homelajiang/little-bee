@@ -1,49 +1,68 @@
-<div class="flex">
-  <div class="w-3/5 bg-amber-200">
-    <div class="flex flex-col items-center">
-      <img class="w-20 h-20" src="assets/ic_avatar.svg">
-      <h1>吴彦祖</h1>
-      <div>7730 积分  1111经验 7级</div>
-    </div>
-
-    <div class="flex justify-between">
-      <h2>工时排行</h2>
-      <div>所有时间</div>
-<!--      年度、季度、月度-->
-    </div>
-
-    <div class="flex mt-4">
-      <div class="flex rounded-lg p-1 bg-gray-200">
-        <div class="bg-white rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
-        <div matRipple class="rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
-      </div>
-    </div>
-
-    <div>
-      <div class="flex items-center" *ngFor="let user of [0,1,2,3,4,5,6,7,8,9]">
-        <div>1</div>
-        <img class="w-12 h-12" src="assets/ic_avatar.svg">
-        <div class="grow flex flex-col justify-center">
-          <h3>吴彦祖</h3>
-          <span>产品经理</span>
-        </div>
-
-        <span>$ 123</span>
-      </div>
-    </div>
-
-  </div>
-  <div class="w-2/5 bg-blue-300">
-
-    <div>项目概述</div>
-    <div>等级排行</div>
-    <div>任务数排行</div>
-    <div>积分排行</div>
-
-  </div>
-</div>
-
 <div>
 
+  <div class="flex flex-col items-center p-8 rounded my-10">
+    <img class="w-20 h-20" src="assets/ic_avatar.svg">
+    <div class="font-semibold text-2xl mt-4 mb-2">吴彦祖</div>
+    <div class="flex items-center">
+      <!--        7730 积分  1111经验 7级-->
+      <img class="w-4 h-4" src="assets/ic_avatar.svg">
+      <span class="ml-2">7730&nbsp;积分</span>
+      <div class="w-1.5 h-1.5 bg-gray-500 rounded-full mx-4"></div>
+      <img class="w-4 h-4" src="assets/ic_avatar.svg">
+      <span class="ml-2">43253&nbsp;经验</span>
+      <div class="w-1.5 h-1.5 bg-gray-500 rounded-full mx-4"></div>
+      <img class="w-4 h-4" src="assets/ic_avatar.svg">
+      <span class="ml-2">7级（小学生）</span>
+    </div>
+  </div>
+
+  <div class="flex justify-between">
+    <h2>工时排行</h2>
+    <div>所有时间</div>
+    <!--      年度、季度、月度-->
+  </div>
+
+  <div class="flex">
+    <div *ngFor="let scene of ['月度','季度','年度']"
+         class="rounded-full border-2  bg-gray-200 py-1.5 px-2.5 mr-4">{{scene}}</div>
+  </div>
+
+  <!--    <div class="flex mt-4">
+        <div class="grow flex rounded-lg p-1 bg-gray-200">
+          <div class="grow bg-white rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
+          <div class="grow rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
+          <div matRipple class="grow rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
+        </div>
+      </div>-->
+
+  <div class="grid grid-cols-4 gap-6 my-10">
+
+    <div class="flex items-center rounded-lg hover:bg-gray-100 py-2 cursor-pointer"
+         *ngFor="let scene of [0,1,2,3,4,5,6,7,8,9,10,11,12]">
+      <div class="flex-none flex justify-center w-10 text-gray-600">
+        <div>{{scene}}</div>
+      </div>
+      <img class="flex-none w-14 h-14" src="assets/ic_avatar.svg">
+      <div class="grow flex flex-col justify-center ml-3">
+        <p class="text-base" style="margin-bottom: 0!important;">吴彦祖</p>
+        <div class="text-gray-400 text-xs">产品经理</div>
+        <span class="text-gray-400 text-xs">110小时</span>
+      </div>
+      <div class="flex cursor-pointer">
+        <!--          <span>123</span>-->
+      </div>
+    </div>
+
+    <!--      <div class="flex items-center" *ngFor="let user of [0,1,2,3,4,5,6,7,8,9]">
+            <div>1</div>
+            <img class="w-12 h-12" src="assets/ic_avatar.svg">
+            <div class="grow flex flex-col justify-center">
+              <h3>吴彦祖</h3>
+              <span>产品经理</span>
+            </div>
+
+            <span>$ 123</span>
+          </div>-->
+  </div>
 
 </div>
