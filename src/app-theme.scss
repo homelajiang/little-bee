@@ -1,0 +1,105 @@
+
+@use "@angular/material" as mat;
+@use "@angular/material";
+@include mat.core();
+
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+$md-primary-palette: (
+  50 : #e9ebfe,
+  100 : #c7cefd,
+  200 : #a2adfb,
+  300 : #7d8cf9,
+  400 : #6173f8,
+  500 : #455af7,
+  600 : #3e52f6,
+  700 : #3648f5,
+  800 : #2e3ff3,
+  900 : #1f2ef1,
+  A100 : #ffffff,
+  A200 : #f4f5ff,
+  A400 : #c1c5ff,
+  A700 : #a7adff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$md-warn: (
+  50 : #ffe5e5,
+  100 : #ffbebe,
+  200 : #ff9393,
+  300 : #ff6768,
+  400 : #ff4747,
+  500 : #ff2627,
+  600 : #ff2223,
+  700 : #ff1c1d,
+  800 : #ff1717,
+  900 : #ff0d0e,
+  A100 : #ffffff,
+  A200 : #fff6f6,
+  A400 : #ffc3c3,
+  A700 : #ffaaaa,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$candy-app-primary: mat.define-palette($md-primary-palette);
+//$candy-app-primary: mat-palette($mat-indigo);
+$candy-app-accent:  mat.define-palette($md-primary-palette);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat.define-palette($md-warn);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat.define-light-theme((
+  color: (
+    primary: $candy-app-primary,
+    accent: $candy-app-accent,
+    warn: $candy-app-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($candy-app-theme);
+@include mat.typography-hierarchy($candy-app-theme);
