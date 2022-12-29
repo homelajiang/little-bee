@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-7 divide-x divide-gray-150" style="min-height: 36rem;">
+  <div class="grid grid-cols-7 divide-x divide-gray-150 border-x" style="min-height: 36rem;">
     <div class="flex flex-col" *ngFor="let weekday of displayWeekdays;let i = index">
       <div matRipple class="cursor-pointer m-2 p-2 bg-amber-200 rounded" *ngFor="let task of week[i].tasks"
            [ngStyle]="{'color':task.color.primary,'background':task.color.secondary}">

@@ -1,70 +1,69 @@
-<div class="mt-20">
+<div class="mt-10">
 
-  <table class="border-separate border border-slate-400">
+  <!--  <div class="grid grid-cols-16">
+
+      <div *ngFor="let ds of dateStrings" class="col-span-2 h-12 flex justify-center items-center">
+        <span>{{ds}}</span>
+      </div>-->
+
+  <div class="flex justify-center py-8">
+    <span class="text-3xl">一周菜单</span>
+  </div>
+
+  <table class="border-collapse border border-slate-400 w-full table-fixed">
     <thead>
     <tr>
-      <th *ngFor="let ds of dateStrings" class="col-span-2 h-12 flex justify-center items-center">
-        <span>{{ds}}</span>
+      <th colspan="2" class="border border-slate-300 h-12" *ngFor="let ds of dateStrings">
+        {{ds}}
       </th>
     </tr>
 
     </thead>
     <tbody>
+
     <tr>
-      <td colspan="2" class="border border-slate-300 ">Indiana</td>
+      <td rowspan="3" class="px-2 border border-slate-300 ">午餐</td>
+      <td class="px-2 border border-slate-300">一楼</td>
+      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l1 of lunch1">
+        <div *ngFor="let menu of l1">{{menu}}</div>
+      </td>
     </tr>
+
     <tr>
-      <td class="border border-slate-300 ">Ohio</td>
-      <td class="border border-slate-300 ">Columbus</td>
+      <td class="px-2 border border-slate-300">二楼</td>
+      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l2 of lunch2">
+        <div *ngFor="let menu of l2">{{menu}}</div>
+      </td>
     </tr>
+
     <tr>
-      <td class="border border-slate-300 ">Michigan</td>
-      <td class="border border-slate-300 ">Detroit</td>
+      <td class="px-2 border border-slate-300">B餐</td>
+      <td class="px-2 border border-slate-300 h-16 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let lb of lunchB">
+        <div *ngFor="let menu of lb">{{menu}}</div>
+      </td>
     </tr>
+
+    <tr>
+      <td colspan="2" class="px-2 border border-slate-300">晚餐</td>
+      <td colspan="2" class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" *ngFor="let ld of dinner">
+        <div *ngFor="let menu of ld">{{menu}}</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="px-2 border border-slate-300"></td>
+      <td colspan="2" class="px-2 border border-slate-300 h-20" *ngFor="let ld of dinner">
+        <div class="h-full flex justify-center items-center">
+          <button mat-stroked-button color="primary">预定晚餐</button>
+        </div>
+      </td>
+    </tr>
+
     </tbody>
   </table>
 
-  <div class="grid grid-cols-16">
-
-    <div *ngFor="let ds of dateStrings" class="col-span-2 h-12 flex justify-center items-center">
-      <span>{{ds}}</span>
-    </div>
-
-    <div class="col-span-1 row-span-3 flex justify-center items-center">午餐</div>
-
-    <div class="col-span-1 flex justify-center items-center">
-      <span>一楼</span>
-    </div>
-
-
-    <div *ngFor="let l1 of lunch1" class="col-span-2 h-32 flex justify-center items-center flex-col">
-      <div *ngFor="let menu of l1">{{menu}}</div>
-    </div>
-
-    <div class="col-span-1 flex justify-center items-center">
-      <span>二楼</span>
-    </div>
-
-
-    <div *ngFor="let l2 of lunch2" class="col-span-2 h-32 flex justify-center items-center flex-col">
-      <div *ngFor="let menu of l2">{{menu}}</div>
-    </div>
-
-    <div class="col-span-1 flex justify-center items-center">
-      <span>B餐</span>
-    </div>
-
-    <div *ngFor="let lb of lunchB" class="col-span-2 h-16 flex justify-center items-center flex-col">
-      <div *ngFor="let menu of lb">{{menu}}</div>
-    </div>
-
-    <div class="h-32 col-span-2 flex justify-center items-center">
-      <span>晚餐</span>
-    </div>
-
-    <div *ngFor="let ld of dinner" class="col-span-2 h-32 flex justify-center items-center flex-col">
-      <div *ngFor="let menu of ld">{{menu}}</div>
-    </div>
-
+  <div class="py-4">
+    <span class="text-gray-300">菜品根据市场价格和供货情况进行微调，此菜单仅供参考。</span>
   </div>
+
 </div>
