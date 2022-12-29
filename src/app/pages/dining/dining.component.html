@@ -13,7 +13,7 @@
   <table class="border-collapse border border-slate-400 w-full table-fixed">
     <thead>
     <tr>
-      <th colspan="2" class="border border-slate-300 h-12" *ngFor="let ds of dateStrings">
+      <th colspan="2" class="border border-slate-300 h-12" *ngFor="let ds of dateStrings;let i = index;" [ngClass]="{'text-indigo-600':i==4,'bg-gray-100':i==4}">
         {{ds}}
       </th>
     </tr>
@@ -24,28 +24,28 @@
     <tr>
       <td rowspan="3" class="px-2 border border-slate-300 ">午餐</td>
       <td class="px-2 border border-slate-300">一楼</td>
-      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l1 of lunch1">
+      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l1 of lunch1;let i = index;"  [ngClass]="{'text-indigo-600':i==3,'bg-gray-100':i==3}">
         <div *ngFor="let menu of l1">{{menu}}</div>
       </td>
     </tr>
 
     <tr>
       <td class="px-2 border border-slate-300">二楼</td>
-      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l2 of lunch2">
+      <td class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let l2 of lunch2;let i = index;"  [ngClass]="{'text-indigo-600':i==3,'bg-gray-100':i==3}">
         <div *ngFor="let menu of l2">{{menu}}</div>
       </td>
     </tr>
 
     <tr>
       <td class="px-2 border border-slate-300">B餐</td>
-      <td class="px-2 border border-slate-300 h-16 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let lb of lunchB">
+      <td class="px-2 border border-slate-300 h-16 hover:bg-gray-200 cursor-pointer" colspan="2" *ngFor="let lb of lunchB;let i = index;"  [ngClass]="{'text-indigo-600':i==3,'bg-gray-100':i==3}">
         <div *ngFor="let menu of lb">{{menu}}</div>
       </td>
     </tr>
 
     <tr>
       <td colspan="2" class="px-2 border border-slate-300">晚餐</td>
-      <td colspan="2" class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" *ngFor="let ld of dinner">
+      <td colspan="2" class="px-2 border border-slate-300 h-36 hover:bg-gray-200 cursor-pointer" *ngFor="let ld of dinner;let i = index;"  [ngClass]="{'text-indigo-600':i==3,'bg-gray-100':i==3}">
         <div *ngFor="let menu of ld">{{menu}}</div>
       </td>
     </tr>

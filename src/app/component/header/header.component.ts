@@ -23,7 +23,10 @@ export class HeaderComponent {
   }, {
     name: '排行榜',
     link: '/ranking',
-  }]
+  },{
+  name: '一周菜单',
+  link: '/dining',
+}]
 
 
 }
