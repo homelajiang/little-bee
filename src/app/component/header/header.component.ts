@@ -9,7 +9,6 @@ import {ActivatedRoute} from "@angular/router";
 export class HeaderComponent {
 
   constructor(private router:ActivatedRoute) {
-    console.log("111111")
     this.router.paramMap
   }
 

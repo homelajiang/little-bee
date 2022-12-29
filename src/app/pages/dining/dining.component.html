@@ -1,1 +1,70 @@
-<p>dining works!</p>
+<div class="mt-20">
+
+  <table class="border-separate border border-slate-400">
+    <thead>
+    <tr>
+      <th *ngFor="let ds of dateStrings" class="col-span-2 h-12 flex justify-center items-center">
+        <span>{{ds}}</span>
+      </th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr>
+      <td colspan="2" class="border border-slate-300 ">Indiana</td>
+    </tr>
+    <tr>
+      <td class="border border-slate-300 ">Ohio</td>
+      <td class="border border-slate-300 ">Columbus</td>
+    </tr>
+    <tr>
+      <td class="border border-slate-300 ">Michigan</td>
+      <td class="border border-slate-300 ">Detroit</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="grid grid-cols-16">
+
+    <div *ngFor="let ds of dateStrings" class="col-span-2 h-12 flex justify-center items-center">
+      <span>{{ds}}</span>
+    </div>
+
+    <div class="col-span-1 row-span-3 flex justify-center items-center">午餐</div>
+
+    <div class="col-span-1 flex justify-center items-center">
+      <span>一楼</span>
+    </div>
+
+
+    <div *ngFor="let l1 of lunch1" class="col-span-2 h-32 flex justify-center items-center flex-col">
+      <div *ngFor="let menu of l1">{{menu}}</div>
+    </div>
+
+    <div class="col-span-1 flex justify-center items-center">
+      <span>二楼</span>
+    </div>
+
+
+    <div *ngFor="let l2 of lunch2" class="col-span-2 h-32 flex justify-center items-center flex-col">
+      <div *ngFor="let menu of l2">{{menu}}</div>
+    </div>
+
+    <div class="col-span-1 flex justify-center items-center">
+      <span>B餐</span>
+    </div>
+
+    <div *ngFor="let lb of lunchB" class="col-span-2 h-16 flex justify-center items-center flex-col">
+      <div *ngFor="let menu of lb">{{menu}}</div>
+    </div>
+
+    <div class="h-32 col-span-2 flex justify-center items-center">
+      <span>晚餐</span>
+    </div>
+
+    <div *ngFor="let ld of dinner" class="col-span-2 h-32 flex justify-center items-center flex-col">
+      <div *ngFor="let menu of ld">{{menu}}</div>
+    </div>
+
+  </div>
+</div>
