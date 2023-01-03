@@ -4,9 +4,9 @@ import {
   HttpResponse,
   MyProjectOverview,
   NormalProjectOverview,
-  Project,
+  Project, ProjectInfo, ProjectMember,
   RankUser,
-  Task,
+  Task, TaskInfo,
   UserInfo
 } from "../common/bee.entity";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
@@ -182,6 +182,62 @@ export class BeeService {
           }
         })
       );
+  }
+
+  // 获取项目详情
+  getProjectInfo(projectId: number): Observable<ProjectInfo> {
+    let body = new HttpParams()
+      .set('projectId', projectId)
+
+    return this.http.post<HttpResponse<ProjectInfo>>('bee/project/projectDetail', body, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            return of(res.result!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      )
+  }
+
+  // 获取项目成员
+  getProjectMembers(projectId: number):Observable<Array<ProjectMember>>{
+    let body = new HttpParams()
+      .set('projectId', projectId)
+      .set('pageNo', 1)
+      .set('pageSize', 1000)
+
+    return this.http.post<HttpResponse<Array<ProjectMember>>>('bee/project/projectMembers', body, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            return of(res.result!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      )
+  }
+
+  // 获取项目最近任务列表
+  getProjectRecentTasks(projectId: number):Observable<HttpResponse<Array<TaskInfo>>>{
+    let body = new HttpParams()
+      .set('projectId', projectId)
+      .set('pageNo', 1)
+      .set('pageSize', 10)
+      .set('taskType', 1)
+
+    return this.http.post<HttpResponse<Array<TaskInfo>>>('bee/project/projectTasks', body, this.formOptions)
+      .pipe(
+        mergeMap(res => {
+          if (res.code === 0) {
+            return of(res!);
+          } else {
+            throw new Error(res.msg);
+          }
+        })
+      )
   }
 
 

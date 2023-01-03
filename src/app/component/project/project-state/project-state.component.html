@@ -4,24 +4,24 @@
   <div class="flex rounded-lg bg-gray-100 px-4 py-3 my-6">
     <img class="aspect-square w-12 h-12" src="./assets/ic_avatar.svg">
     <div class="flex flex-col justify-center ml-3">
-      <h3 style="margin-bottom: 0!important;">吴彦祖</h3>
-      <span class="text-gray-500 text-sm">产品经理</span>
+      <h3 style="margin-bottom: 0!important;">{{projectInfo?.managerName}}</h3>
+      <span class="text-gray-500 text-sm"></span>
     </div>
   </div>
 
   <div class="flex justify-between items-center my-2">
     <span style="margin-bottom: 0!important;">开始时间</span>
-    <span>2022-21-19</span>
+    <span>{{projectInfo?.startDate}}</span>
   </div>
 
   <div class="flex justify-between items-center my-2">
     <span style="margin-bottom: 0!important;">预计结束</span>
-    <span>2022-21-19</span>
+    <span>{{projectInfo?.endDate}}</span>
   </div>
 
   <div class="flex justify-between items-center my-2">
     <span style="margin-bottom: 0!important;">关联项目</span>
-    <span>融合通信调度平台</span>
+    <span>{{projectInfo?.oaProjectName}}</span>
   </div>
 
   <div class="flex items-center my-1">
@@ -37,7 +37,7 @@
     <img class="aspect-square mr-2 w-8 h-8" src="./assets/ic_avatar.svg">
     <h3 style="margin-bottom: 0!important;">任务数量</h3>
     <span class="grow"></span>
-    <span class="text-lg font-semibold">200</span>
+    <span class="text-lg font-semibold">{{projectInfo?.taskCount}}</span>
   </div>
 
   <div class="flex items-center rounded-lg bg-gray-100 px-4 py-3 mb-4">
@@ -51,7 +51,7 @@
     <img class="aspect-square mr-2 w-8 h-8" src="./assets/ic_avatar.svg">
     <h3 style="margin-bottom: 0!important;">变更</h3>
     <span class="grow"></span>
-    <span class="text-lg font-semibold">200</span>
+    <span class="text-lg font-semibold">{{projectInfo?.changeHistory?.length}}</span>
   </div>
 
 </div>

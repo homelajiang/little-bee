@@ -1,8 +1,8 @@
 <div class="pt-10">
 
   <div>
-    <p class="font-semibold text-2xl">融合通信APP</p>
-    <span class="text-gray-500">韦氏词典的年度词是“gaslighting”（煤气灯效应），而牛津英语词典的年度词是 goblin mode。</span>
+    <p class="font-semibold text-2xl">{{projectInfo.projectName}}</p>
+    <span class="text-gray-500">{{projectInfo.projectDesc}}</span>
 
     <div class="mt-1">
       <span class="cursor-pointer rounded-full bg-gray-200 text-gray-600 text-xs px-2 py-1">原型地址</span>
@@ -14,27 +14,31 @@
     <div class="text-lg font-semibold mb-4">项目现场</div>
     <div class="flex flex-wrap">
 
-      <div class="rounded-full border-dashed text-indigo-600  border-2 border-indigo-600 py-1.5 px-2.5 mr-4 cursor-pointer"
-      matRipple>+ 添加现场</div>
+      <div
+        class="rounded-full border-dashed text-indigo-600  border-2 border-indigo-600 py-1.5 px-2.5 mr-4 my-2 cursor-pointer"
+        matRipple>+ 添加现场
+      </div>
 
-      <div *ngFor="let scene of ['福建武警总队','上海应急听','江西功能只对','其他测试现场']"
-              class="rounded-full border-2  bg-gray-200 py-1.5 px-2.5 mr-4">{{scene}}</div>
+      <div *ngFor="let scene of getProjectScenes()"
+           class="rounded-full border-2  bg-gray-200 py-1.5 px-2.5 mr-4 my-2 cursor-pointer">{{scene}}</div>
     </div>
   </div>
 
   <div class="text-lg font-semibold mb-4">项目成员</div>
   <div class="grid grid-cols-6 gap-4 mb-10">
 
-    <div class="flex justify-center items-center rounded-lg bg-white px-2 py-2 text-indigo-600 border-dashed cursor-pointer border-2 border-indigo-600" matRipple>
-     + 添加成员
+    <div
+      class="flex justify-center items-center rounded-lg bg-white px-2 py-2 text-indigo-600 border-dashed cursor-pointer border-2 border-indigo-600"
+      matRipple>
+      + 添加成员
     </div>
 
     <div class="flex items-center rounded-lg bg-gray-100 px-2 py-2 cursor-pointer"
-         *ngFor="let scene of [0,1,2,3,4,5,6,7,8,9,10,11,12]">
+         *ngFor="let member of projectMembers">
       <img class="flex-none aspect-square w-8 h-8" src="./assets/ic_avatar.svg">
       <div class="grow flex flex-col justify-center ml-3">
-        <p style="margin-bottom: 0!important;">吴彦祖</p>
-        <span class="text-gray-400 text-xs">产品经理</span>
+        <p style="margin-bottom: 0!important;">{{member.name}}</p>
+        <span class="text-gray-400 text-xs">{{member.roleId}}</span>
       </div>
       <div class="flex cursor-pointer">
         <mat-icon class="m-1">close</mat-icon>

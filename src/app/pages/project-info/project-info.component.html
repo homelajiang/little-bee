@@ -1,8 +1,8 @@
 <div class="flex">
   <div class="grow mr-16">
-    <app-project-overview></app-project-overview>
+    <app-project-overview [projectId]="projectId" (projectInfoEvent)="onGetProjectInfo($event)"></app-project-overview>
   </div>
   <div class="flex-none w-80">
-    <app-project-state></app-project-state>
+    <app-project-state [projectInfo]="projectInfo"></app-project-state>
   </div>
 </div>

@@ -2,6 +2,14 @@ export class HttpResponse<T> {
   code = 0
   msg = ""
   result: T | undefined;
+  page?: PageInfo = undefined
+}
+
+export class PageInfo {
+  pageNo = 0;
+  pageSize = 0;
+  totalCount = 0;
+  totalPage = 0
 }
 
 export class Daily {
@@ -108,6 +116,35 @@ export class MyProjectOverview extends ProjectOverview {
   taskCount = 0;
 }
 
+export class ProjectInfo {
+  changeHistory?: Array<ChangeHistory> = [];
+  endDate? = '';
+  startDate? = '';
+  projectIcon? = ''
+  oaProjectCode = '';
+  managerId = 0;
+  managerName = '';
+  scene? = ''
+  oaProjectName = '';
+  projectCode = '';
+  projectDesc? = '';
+  designUrl? = '';
+  prototypeUrl? = '';
+  projectName = '';
+  projectId = 0;
+
+  taskCount? = 0;
+  recentTasks?: Array<TaskInfo> = []
+}
+
+export class ChangeHistory {
+  startDateBefore? = '';
+  endDateBefore? = '';
+  startDateAfter? = '';
+  endDateAfter? = '';
+  remarks? = '';
+}
+
 export class Task {
   createTime = '';
   userNames = '';
@@ -157,6 +194,14 @@ export class RankUser {
   head = '';
   workHours = 0;
   userName = '';
+  userId = 0;
+}
+
+export class ProjectMember {
+  taskCount = 0;
+  headImg = '';
+  roleId = 0;
+  name = '';
   userId = 0;
 }
 
