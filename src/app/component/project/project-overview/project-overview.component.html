@@ -19,8 +19,8 @@
         matRipple>+ 添加现场
       </div>
 
-      <div *ngFor="let scene of getProjectScenes()"
-           class="rounded-full border-2  bg-gray-200 py-1.5 px-2.5 mr-4 my-2 cursor-pointer">{{scene}}</div>
+      <div matRipple *ngFor="let scene of getProjectScenes()"
+           class="rounded-full border bg-gray-100 py-1.5 px-2.5 mr-4 my-2 cursor-pointer">{{scene}}</div>
     </div>
   </div>
 
@@ -34,27 +34,28 @@
     </div>
 
     <div class="flex items-center rounded-lg bg-gray-100 px-2 py-2 cursor-pointer"
+         matRipple
          *ngFor="let member of projectMembers">
       <img class="flex-none aspect-square w-8 h-8" src="./assets/ic_avatar.svg">
       <div class="grow flex flex-col justify-center ml-3">
         <p style="margin-bottom: 0!important;">{{member.name}}</p>
         <span class="text-gray-400 text-xs">{{member.roleId}}</span>
       </div>
-      <div class="flex cursor-pointer">
-        <mat-icon class="m-1">close</mat-icon>
-      </div>
+      <!--      <div class="flex cursor-pointer">
+              <mat-icon class="m-1">close</mat-icon>
+            </div>-->
     </div>
 
   </div>
 
   <div class="text-lg font-semibold mb-4">最近动态</div>
-  <div>
-    <div class="flex items-center py-2" *ngFor="let event of [0,1,2,3,4,5]">
+  <div class="flex flex-col w-full">
+    <div class="flex items-center py-2" *ngFor="let task of projectInfo.recentTasks">
       <img class="aspect-square w-6 h-6" src="./assets/ic_avatar.svg">
-      <span class="ml-2">吴彦祖</span>
-      <span class="ml-2 text-gray-500">创建了任务</span>
-      <span class="ml-2">规范化就赶快花费多少客户更开放的很是感慨</span>
-      <span class="ml-2 text-gray-500">一天前</span>
+      <span class="ml-2 whitespace-nowrap">{{task.leaders}}</span>
+      <span class="ml-2 text-gray-500  whitespace-nowrap">创建了任务</span>
+<!--      <span class="ml-2 truncate">{{task.taskContent}}</span>-->
+      <span class="ml-2 text-gray-500  whitespace-nowrap">{{task.createTime | dateAgoFormat}}</span>
     </div>
   </div>
 </div>

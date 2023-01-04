@@ -1,18 +1,18 @@
 <div>
 
-  <div class="flex flex-col items-center p-8 rounded ">
-    <img class="w-20 h-20" src="assets/ic_avatar.svg">
-    <div class="font-semibold text-2xl mt-4 mb-2">吴彦祖</div>
+  <div class="flex flex-col items-center p-8 rounded">
+    <img class="w-20 h-20 rounded-full" src="{{userInfo.head}}">
+    <div class="font-semibold text-2xl mt-4 mb-2">{{userInfo.name}}</div>
     <div class="flex items-center">
       <!--        7730 积分  1111经验 7级-->
       <img class="w-4 h-4" src="assets/ic_avatar.svg">
-      <span class="ml-2">7730&nbsp;积分</span>
-      <div class="w-1.5 h-1.5 bg-gray-500 rounded-full mx-4"></div>
+      <span class="ml-2">{{userInfo.score}}&nbsp;积分</span>
+      <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-4"></div>
       <img class="w-4 h-4" src="assets/ic_avatar.svg">
-      <span class="ml-2">43253&nbsp;经验</span>
-      <div class="w-1.5 h-1.5 bg-gray-500 rounded-full mx-4"></div>
+      <span class="ml-2">{{userInfo.exp}}&nbsp;经验</span>
+      <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-4"></div>
       <img class="w-4 h-4" src="assets/ic_avatar.svg">
-      <span class="ml-2">7级（小学生）</span>
+      <span class="ml-2">{{userInfo.level}}级 ({{userInfo.levelName}})</span>
     </div>
   </div>
 
@@ -23,46 +23,24 @@
   </div>
 
   <div class="flex">
-    <div *ngFor="let scene of ['月度','季度','年度']"
-         class="rounded-full border-2  bg-gray-200 py-1.5 px-2.5 mr-4">{{scene}}</div>
+    <div *ngFor="let type of ['月度','季度','年度']"
+         class="rounded-full border py-1.5 px-6 mr-4 cursor-pointer" matRipple>{{type}}</div>
   </div>
-
-  <!--    <div class="flex mt-4">
-        <div class="grow flex rounded-lg p-1 bg-gray-200">
-          <div class="grow bg-white rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
-          <div class="grow rounded-lg py-1 px-3 cursor-pointer">我参与的</div>
-          <div matRipple class="grow rounded-lg py-1 px-3 ml-1 cursor-pointer">所有</div>
-        </div>
-      </div>-->
 
   <div class="grid grid-cols-4 gap-6 my-10">
 
     <div class="flex items-center rounded-lg hover:bg-gray-100 py-2 cursor-pointer"
-         *ngFor="let scene of [0,1,2,3,4,5,6,7,8,9,10,11,12]">
+         *ngFor="let user of rankingUsers;let i=index;">
       <div class="flex-none flex justify-center w-10 text-gray-600">
-        <div>{{scene}}</div>
+        <div>{{i+1}}</div>
       </div>
-      <img class="flex-none w-14 h-14" src="assets/ic_avatar.svg">
+      <img class="flex-none w-14 h-14 rounded-full" src="{{user.head?user.head:'assets/ic_avatar.svg'}}">
       <div class="grow flex flex-col justify-center ml-3">
-        <p class="text-base" style="margin-bottom: 0!important;">吴彦祖</p>
-        <div class="text-gray-400 text-xs">产品经理</div>
-        <span class="text-gray-400 text-xs">110小时</span>
-      </div>
-      <div class="flex cursor-pointer">
-        <!--          <span>123</span>-->
+        <div class="text-base">{{user.userName}}</div>
+<!--        <div class="text-gray-400 text-xs">产品经理</div>-->
+        <span class="text-gray-400 text-xs mt-1">{{user.workHours}}小时</span>
       </div>
     </div>
-
-    <!--      <div class="flex items-center" *ngFor="let user of [0,1,2,3,4,5,6,7,8,9]">
-            <div>1</div>
-            <img class="w-12 h-12" src="assets/ic_avatar.svg">
-            <div class="grow flex flex-col justify-center">
-              <h3>吴彦祖</h3>
-              <span>产品经理</span>
-            </div>
-
-            <span>$ 123</span>
-          </div>-->
   </div>
 
 </div>

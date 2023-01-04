@@ -4,7 +4,7 @@ import {
   HttpResponse,
   MyProjectOverview,
   NormalProjectOverview,
-  Project, ProjectInfo, ProjectMember,
+  Project, ProjectInfo, ProjectMember, ProjectTask,
   RankUser,
   Task, TaskInfo,
   UserInfo
@@ -221,14 +221,14 @@ export class BeeService {
   }
 
   // 获取项目最近任务列表
-  getProjectRecentTasks(projectId: number):Observable<HttpResponse<Array<TaskInfo>>>{
+  getProjectRecentTasks(projectId: number):Observable<HttpResponse<Array<ProjectTask>>>{
     let body = new HttpParams()
       .set('projectId', projectId)
       .set('pageNo', 1)
       .set('pageSize', 10)
       .set('taskType', 1)
 
-    return this.http.post<HttpResponse<Array<TaskInfo>>>('bee/project/projectTasks', body, this.formOptions)
+    return this.http.post<HttpResponse<Array<ProjectTask>>>('bee/project/projectTasks', body, this.formOptions)
       .pipe(
         mergeMap(res => {
           if (res.code === 0) {

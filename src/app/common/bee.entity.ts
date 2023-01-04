@@ -134,7 +134,25 @@ export class ProjectInfo {
   projectId = 0;
 
   taskCount? = 0;
-  recentTasks?: Array<TaskInfo> = []
+  recentTasks?: Array<ProjectTask> = []
+}
+
+export class ProjectTask {
+  taskBeginDate = '';
+  workHours = 0.0;
+  icon = '';
+  taskTypeState = 0;
+  leaders = '';
+  alarmFlag = 0;
+  scene? = '';
+  taskEndDate = ''
+  taskType = 1;
+  createBy = '';
+  taskContent = '';
+  createTime = ''
+  leaderIds = '';
+  id = 0;
+  state = 0;
 }
 
 export class ChangeHistory {
