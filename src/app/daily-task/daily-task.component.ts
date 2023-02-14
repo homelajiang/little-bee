@@ -40,6 +40,10 @@ export class DailyTaskComponent implements OnInit {
   }
 
   closeTask(task: Task) {
+    this.showInputWorkHoursDialog(task);
+    return
+    // 任务不同步到oa
+
     if (!this.beeService.checkSyncOa(task.endTime)) {
       ConfirmDialog.open(this.matDialog, new ConfirmData('提示', '当前关闭的任务不可同步工时' + '<br/>' + '是否继续关闭？'))
         .afterClosed()

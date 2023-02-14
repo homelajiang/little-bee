@@ -56,6 +56,10 @@ export class TaskInfoComponent implements OnInit {
 
   // 关闭任务
   closeTask() {
+    this.showInputWorkHoursDialog();
+    return
+    // 任务不同步到oa
+
     const sycOaWorkHours = this.beeService.checkSyncOa(this.task.endTime);
     if (!sycOaWorkHours) {
       ConfirmDialog.open(this.dialog, new ConfirmData('提示', '当前关闭的任务不可同步工时' + '<br/>' + '是否继续关闭？'))

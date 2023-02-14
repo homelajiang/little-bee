@@ -558,6 +558,9 @@ export class BeeService {
       dayOfWeek = 7;
     }
 
+    return this.closeBeeTask(task, workHours, taskDay);
+    // 任务不同步到oa
+
     if (workHours) {
       let pn;
       if ('维护项目' === task.projectName) {
